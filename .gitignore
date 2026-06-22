@@ -1,0 +1,45 @@
+# ===== Python 缓存 =====
+__pycache__/
+*.pyc
+*.pyo
+
+# ===== IDE / 工具 =====
+.codebuddy/
+
+# ===== 原始数据（体积巨大，不进入版本控制） =====
+数据/1min_log_return/
+数据/1min_log_return_npy/
+数据/*.RData
+数据/*.rdata
+
+# ===== 生成过的输出（可重新计算） =====
+图形Lasso/code/输出数据/
+图形Lasso/*.npz
+*.npz
+
+# ===== 临时文件 =====
+_pdf_text.txt
+*.log
+*_log.txt
+
+# ===== Excel / 日志 / 诊断输出 =====
+数据/Excel_Output/
+*运行日志.txt
+*.log
+lambda_selection_diagnostics.csv
+
+# ===== 图片 / 图表 =====
+图片*.png
+图片*.jpg
+figures_filtered/
+
+# ===== 文档 / 参考文献 / PDF =====
+申报书/
+论文/
+初稿/
+参考文件/
+VARX_results/
+code buddy/
+*.pdf
+*.docx
+*.doc
