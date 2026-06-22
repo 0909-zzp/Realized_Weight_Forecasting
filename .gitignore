@@ -4,7 +4,7 @@ __pycache__/
 *.pyo
 
 # ===== IDE / 工具 =====
-.codebuddy/
+.codebuddy/memory/
 
 # ===== 原始数据（体积巨大，不进入版本控制） =====
 数据/1min_log_return/
