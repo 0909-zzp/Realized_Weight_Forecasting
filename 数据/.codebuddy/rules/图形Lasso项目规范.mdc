@@ -1,94 +1,189 @@
 ---
-description: 图形Lasso高维GMVP权重预测项目的开发规范、架构约束与操作纪律
+description: 图形Lasso高维GMVP权重预测 — 架构红线、易错规则、坑点、命令速查
 alwaysApply: true
 enabled: true
 updatedAt: 2026-06-22T00:00:00.000Z
-provider: 
 ---
 
 # 图形Lasso项目开发规范
 
-本规则与 Vibe Coding 12条 并行生效。任何时候在本项目生成或修改代码，必须先遵守本规范。
+> 本规则与 Vibe Coding 12条并行生效。任何时候生成或修改代码，必须先遵守。
 
 ---
 
-## 一、架构红线（违反其一 = 拒绝修改）
+## 一、架构红线
 
 ### 1.1 开发前必读 README
-在进行任何功能开发、参数调整、模块新增之前，必须先读取 `图形Lasso/README.md`，了解当前架构状态、参数值、模块边界和规范约束。不得凭记忆或假设进行编码。
+先读取 `图形Lasso/README.md`，了解架构状态、参数值、模块边界。**不得凭记忆或假设编码。**
 
-### 1.2 参数唯一源
-- 所有可调参数在 `图形Lasso/code/共享模块.py` 中有且仅有一处定义
-- 各阶段脚本通过 `from 共享模块 import K, EPS_RIDGE, ...` 引用，禁止脚本内写死任何魔数
-- 参数状态标记：`# ✓ 已确定`（经实验验证）或 `# ⚠ [TBD]`（占位待验证）
-
-### 1.3 README 与代码同步
-代码变更涉及模块增删、参数调整、架构修改时，必须先更新 README.md 对应章节，再实施代码变更。
-
-### 1.4 单向依赖
+### 1.2 参数唯一源 = 共享模块.py
 ```
-L0数据 → L1共享模块 → L2构造层 → L3预测层 → L4评估层
+所有参数在 图形Lasso/code/共享模块.py 有且仅有1处定义
+各脚本通过 from 共享模块 import K, EPS_RIDGE, ... 引用
+禁止脚本内写死任何魔数
+参数状态标记: # ✓ 已确定  或  # ⚠ [TBD] 待验证
 ```
-- 上层 import 下层，反之禁止
-- L1 不 import 项目内任何其他 .py 文件
-- 阶段间通过 `.txt` / `.csv` / `.npy` 传递数据，不直接 cross-import
 
-### 1.5 GLasso 统一入口
-- 所有 GLasso 拟合必须通过 `共享模块.do_glasso()` 调用
-- 禁止直接调用 `sklearn.covariance.graphical_lasso`
-- 协方差 = `X @ Xᵀ + ridge·I`，不除以分钟数 M（与论文公式3一致）
+### 1.3 单向依赖
+```
+L0数据(.RData) → L1共享模块 → L2构造 → L3预测 → L4评估
+  × 反向import        × 阶段间cross-import     × L1 import 项目内其他.py
+  ✓ 阶段间通过 .txt / .csv / .npy 传递数据
+```
+
+### 1.4 GLasso 统一入口
+```python
+from 共享模块 import do_glasso        # ✓ 正确
+from sklearn.covariance import graphical_lasso  # ✗ 禁止
+```
+协方差 = `X @ Xᵀ + ridge·I`，**不除以 M**（论文公式3）。
 
 ---
 
-## 二、运行纪律
+## 二、容易猜错的规则（反直觉）
 
-### 2.1 数据预检（GIGO 防护）
-运行任何计算密集型阶段前，必须抽样 5 个文件验证数据契约：
-- 文件数量（2436天）
-- rett1 shape (K=392, M=390)
-- dtype=float64、NaN/Inf=0
-- 数值范围合理（对数收益 ~±10%）
+| 你以为 | 实际情况 | 原因 |
+|--------|---------|------|
+| 协方差 = X@Xᵀ / M | **不除 M**，就是 X@Xᵀ | 论文公式(3)写死了 |
+| .RData 文件名是 `20100630_1min...` | 中间有**空格**：`20100630 _1min...` | R 导出时的遗留格式 |
+| M (分钟数) 每天不一样 | 全部 390 分钟 | 6.5小时交易 × 60 |
+| K=392 所以协方差满秩 | M=390 < K=392 → **必定奇异**，Ridge 是必需品 | rank ≤ min(392,390) |
+| GLasso 需要 500 次迭代 | 30~80 次就收敛，150 安全裕度充足 | 凸优化，收敛快 |
+| `cond_val` 每天都需要算 | 只用于 Table1 描述性统计，每5天算一次即可 | eigvalsh O(K³) |
+| pyreadr 和 np.load 差不多快 | np.load 快 **5~10倍**，且支持多进程内存映射 | 二进制 vs R格式解析 |
+| `git add .gitignore` 就会提交规则文件 | `.codebuddy/` 整目录被 gitignore 了 | 已改为只排除 `.codebuddy/memory/` |
 
-跳过此步的代价：30-60 分钟计算后发现数据不匹配。
+---
 
-### 2.2 提交频率（Rule 9）
-每完成一个小功能块或阶段性成果，执行：
+## 三、代码读不出的约定（隐式契约）
+
+### 3.1 输出目录结构
+```
+阶段一输出 → 图形Lasso/lambda_opt.txt（项目根，不是 code/输出数据/）
+阶段二输出 → 图形Lasso/code/输出数据/reg_weights_2436.csv
+阶段三输出 → 图形Lasso/code/输出数据/X_features.npy, Y_targets.npy
+```
+下游脚本按文件名找上游产出，路径不匹配就报 FileNotFoundError。
+
+### 3.2 文件命名即接口
+- `lambda_opt.txt` — 阶段一→阶段二的唯一通道
+- `reg_weights_2436.csv` — 阶段二→阶段三的唯一通道
+- `X_features.npy / Y_targets.npy` — 阶段三A→阶段三B的唯一通道
+- 改文件名 = 破坏下游，改之前先搜所有引用
+
+### 3.3 日志是唯一的运行时证据
+每个阶段独立写 log：`OUT_DIR / "xxx_log.txt"`
+并行进程不直接写 log（进程隔离），只在主进程汇总后输出
+
+### 3.4 失败日不中断全流程
+`process_one_day` 失败 → 返回 `_failed_result()` 占位字典
+汇总时用 `.get(i, _failed_result(i, "未完成"))` 兜底
+失败日存 `failed_days.csv`，NaN 被描述性统计自动忽略
+
+---
+
+## 四、技术栈与版本
+
+| 组件 | 版本 | 备注 |
+|------|:--:|------|
+| Python | **3.9+** | 实测 3.13 可用 |
+| numpy | 1.21+ | @ 矩阵乘法 |
+| pandas | 1.3+ | DataFrame, CSV |
+| scikit-learn | 1.0+ | graphical_lasso（mode='cd' 坐标下降）|
+| pyreadr | 0.4+ | .RData 读取（已被 .npy 替代，仅回退用）|
+| matplotlib | 3.5+ | 可视化（阶段四用，可选）|
+
+> **Windows 注意**：sklearn 某些版本 `graphical_lasso` 不接受 `cov_init` 参数，不要传。
+
+---
+
+## 五、常用命令速查
+
+### 5.1 全流程
 ```bash
 cd /d "d:\HuaweiMoveData\Users\27438\Desktop\大创"
-git add -A
-git commit -m "明确描述做了什么"
+
+# 仅首次：.RData → .npy 转换（已做，不用重复）
+python 图形Lasso/code/_convert_npy.py
+
+# 阶段二：全量权重（10-20 min）
+python "图形Lasso/code/权重计算+描述性分析（步骤二）.py"
+
+# 阶段三：
+python 图形Lasso/code/特征工程.py
+python 图形Lasso/code/VARX预测.py
+python 图形Lasso/code/决策聚焦训练.py
+
+# 阶段四：
+python 图形Lasso/code/性能评估.py
+python 图形Lasso/code/可视化.py
 ```
-Commit 粒度：不要每次 Ctrl+S 都提交，也不要一天几十个改动堆一个 commit。
-推荐节点：bug修复完成、新功能完成、阶段脚本跑通、README 同步完成。
+
+### 5.2 Git
+```bash
+cd /d "d:\HuaweiMoveData\Users\27438\Desktop\大创"
+git status                    # 看看改了什么
+git diff                      # 看看具体改了什么
+git add -A                    # 暂存所有
+git commit -m "做了什么"       # 存档
+git push                      # 推到GitHub
+git log --oneline             # 看历史
+```
+
+### 5.3 数据预检（跑长任务前必做）
+```bash
+python -c "
+import os, numpy as np, pyreadr
+D='d:/HuaweiMoveData/Users/27438/Desktop/大创/数据/1min_log_return'
+fs=[f for f in sorted(os.listdir(D)) if f.endswith('_1min_log_return.RData') and not f.startswith('1min')]
+print(f'文件:{len(fs)}')
+for i in [0,len(fs)//2,len(fs)-1]:
+    r=pyreadr.read_r(os.path.join(D,fs[i]))['rett1'].values
+    print(f'[{i}] shape={r.shape} dtype={r.dtype} NaN={np.isnan(r).sum()}')
+"
+```
 
 ---
 
-## 三、代码规范
+## 六、架构取舍（为什么这么设计）
 
-### 3.1 数据类型
-- GLasso 输入必须是 `float64`，`float32` 导致 100% 失败
-- 每个脚本首行 `sys.stdout.reconfigure(encoding='utf-8')`
-
-### 3.2 并行处理
-- Windows 下并行入口必须 `if __name__ == '__main__': main()`
-- 工作函数必须模块级定义（非嵌套），兼容 spawn 模式
-
-### 3.3 纯函数优先
-协方差计算、GLasso 拟合、权重计算、邻接矩阵等核心函数无副作用
-
-### 3.4 命名规范
-| 类别 | 规范 | 示例 |
-|------|------|------|
-| 主线脚本 | 中文描述 | `λΩ选择.py`, `特征工程.py` |
-| 辅助/诊断 | `_` 前缀+英文 | `_check_cond.py`, `_convert_npy.py` |
-| 弃用代码 | 文件头部 `# [已弃用]`+替代方案 | `λ值确定（步骤一）.py` |
+| 取舍 | 选择了 | 放弃了 | 理由 |
+|------|--------|--------|------|
+| 协方差计算 | 单日独立 X@Xᵀ | 滚动窗口平均 | 论文要求逐日精度矩阵，不是平滑估计 |
+| 并行策略 | ProcessPoolExecutor | ThreadPoolExecutor | GLasso 是 CPU 密集型，线程受 GIL 限制 |
+| 阶段间通信 | 文件 (.csv/.npy) | 直接 import | 解耦 + 可断点续跑 + 可单独调试每个阶段 |
+| λ 选择 | 固定窗 44+5+22 | 滚动窗交叉验证 | 简化、可复现、论文已验证 |
+| 特征工程 | 手动构建特征组 | 自动特征生成 | 论文公式明确、可解释性要求高 |
+| 网络特征 | 自实现 PageRank/度/聚类 | networkx 库 | 零外部依赖、快速、对 392 节点够用 |
+| 数据格式 | .npy (np.save) | .h5 / .parquet | 最小依赖、内存映射友好、读写最快 |
+| 热启动 | **放弃了** | 前一天 prec 作 init | 并行化收益 > 热启动收益（8核并行 vs 串行热启） |
 
 ---
 
-## 四、当前项目状态
+## 七、已知坑点（踩过了，别再来）
 
-- **已完成**：阶段一（λ=5e-7）、阶段二（2436×392权重矩阵）、数据预检
-- **已优化**：MAX_ITER 300→150、条件数每5天计算、.npy 快读
-- **待执行**：阶段三（特征工程 → VARX → 决策聚焦）
-- **VARX超参数**：全部为 [TBD] 占位值，需验证实验确定
-- **Git仓库**：main分支已推送到 GitHub `0909-zzp/Realized_Weight_Forecasting`
+| # | 坑 | 现象 | 原因 | 解决 |
+|:--:|------|------|------|------|
+| 1 | **float32 传 GLasso** | 100% FloatingPointError | sklearn 内部精度要求 | 全程 float64 |
+| 2 | **λ太大导致全零精度矩阵** | 所有权重 = 1/K (等权重) | λ > 1e-3 压制了所有边 | λ 必须 ≤ 1e-5 量级 |
+| 3 | **崩盘日协方差条件数爆炸** | GLasso 收敛到 max_iter 才停 | 2008/2020 波动极大 | Ridge 退避链自动处理，等待 |
+| 4 | **pyreadr 多进程竞争** | 每个子进程反复解析 R 格式 | pyreadr 不支持 mmap | 转 .npy 后解决 |
+| 5 | **Windows 路径含中文** | spawn 模式下子进程找不到共享模块 | 默认编码问题 | `sys.stdout.reconfigure(encoding='utf-8')` |
+| 6 | **并行入口不是 main guard** | RuntimeError: spawn | Windows 无 fork | 必须 `if __name__ == '__main__': main()` |
+| 7 | **OUT_DIR 写了但没 mkdir** | FileNotFoundError | 目录不存在 | 共享模块初始化时 `OUT_DIR.mkdir(parents=True, exist_ok=True)` |
+| 8 | **Git cd 后没切盘符** | fatal: not a git repository | Win CMD: `cd` 不跨盘符 | 必须 `cd /d` 或先切盘符 `d:` |
+| 9 | **日志文件被 .gitignore 误杀** | 日志不提交是好的，但诊断信息丢了 | 每次重跑会覆盖旧日志 | 跑完之后把关键 log 复制到笔记里 |
+| 10 | **全零列导致某资产 GLasso 精度异常** | 每天约1列全零 → 该资产偏相关系数不可靠 | 该资产当日无交易 | 不影响整体，Ridge 退避链覆盖；后续可考虑过滤 |
+
+---
+
+## 八、当前项目状态
+
+| 维度 | 状态 |
+|------|------|
+| 阶段一（λ选择） | ✅ λ=5e-7 |
+| 阶段二（全量权重） | ✅ 2436×392 权重矩阵已生成 |
+| 性能优化 | ✅ MAX_ITER=150, 条件数降频, .npy快读 |
+| Git | ✅ main分支 → GitHub `0909-zzp/Realized_Weight_Forecasting` |
+| 阶段三（VARX） | 🔲 **待执行**：特征工程 → VARX拟合 → 决策聚焦 |
+| VARX超参数 | ⚠ 全部 [TBD] 占位值，需验证实验确定 |
