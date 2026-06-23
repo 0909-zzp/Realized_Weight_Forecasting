@@ -56,8 +56,11 @@
 |------|:--:|
 | 最优 λ_Ω | 5e-7 |
 | 测试集 OOS (λ=5e-7 vs 等权重) | -41.9% 组合方差 |
-| 全量权重矩阵 | 2436 × 392 |
-| 网络数据 | 已生成 |
+| 全量权重矩阵 | 2436 × 392（计算中） |
+| 权重计算方式 | 纯权重计算.py（独立脚本，零项目依赖） |
+| 并行策略 | multiprocessing.Pool + imap_unordered（11 worker） |
+| 数据读取 | .npy 快读（已转换 2436 天） |
+| R 版对照 | code/R.R（超参数已对齐，串行，可用作备份） |
 
 ---
 
@@ -168,13 +171,24 @@ ETA = 1e-4                      # 交易成本系数
 
 **产出**：`lambda_opt.txt`, `lambda_selection_diagnostics.csv`, `test_results.txt`
 
-### 2.3 阶段二：`code/权重计算+描述性分析（步骤二）.py`
+### 2.3 阶段二：`code/权重计算+描述性分析（步骤二）.py` / `code/纯权重计算.py`
 
-用选定的 λ_Ω 对全部 2436 个交易日逐日计算单日 GLasso（论文公式 (3)→(4)→(5)），
-得到每日 GMVP 权重与资产网络。
+**权重计算方案**：
 
-**产出**：`reg_weights_2436.csv`, `Table1_Descriptive_Statistics.csv`, `Daily_Statistics.csv`,
-`最后一日的精度矩阵.csv`, `per_asset_mean_degree.csv`, `failed_days.csv`
+| 脚本 | 依赖 | 适用 | 状态 |
+|------|------|------|:--:|
+| `权重计算+描述性分析（步骤二）.py` | 共享模块 | 全量统计+诊断 | 需修复并行问题 |
+| **`纯权重计算.py`** | **零项目依赖** | **快速权重输出** | ✅ 主力 |
+
+`纯权重计算.py` 特点：
+- 不 import 共享模块，参数独立嵌入（对齐共享模块）
+- 用 `multiprocessing.Pool.imap_unordered` 替代 `ProcessPoolExecutor`（Windows spawn 兼容）
+- Ridge 退避链：`[1e-4, 1e-3, 1e-2]`（精简化三步）
+- `if __name__ == '__main__': main()` + `freeze_support()`（Windows 安全）
+
+用选定的 λ_Ω 对全部 2436 个交易日逐日计算单日 GLasso（论文公式 (3)→(4)→(5)），得到每日 GMVP 权重与资产网络。
+
+**产出**：`reg_weights_2436.csv`
 
 ### 2.4 阶段三-A：`code/特征工程.py`
 
@@ -237,15 +251,26 @@ L = w̃_predᵀ·Σ̂_realized·w̃_pred + η·‖w̃_pred - w̃_{t-1}‖₁
 
 | 脚本 | 用途 |
 |------|------|
+| `纯权重计算.py` | **主力**：独立权重计算（零项目依赖，Windows/Linux双平台） |
+| `_spot_test.py` | Ridge 值快速验证（抽样 5 天）|
+| `_convert_npy.py` | .RData → .npy 批量转换（I/O 加速 5~10×） |
 | `快速λ选择.py` | 跳过 λ 扫描，直接使用已知 λ 评估 |
 | `_quick_test.py` | 环境诊断：验证 graphical_lasso 可运行 |
 | `_check_cond.py` | 协方差条件数检查 |
 | `_check_big_lambda.py` | 大 λ 值失败诊断 |
 | `_test_small_lambda.py` | λ 细化搜索 (2e-6~1e-5) |
 | `_test_deeper.py` | λ 深度探索 (1e-7~5e-7) |
-| `_convert_npy.py` | .RData → .npy 批量转换（I/O 加速 5~10×） |
+| `R.R` | R 语言备份版权重计算（超参与 Python 对齐，串行） |
 
-### 2.11 已弃用模块
+### 2.11 云端脚本（试用阶段）
+
+| 脚本 | 平台 | 用途 |
+|------|------|------|
+| `_run_pool.py` | Ubuntu 云端 | multiprocessing.Pool 并行版 |
+| `_run_serial.py` | Ubuntu 云端 | 串行 nohup 后台版 |
+| `_run_clean.py` | 通用 | 零项目依赖并行版（前期迭代） |
+
+### 2.12 已弃用模块
 
 | 文件 | 原用途 | 替代 |
 |------|------|------|
@@ -395,10 +420,14 @@ python code/可视化.py
 
 | 问题 | 解决 |
 |------|------|
-| GLasso 卡住 | 协方差条件数过高 (崩盘日)，正常，等待 |
+| **Windows multiprocessing 卡住** | 用 `纯权重计算.py`（`Pool.imap_unordered` + `freeze_support`）替代原版 |
+| **全部天数失败 (Non SPD result)** | Ridge 不够：用退避链 `[1e-4, 1e-3, 1e-2]` 从小到大试 |
+| **云端 8vCPU 实例 Pool 卡死** | 竞价实例受限，换 AutoDL 或本地跑 `纯权重计算.py` |
+| **ProcessPoolExecutor 无进度** | Windows spawn + 子进程重复扫目录：改用 `Pool.imap_unordered` |
+| GLasso 卡住 | 协方差条件数过高 (崩盘日)，退避链自动升级 Ridge |
 | FloatingPointError | λ 太小，增大 EPS_RIDGE 或提高 λ 下界 |
 | 内存不足 | 减少 N_WORKERS |
-| spawn RuntimeError | 确保 `if __name__ == '__main__':` |
+| spawn RuntimeError | 确保 `if __name__ == '__main__':` + `freeze_support()` |
 | 所有 λ 得分 inf | sklearn 版本问题，检查 graphical_lasso 无 cov_init 参数 |
 
 ---
@@ -545,7 +574,9 @@ log(f"进度: {done}/{total} ({pct:.0f}%)  耗时:{elapsed:.0f}s  ETA:{eta:.0f}s
 | `lambda_opt.txt` | `图形Lasso/` | λΩ选择.py |
 | `lambda_selection_diagnostics.csv` | `图形Lasso/` | λΩ选择.py |
 | `test_results.txt` | `图形Lasso/` | λΩ选择.py |
-| `reg_weights_2436.csv` | `code/输出数据/` | 步骤二 |
+| `reg_weights_2436.csv` | `code/输出数据/` | 纯权重计算.py |
+| `reg_weights_2436_R.csv` | `code/输出数据/` | R.R（备份验证） |
+| `reg_cond_2436_R.csv` | `code/输出数据/` | R.R |
 | `Table1_Descriptive_Statistics.csv` | `code/输出数据/` | 步骤二 |
 | `Daily_Statistics.csv` | `code/输出数据/` | 步骤二 |
 | `最后一日的精度矩阵.csv` | `code/输出数据/` | 步骤二 |

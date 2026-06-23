@@ -174,6 +174,8 @@ for i in [0,len(fs)//2,len(fs)-1]:
 | 8 | **Git cd 后没切盘符** | fatal: not a git repository | Win CMD: `cd` 不跨盘符 | 必须 `cd /d` 或先切盘符 `d:` |
 | 9 | **日志文件被 .gitignore 误杀** | 日志不提交是好的，但诊断信息丢了 | 每次重跑会覆盖旧日志 | 跑完之后把关键 log 复制到笔记里 |
 | 10 | **全零列导致某资产 GLasso 精度异常** | 每天约1列全零 → 该资产偏相关系数不可靠 | 该资产当日无交易 | 不影响整体，Ridge 退避链覆盖；后续可考虑过滤 |
+| 11 | **Windows ProcessPoolExecutor 卡住** | 标题输出后永远无进度 | 子进程重复扫描 .RData 目录、争夺文件锁 | 改用 `Pool.imap_unordered` + `freeze_support`，worker 内不 import 共享模块 |
+| 12 | **云端 8vCPU Pool 无输出** | Linux 上 Pool 启动后无进度，单天测试却通过 | 竞价实例限速/进程数超配额 | 用 `nohup` 后台串行、减少 worker 数、或换 AutoDL |
 
 ---
 
@@ -182,8 +184,11 @@ for i in [0,len(fs)//2,len(fs)-1]:
 | 维度 | 状态 |
 |------|------|
 | 阶段一（λ选择） | ✅ λ=5e-7 |
-| 阶段二（全量权重） | ✅ 2436×392 权重矩阵已生成 |
-| 性能优化 | ✅ MAX_ITER=150, 条件数降频, .npy快读 |
+| 阶段二（全量权重） | ⏳ 计算中：Windows 12核 `纯权重计算.py`（Pool+退避链） |
+| 数据预处理 | ✅ .npy快读（2436天已转换），条件数检查 |
+| 云端计算 | ⚠ 腾讯云8vCPU受限，尝试 AutoDL |
+| 性能优化 | ✅ MAX_ITER=100, Ridge退避链=[1e-4,1e-3,1e-2], .npy快读 |
+| R备份 | ✅ R.R（超参与Python对齐） |
 | Git | ✅ main分支 → GitHub `0909-zzp/Realized_Weight_Forecasting` |
-| 阶段三（VARX） | 🔲 **待执行**：特征工程 → VARX拟合 → 决策聚焦 |
+| 阶段三（VARX） | 🔲 等待阶段二权重输出 |
 | VARX超参数 | ⚠ 全部 [TBD] 占位值，需验证实验确定 |
