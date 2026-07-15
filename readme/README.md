@@ -150,7 +150,7 @@
 | (6) A | 资产网络 | `compute_adjacency()` |
 | (7) Ā | 滚动网络均值 | `rolling_network_mean()` (特征工程.py) |
 | §3.2 | VARX 模型 | `fit_varx_asset()` (VARX预测.py) |
-| §3.3 | 决策聚焦损失 | `decision_focused_loss()` (决策聚焦训练.py) |
+| §3.3 | 决策聚焦损失 (L2闭式解) | `VARX/VAR及拓展（table2）.py` (M6) ✅ |
 
 ---
 
@@ -356,8 +356,8 @@ python code/特征工程.py
 # 步骤 4: VARX 拟合
 python code/VARX预测.py
 
-# 步骤 5: 决策聚焦评估
-python code/决策聚焦训练.py
+# 步骤 5: 组合表现评估
+python 性能评估与可视化/Table3_投资组合表现.py
 
 # 步骤 6: 性能评估 + 可视化
 python code/性能评估.py
@@ -378,12 +378,10 @@ python code/权重计算+描述性分析（步骤二）.py
 
 # 阶段三: VARX 预测流水线
 python code/特征工程.py
-python code/VARX预测.py          # 含滚动回测
-python code/决策聚焦训练.py
+python "VARX/VAR及拓展（table2）.py"
 
-# 阶段四: 评估与可视化
-python code/性能评估.py
-python code/可视化.py
+# 步骤 5: 组合表现评估
+python 性能评估与可视化/Table3_投资组合表现.py
 ```
 
 ### 4.4 常见问题

@@ -39,9 +39,6 @@ Realized_Weight_Forecasting/
 │   ├── final_params.json           # Confirmed optimal parameters
 │   └── fitted_models/              # Trained model coefficients (regeneratable)
 │
-├── DFL/                            # Stage 3-C: Decision-Focused Loss
-│   └── 决策聚焦训练.py              # DFL post-processing + evaluation
-│
 ├── 性能评估与可视化/                 # Stage 4: Evaluation
 │   ├── Table3_投资组合表现.py       # Portfolio performance (volatility, RPV, Sharpe, drawdown)
 │   └── Table3_results.csv          # ★ Final Table 3

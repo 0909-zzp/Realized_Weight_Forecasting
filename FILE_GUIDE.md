@@ -12,10 +12,9 @@
 | `图形Lasso/code/共享模块.py` | 参数唯一源 + 公共函数 |
 | `图形Lasso/code/纯权重计算.py` | 阶段二: 逐日 GLasso → GMVP 权重 + 邻接 |
 | `特征工程/特征工程.py` | 阶段三-A: X/Y/A_bar 构建 |
-| `VARX/VAR及拓展（table2）.py` | 阶段三-B: M1~M7 拟合 + Table 2 |
+| `VARX/VAR及拓展（table2）.py` | 阶段三-B: M1~M7 拟合 + Table 2 (含DFL L2) |
 | `VARX/网格搜索.py` | 阶段三-B: 分层消融参数搜索 |
 | `性能评估与可视化/Table3_投资组合表现.py` | 阶段四: 组合表现评估 |
-| `DFL/决策聚焦训练.py` | 阶段三-C: DFL 后处理 |
 
 ## VARX/ 目录
 
