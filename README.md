@@ -83,11 +83,16 @@ Realized_Weight_Forecasting/
 
 ### Table 3 — Portfolio Performance
 
-| Model | Volatility | RPV | Sharpe | Max DD |
-|---|---|---|---|---|
-| Network VARX | 0.103 | **0.0101** | −0.342 | −13.4% |
-| DFL VARX (L2) | 0.103 | 0.0102 | **−0.051** ± | **−12.6%** ± |
-| Equal-Weight | 0.136 | 0.0169 | −0.939 | −21.8% |
+| Model | Volatility | RPV(ann) | Turnover | Sharpe | Max DD |
+|---|---|---|---|---|---|
+| Equal-Weight | 0.136 | 0.0169 | 0.000 | −0.939 | −21.8% |
+| VAR | 0.126 | 0.0161 | 3.051 | −0.926 | −20.8% |
+| Sparse VAR | 0.105 | 0.0107 | 0.283 | −0.290 | −13.9% |
+| Sparse VARX | 0.105 | 0.0106 | 0.283 | −0.284 | −13.8% |
+| Network VARX | 0.103 | 0.0101 | 0.354 | −0.342 | −13.4% |
+| +Smooth | **0.102** | **0.0096** | 0.417 | −0.402 | −13.5% |
+| **DFL VARX (L2)** | 0.103 | 0.0102 | 0.371 | **−0.056** ± | **−12.6%** ± |
+| LSTM | 10.26 | 100.7 | 26.85 | −0.868 | −1135% |
 
 > ± DFL achieves the best risk-adjusted return among all models. L2 closed-form solution balances portfolio variance and turnover.
 
