@@ -4,7 +4,7 @@ __pycache__/
 *.pyo
 
 # ===== IDE / 工具 =====
-.codebuddy/memory/
+# .codebuddy/memory/  (改为允许跟踪)
 
 # ===== 原始数据（体积巨大，不进入版本控制） =====
 数据/1min_log_return/
