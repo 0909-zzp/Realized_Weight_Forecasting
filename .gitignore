@@ -43,3 +43,14 @@ code buddy/
 *.pdf
 *.docx
 *.doc
+# ===== 大型输出文件 (可由代码重新生成) =====
+VARX/Y_pred_model*.npy
+VARX/coefs_model*.npy
+VARX/intercepts_model*.npy
+VARX/scaler_model*.pkl
+VARX/feat_cols_model*.npy
+VARX/fitted_models/
+特征工程/*.npy
+特征工程/*.csv
+# ===== 数据文件 =====
+数据/*.csv

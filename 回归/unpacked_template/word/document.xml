@@ -1,0 +1,3521 @@
+<?xml version="1.0" encoding="UTF-8"?><w:document xmlns:wpc="http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:wp14="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml" xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:w15="http://schemas.microsoft.com/office/word/2012/wordml" xmlns:wpg="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup" xmlns:wpi="http://schemas.microsoft.com/office/word/2010/wordprocessingInk" xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml" xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape" xmlns:wpsCustomData="http://www.wps.cn/officeDocument/2013/wpsCustomData" mc:Ignorable="w14 w15 wp14">
+  <w:body>
+    <w:p w14:paraId="63DE6D14">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:pBdr>
+          <w:top w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:left w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:bottom w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:right w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+        </w:pBdr>
+        <w:bidi w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:after="0" w:afterAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:ind w:left="0" w:right="0"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:color w:val="1F1F1F"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F1F1F"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:bdr w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+        </w:rPr>
+        <w:t>题目：</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:color w:val="1F1F1F"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:bdr w:val="none" w:color="auto" w:sz="0" w:space="0"/>
+        </w:rPr>
+        <w:t xml:space="preserve"> </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:i w:val="0"/>
+          <w:iCs w:val="0"/>
+          <w:caps w:val="0"/>
+          <w:color w:val="0F1115"/>
+          <w:spacing w:val="0"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:shd w:val="clear" w:fill="FFFFFF"/>
+        </w:rPr>
+        <w:t>跨越数字鸿沟还是赢者通吃？——基于北大数字普惠金融指数（PKU-DFI）与中国省域面板数据的实证检验</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="0FAC3E58">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:pBdr>
+          <w:top w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:left w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:bottom w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:right w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+        </w:pBdr>
+        <w:bidi w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:after="0" w:afterAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:ind w:left="0" w:right="0"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:color w:val="1F1F1F"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F1F1F"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:bdr w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+        </w:rPr>
+        <w:t>摘要：</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="2016EE1C">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:pBdr>
+          <w:top w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:left w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:bottom w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:right w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+        </w:pBdr>
+        <w:bidi w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:after="0" w:afterAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:ind w:left="0" w:right="0"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:i w:val="0"/>
+          <w:iCs w:val="0"/>
+          <w:caps w:val="0"/>
+          <w:color w:val="0F1115"/>
+          <w:spacing w:val="0"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:shd w:val="clear" w:fill="FFFFFF"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:i w:val="0"/>
+          <w:iCs w:val="0"/>
+          <w:caps w:val="0"/>
+          <w:color w:val="0F1115"/>
+          <w:spacing w:val="0"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:shd w:val="clear" w:fill="FFFFFF"/>
+        </w:rPr>
+        <w:t> 数字技术兼具&#x201C;去中心化&#x201D;的普惠潜力与&#x201C;赢者通吃&#x201D;的极化风险，其对区域经济差距的净效应尚无定论。本文利用2011—2022年中国内地30个省份的面板数据，以北京大学数字普惠金融指数（PKU-DFI）衡量数字经济发展水平，以对数偏差绝对值衡量省际经济差距，构建个体固定效应模型进行基准回归，并采用工具变量法（IV）探讨内生性问题。实证发现：（1）数字普惠金融的发展整体上与省际经济差距呈负向关联，在多项稳健性检验后方向一致，但IV估计提示需审慎解读因果方向；（2）该效应存在明显的区域异质性，在东、中、西三大区域均呈收敛态势，但收敛力度呈现&#x201C;东部&gt;中部&gt;西部&#x201D;的梯度递减格局；（3）理论机制分析表明，产业数字化转型与要素流动加速可能是弥合差距的重要渠道，但其正式计量检验尚待后续研究深化。研究结论表明，数字经济并非自动实现区域均衡，需因地制宜制定差异化政策，方能将&#x201C;数字红利&#x201D;转化为协调发展的持久动力。</w:t>
+      </w:r>
+      
+    </w:p>
+    <w:p w14:paraId="23392E06">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:pBdr>
+          <w:top w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:left w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:bottom w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:right w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+        </w:pBdr>
+        <w:bidi w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:after="0" w:afterAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:ind w:left="0" w:right="0"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F1F1F"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:bdr w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F1F1F"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:bdr w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+        </w:rPr>
+        <w:t>一、 引言</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="37D4636A">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:shd w:val="clear" w:fill="FFFFFF"/>
+        <w:spacing w:before="160" w:beforeAutospacing="0" w:after="160" w:afterAutospacing="0"/>
+        <w:ind w:left="0" w:right="0" w:firstLine="0"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:i w:val="0"/>
+          <w:iCs w:val="0"/>
+          <w:caps w:val="0"/>
+          <w:color w:val="0F1115"/>
+          <w:spacing w:val="0"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:i w:val="0"/>
+          <w:iCs w:val="0"/>
+          <w:caps w:val="0"/>
+          <w:color w:val="0F1115"/>
+          <w:spacing w:val="0"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:shd w:val="clear" w:fill="FFFFFF"/>
+        </w:rPr>
+        <w:t>自20世纪90年代以来，信息通信技术的革命性突破催生了以数据为核心生产要素、以数字平台为主要组织形态的新经济模式。中国数字经济规模已从2012年的11.2万亿元扩张至2023年的53.9万亿元，占GDP比重超过42%。互联网技术因其&#x201C;去中心化&#x201D;与&#x201C;扁平化&#x201D;特征，曾被寄予打破地理隔阂、惠及偏远地区的厚望；然而现实中，数字产业却往往向东部核心城市集聚，呈现出鲜明的空间极化态势。数字经济究竟是后发地区&#x201C;弯道超车&#x201D;的引擎，还是进一步加剧区域&#x201C;马太效应&#x201D;的推手，已成为发展经济学与区域科学的核心议题。</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="35B1DF0B">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:shd w:val="clear" w:fill="FFFFFF"/>
+        <w:spacing w:before="160" w:beforeAutospacing="0" w:after="160" w:afterAutospacing="0"/>
+        <w:ind w:left="0" w:right="0" w:firstLine="0"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:i w:val="0"/>
+          <w:iCs w:val="0"/>
+          <w:caps w:val="0"/>
+          <w:color w:val="0F1115"/>
+          <w:spacing w:val="0"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:i w:val="0"/>
+          <w:iCs w:val="0"/>
+          <w:caps w:val="0"/>
+          <w:color w:val="0F1115"/>
+          <w:spacing w:val="0"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:shd w:val="clear" w:fill="FFFFFF"/>
+        </w:rPr>
+        <w:t>围绕这一议题，现有理论推演形成了两种竞争性假说。一方强调&#x201C;数字红利&#x201D;：数字经济通过降低信息搜寻成本、突破地理空间约束，为欠发达地区提供&#x201C;蛙跳&#x201D;式发展机遇，从而弥合区域差距；另一方则警示&#x201C;数字鸿沟&#x201D;：由于数字基础设施、人力资本储备和产业生态的初始禀赋差异，发达地区更易凭借先发优势形成创新要素的&#x201C;虹吸效应&#x201D;，进而固化甚至扩大区域经济落差。两种效应在现实中同时存在，其相对强弱取决于特定发展阶段和区域特征，无法先验地断言。</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="741A7D0E">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:shd w:val="clear" w:fill="FFFFFF"/>
+        <w:spacing w:before="160" w:beforeAutospacing="0" w:after="160" w:afterAutospacing="0"/>
+        <w:ind w:left="0" w:right="0" w:firstLine="0"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:i w:val="0"/>
+          <w:iCs w:val="0"/>
+          <w:caps w:val="0"/>
+          <w:color w:val="0F1115"/>
+          <w:spacing w:val="0"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:i w:val="0"/>
+          <w:iCs w:val="0"/>
+          <w:caps w:val="0"/>
+          <w:color w:val="0F1115"/>
+          <w:spacing w:val="0"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:shd w:val="clear" w:fill="FFFFFF"/>
+        </w:rPr>
+        <w:t>在实证层面，尽管已有大量文献考察了数字经济与区域增长的关系，但识别困境依旧突出。一方面，数字经济发展与区域经济差距之间可能存在反向因果关系——差距较小的地区往往具备更好的数字经济孕育土壤；另一方面，不可观测的省份特质（如制度质量、文化观念）和宏观周期波动同时影响两者，导致遗漏变量偏误。现有研究多采用传统面板固定效应模型，对工具变量法的应用尚不充分，且较少在统一框架内同时检验&#x201C;弥合&#x201D;与&#x201C;拉大&#x201D;两种效应的异质性边界。</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="000A5B14">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:shd w:val="clear" w:fill="FFFFFF"/>
+        <w:spacing w:before="160" w:beforeAutospacing="0" w:after="160" w:afterAutospacing="0"/>
+        <w:ind w:left="0" w:right="0" w:firstLine="0"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:i w:val="0"/>
+          <w:iCs w:val="0"/>
+          <w:caps w:val="0"/>
+          <w:color w:val="0F1115"/>
+          <w:spacing w:val="0"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:i w:val="0"/>
+          <w:iCs w:val="0"/>
+          <w:caps w:val="0"/>
+          <w:color w:val="0F1115"/>
+          <w:spacing w:val="0"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:shd w:val="clear" w:fill="FFFFFF"/>
+        </w:rPr>
+        <w:t>为此，本文在以下方面展开改进：首先，引入北京大学数字普惠金融指数（PKU-DFI）作为核心解释变量，该指数从覆盖广度、使用深度和数字化程度三个维度综合刻画数字经济发展水平，较单一指标更具全面性。其次，选取泰尔指数度量区域经济差距，利用其可分解性捕捉省际差异的动态演变。再次，在计量策略上，本文先构建双向固定效应模型控制省份个体异质性和时间共性冲击，再采用历史固定电话数据与全国互联网端口数的交互项作为工具变量，以期在更干净的因果识别框架下估计净效应。最后，通过东部、中部、西部引入区域虚拟变量与DFI的交互项，检验数字经济</w:t>
+      </w:r>
+      <w:bookmarkStart w:id="0" w:name="_GoBack"/>
+      <w:bookmarkEnd w:id="0"/>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:i w:val="0"/>
+          <w:iCs w:val="0"/>
+          <w:caps w:val="0"/>
+          <w:color w:val="0F1115"/>
+          <w:spacing w:val="0"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:shd w:val="clear" w:fill="FFFFFF"/>
+        </w:rPr>
+        <w:t>效益在不同梯度区域间的非均质性。</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="72DEBD34">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:shd w:val="clear" w:fill="FFFFFF"/>
+        <w:spacing w:before="160" w:beforeAutospacing="0" w:after="0" w:afterAutospacing="0"/>
+        <w:ind w:left="0" w:right="0" w:firstLine="0"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:i w:val="0"/>
+          <w:iCs w:val="0"/>
+          <w:caps w:val="0"/>
+          <w:color w:val="0F1115"/>
+          <w:spacing w:val="0"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:i w:val="0"/>
+          <w:iCs w:val="0"/>
+          <w:caps w:val="0"/>
+          <w:color w:val="0F1115"/>
+          <w:spacing w:val="0"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:shd w:val="clear" w:fill="FFFFFF"/>
+        </w:rPr>
+        <w:t>本文的边际贡献主要体现为三点：第一，采用更为严谨的IV策略处理内生性，为&#x201C;普惠效应&#x201D;或&#x201C;马太效应&#x201D;的识别提供更可靠的证据；第二，跳出单一线性假设，通过分区域异质性检验揭示两种效应的动态博弈与阈值条件；第三，基于实证结论提出差异化的政策建议，为&#x201C;十四五&#x201D;时期推进数字中国建设与区域协调发展战略的协同实施提供参考。本文后续结构安排如下：第二部分为理论机制与研究假说；第三部分为研究设计与数据说明；第四部分为计量模型设定；第五部分为实证结果与讨论；第六部分为结论与政策建议。</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="77BF2CCD">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:pBdr>
+          <w:top w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:left w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:bottom w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:right w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+        </w:pBdr>
+        <w:bidi w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:after="0" w:afterAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:ind w:left="0" w:right="0"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F1F1F"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:bdr w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+        </w:rPr>
+      </w:pPr>
+    </w:p>
+    <w:p w14:paraId="4E443E90">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:pBdr>
+          <w:top w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:left w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:bottom w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:right w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+        </w:pBdr>
+        <w:bidi w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:after="0" w:afterAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:ind w:left="0" w:right="0"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:color w:val="1F1F1F"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F1F1F"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:bdr w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+        </w:rPr>
+        <w:t>二、 理论机制与研究假说</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="65D8BA4E">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:pBdr>
+          <w:top w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:left w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:bottom w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:right w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+        </w:pBdr>
+        <w:bidi w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:after="0" w:afterAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:ind w:left="0" w:right="0"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:color w:val="1F1F1F"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:color w:val="1F1F1F"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:bdr w:val="none" w:color="auto" w:sz="0" w:space="0"/>
+        </w:rPr>
+        <w:t>数字经济对区域经济差距的影响并非简单的线性收敛或发散，而是取决于&#x201C;普惠效应&#x201D;与&#x201C;马太效应&#x201D;的相对力量对比。本文从数字基础设施、产业数字化转型以及要素流动加速三个维度展开机制推演。</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="3F799B85">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:pBdr>
+          <w:top w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:left w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:bottom w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:right w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+        </w:pBdr>
+        <w:bidi w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:after="0" w:afterAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:ind w:left="0" w:right="0"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:color w:val="1F1F1F"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F1F1F"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:bdr w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+        </w:rPr>
+        <w:t>（一）&#x201C;普惠效应&#x201D;：数字经济对区域差距的弥合机制</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="6F285CF0">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:pBdr>
+          <w:top w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:left w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:bottom w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:right w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+        </w:pBdr>
+        <w:bidi w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:after="0" w:afterAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:ind w:left="0" w:right="0"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:color w:val="1F1F1F"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:bdr w:val="none" w:color="auto" w:sz="0" w:space="0"/>
+        </w:rPr>
+        <w:t>新古典经济学增长理论强调资本边际收益递减规律是落后地区实现经济追赶的内生动力。数字普惠金融作为一种新型生产要素组合，极大地强化了这一追赶机制。首先，数字技术的低边际成本特征突破了传统金融物理网点的空间约束，显著降低了中西部偏远地区长尾客群的信息搜寻成本与交易摩擦，缓解了中小微企业的融资约束。其次，产业数字化转型使得后发地区能够借助云计算、工业互联网等技术实现传统产业的&#x201C;蛙跳式&#x201D;升级，缩短与东部发达地区的技术代差。最后，数字平台加速了数据、资本和劳动力的跨区域匹配，提升了资源配置效率，使得偏远地区的要素也能接入全国统一大市场。基于此，本文提出第一项竞争性假说：</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="52F95377">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:pBdr>
+          <w:top w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:left w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:bottom w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:right w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+        </w:pBdr>
+        <w:bidi w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:after="0" w:afterAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:ind w:left="0" w:right="0"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:color w:val="1F1F1F"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F1F1F"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:bdr w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+        </w:rPr>
+        <w:t>假说1：数字经济（数字普惠金融）发展具有显著的空间溢出与普惠特征，能够有效弥合区域经济差距。</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="432CBF08">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:pBdr>
+          <w:top w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:left w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:bottom w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:right w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+        </w:pBdr>
+        <w:bidi w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:after="0" w:afterAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:ind w:left="0" w:right="0"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:color w:val="1F1F1F"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F1F1F"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:bdr w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+        </w:rPr>
+        <w:t>（二）&#x201C;马太效应&#x201D;：数字鸿沟对区域差距的拉大机制</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="57845162">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:pBdr>
+          <w:top w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:left w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:bottom w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:right w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+        </w:pBdr>
+        <w:bidi w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:after="0" w:afterAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:ind w:left="0" w:right="0"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:color w:val="1F1F1F"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:color w:val="1F1F1F"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:bdr w:val="none" w:color="auto" w:sz="0" w:space="0"/>
+        </w:rPr>
+        <w:t>尽管数字技术具有&#x201C;去中心化&#x201D;潜力，但在现实经济运行中，数字资源的配置高度依赖于初始的物质资本储备与人力资本结构。第一，数字基础设施建设存在显著的初始固定成本与规模经济效应。东部发达地区凭借雄厚的财力与政策优势，率先完成了5G基站、算力中心等新基建布局，构筑了坚实的先发壁垒。第二，数字经济的&#x201C;网络外部性&#x201D;容易引发&#x201C;赢者通吃&#x201D;的局面。核心城市凭借成熟的数字产业集群与优越的创新环境，对中西部的高级数据人才、技术资本形成强烈的&#x201C;虹吸效应&#x201D;，加速了核心生产要素的单向流动。第三，如果后发地区缺乏足够的数字素养（Digital Literacy）与配套制度支撑，即使硬件基础设施铺设到位，也无法将其有效转化为实际的经济产出，从而陷入&#x201C;低端锁定&#x201D;与&#x201C;数字鸿沟&#x201D;的恶性循环。基于此，本文提出第二项竞争性假说：</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="4F492209">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:pBdr>
+          <w:top w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:left w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:bottom w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+          <w:right w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+        </w:pBdr>
+        <w:bidi w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:after="0" w:afterAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:ind w:left="0" w:right="0"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:color w:val="1F1F1F"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F1F1F"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:bdr w:val="none" w:color="1F1F1F" w:sz="0" w:space="0"/>
+        </w:rPr>
+        <w:t>假说2：受制于要素禀赋差异与网络外部性，数字经济的收敛效应存在显著的区域异质性，表现为「东部&gt;中部&gt;西部」的梯度递减格局；在基础设施与人力资本相对薄弱的地区，收敛力度明显弱化。</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="32593262">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>三、 研究设计与数据说明</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="6D323CCF">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>（一） 核心变量选取与测度</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="4AC770A0">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>被解释变量：区域经济差距（Gap）</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="12F9DC21">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>为了科学评估地区间经济发展的非均衡程度，本文选取泰尔指数（Theil Index）作为衡量区域经济差距的核心指标。相较于单一的极差或标准差，泰尔指数能够更好地将总体区域差距分解为组内差距与组间差距，更为敏锐地捕捉经济活动的动态空间分布特征。本文主要采用各省人均GDP数据来计算该指数。</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="19B23FB7">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>核心解释变量：数字经济发展水平（DFI）</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="65C0BF7A">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>为保证实证结果的权威性与可复制性，实证设计直接引入北京大学数字普惠金融指数（PKU-DFI）作为核心解释变量。该指数从覆盖广度、使用深度和数字化程度三个主要维度，全面且动态地刻画了中国各地区的数字经济发展状况。为消除异方差影响，实证过程中对该指数进行对数化处理。</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="49B24294">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>控制变量（Controls）</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="5B42F906">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>为尽可能缓解遗漏变量导致的估计偏误，本文选取以下控制变量：</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="364BF34D">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>产业结构升级（</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:lang w:val="en-US" w:eastAsia="zh-CN"/>
+        </w:rPr>
+        <w:t>IS</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>）：以第三产业增加值与第二产业增加值的比值衡量。</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="44718F7C">
+      <w:pPr>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:jc w:val="left"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>基础设施水平</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:lang w:eastAsia="zh-CN"/>
+        </w:rPr>
+        <w:t>（</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:lang w:val="en-US" w:eastAsia="zh-CN"/>
+        </w:rPr>
+        <w:t>Infra</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>）：以各省公路与铁路货运量总和取对数表示。政府干预程度（</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:lang w:val="en-US" w:eastAsia="zh-CN"/>
+        </w:rPr>
+        <w:t>Gov</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>）：以地方财政一般公共预算支出占地区GDP的比重衡量。</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="7ED05B44">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>对外开放程度（</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:lang w:val="en-US" w:eastAsia="zh-CN"/>
+        </w:rPr>
+        <w:t>Open</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>）：以各省外商直接投资额占GDP的比重衡量。人力资本水平（</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:lang w:val="en-US" w:eastAsia="zh-CN"/>
+        </w:rPr>
+        <w:t>HC</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>）：以各省大专及以上学历人口占总就业人口的比重衡量。</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="011E8192">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>（二） 数据来源与样本选择</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="76B78857">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>本文的样本期涵盖2011—2022年。数据来源主要包括中国各省份统计年鉴、北京大学数字普惠金融指数、国家统计局及CEIC数据库。鉴于部分地区宏观数据缺失较多及统计口径差异，本文选取中国内地30个省（自治区、直辖市）作为研究样本，构成平衡面板数据（Balanced Panel Data），并运用统计软件对所有连续变量进行了上下1%的缩尾处理，以剔除极端异常值的干扰。</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="2E4760BB">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>四、 计量模型设定</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="3CB5DBD3">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>（一） 基准回归模型：双向固定效应</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="17C5355D">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:lang w:eastAsia="zh-CN"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>由于不同省份之间存在不随时间变化的固有特征（如地理位置、自然资源），且各个年份也存在影响全国的宏观冲击，本文构建双向固定效应面板数据回归模型，以剥离上述干扰因素，识别数字经济对区域差距的净效应。基准模型设定如下：</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+          <w:lang w:eastAsia="zh-CN"/>
+        </w:rPr>
+        <w:drawing>
+          <wp:inline distT="0" distB="0" distL="114300" distR="114300">
+            <wp:extent cx="5273040" cy="491490"/>
+            <wp:effectExtent l="0" t="0" r="10160" b="3810"/>
+            <wp:docPr id="1" name="图片 1" descr="8fdbea7862bc54368f297f24ff09b2dc"/>
+            <wp:cNvGraphicFramePr>
+              <a:graphicFrameLocks xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" noChangeAspect="1"/>
+            </wp:cNvGraphicFramePr>
+            <a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+              <a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">
+                <pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">
+                  <pic:nvPicPr>
+                    <pic:cNvPr id="1" name="图片 1" descr="8fdbea7862bc54368f297f24ff09b2dc"/>
+                    <pic:cNvPicPr>
+                      <a:picLocks noChangeAspect="1"/>
+                    </pic:cNvPicPr>
+                  </pic:nvPicPr>
+                  <pic:blipFill>
+                    <a:blip r:embed="rId6"/>
+                    <a:stretch>
+                      <a:fillRect/>
+                    </a:stretch>
+                  </pic:blipFill>
+                  <pic:spPr>
+                    <a:xfrm>
+                      <a:off x="0" y="0"/>
+                      <a:ext cx="5273040" cy="491490"/>
+                    </a:xfrm>
+                    <a:prstGeom prst="rect">
+                      <a:avLst/>
+                    </a:prstGeom>
+                  </pic:spPr>
+                </pic:pic>
+              </a:graphicData>
+            </a:graphic>
+          </wp:inline>
+        </w:drawing>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="39DECDE2">
+      <w:pPr>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:jc w:val="left"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>其中，i 表示省份，t 表示年份。为区域经济差距；</w:t>
+      </w:r>
+      <m:oMath>
+        <m:r>
+          <m:rPr/>
+          <w:rPr>
+            <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+            <w:sz w:val="24"/>
+          </w:rPr>
+          <m:t>DF</m:t>
+        </m:r>
+        <m:sSub>
+          <m:sSubPr>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:sSubPr>
+          <m:e>
+            <m:r>
+              <m:rPr/>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+              <m:t>I</m:t>
+            </m:r>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:e>
+          <m:sub>
+            <m:r>
+              <m:rPr/>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+              <m:t>it</m:t>
+            </m:r>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:sub>
+        </m:sSub>
+      </m:oMath>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve"> 为数字普惠金融指数；</w:t>
+      </w:r>
+      <m:oMath>
+        <m:r>
+          <m:rPr/>
+          <w:rPr>
+            <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+            <w:sz w:val="24"/>
+          </w:rPr>
+          <m:t>Control</m:t>
+        </m:r>
+        <m:sSub>
+          <m:sSubPr>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:sSubPr>
+          <m:e>
+            <m:r>
+              <m:rPr/>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+              <m:t>s</m:t>
+            </m:r>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:e>
+          <m:sub>
+            <m:r>
+              <m:rPr/>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+              <m:t>it</m:t>
+            </m:r>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:sub>
+        </m:sSub>
+      </m:oMath>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>为控制变量集合。</w:t>
+      </w:r>
+      <m:oMath>
+        <m:sSub>
+          <m:sSubPr>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:sSubPr>
+          <m:e>
+            <m:r>
+              <m:rPr/>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+              <m:t>μ</m:t>
+            </m:r>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:e>
+          <m:sub>
+            <m:r>
+              <m:rPr/>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+              <m:t>i</m:t>
+            </m:r>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:sub>
+        </m:sSub>
+      </m:oMath>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>表示省份固定效应，</w:t>
+      </w:r>
+      <m:oMath>
+        <m:sSub>
+          <m:sSubPr>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:sSubPr>
+          <m:e>
+            <m:r>
+              <m:rPr/>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+              <m:t>δ</m:t>
+            </m:r>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:e>
+          <m:sub>
+            <m:r>
+              <m:rPr/>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+              <m:t>t</m:t>
+            </m:r>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:sub>
+        </m:sSub>
+      </m:oMath>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>表示时间固定效应，</w:t>
+      </w:r>
+      <m:oMath>
+        <m:sSub>
+          <m:sSubPr>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:sSubPr>
+          <m:e>
+            <m:r>
+              <m:rPr/>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+              <m:t>ε</m:t>
+            </m:r>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:e>
+          <m:sub>
+            <m:r>
+              <m:rPr/>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+              <m:t>it</m:t>
+            </m:r>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:sub>
+        </m:sSub>
+      </m:oMath>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">为随机扰动项。系数 </w:t>
+      </w:r>
+      <m:oMath>
+        <m:r>
+          <m:rPr/>
+          <w:rPr>
+            <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+            <w:sz w:val="24"/>
+          </w:rPr>
+          <m:t>β</m:t>
+        </m:r>
+      </m:oMath>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>为本文核心关注参数，若其显著为负，则说明数字经济发展有效弥合了区域经济差距。</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="1F8BE24A">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>（二） 内生性处理：工具变量法（IV）</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="75994A6B">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>考虑到数字经济发展与区域经济差距之间可能存在反向因果关系，本文采用工具变量法（IV）缓解内生性问题。选取&#x201C;各省份1984年每万人固定电话数量&#x201D;作为数字经济的工具变量（</w:t>
+      </w:r>
+      <m:oMath>
+        <m:r>
+          <m:rPr/>
+          <w:rPr>
+            <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+            <w:sz w:val="24"/>
+          </w:rPr>
+          <m:t>IV</m:t>
+        </m:r>
+      </m:oMath>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>）。该历史数据深刻影响了当期数字技术的普及路径（满足相关性），同时难以对当前的区域经济差距产生直接影响（满足排他性）。两阶段最小二乘法（2SLS）的模型设定如下：</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="63FF50BB">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>第一阶段回归（提取外生变异）：</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="61FA6BE7">
+      <w:pPr>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:jc w:val="left"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <m:oMathPara>
+        <m:oMath>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>DF</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>I</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>it</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>=</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>π</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>0</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>+</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>π</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>1</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>I</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>V</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>it</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>+</m:t>
+          </m:r>
+          <m:nary>
+            <m:naryPr>
+              <m:chr m:val="∑"/>
+              <m:limLoc m:val="subSup"/>
+              <m:subHide m:val="1"/>
+              <m:supHide m:val="1"/>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:naryPr>
+            <m:sub>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+            <m:sup>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sup>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>ϕ</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+          </m:nary>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>Control</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>s</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>it</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>+</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>μ</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>i</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>+</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>δ</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>t</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>+</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>v</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>it</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+        </m:oMath>
+      </m:oMathPara>
+    </w:p>
+    <w:p w14:paraId="22432E69">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>第二阶段回归（因果净效应估计）：</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="58BFDB0E">
+      <w:pPr>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:jc w:val="left"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <m:oMathPara>
+        <m:oMath>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>Ga</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>p</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>it</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>=α+</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>β</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>IV</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:acc>
+                <m:accPr>
+                  <m:ctrlPr>
+                    <w:rPr>
+                      <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                      <w:sz w:val="24"/>
+                    </w:rPr>
+                  </m:ctrlPr>
+                </m:accPr>
+                <m:e>
+                  <m:r>
+                    <m:rPr/>
+                    <w:rPr>
+                      <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                      <w:sz w:val="24"/>
+                    </w:rPr>
+                    <m:t>DFI</m:t>
+                  </m:r>
+                  <m:ctrlPr>
+                    <w:rPr>
+                      <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                      <w:sz w:val="24"/>
+                    </w:rPr>
+                  </m:ctrlPr>
+                </m:e>
+              </m:acc>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>it</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>+</m:t>
+          </m:r>
+          <m:nary>
+            <m:naryPr>
+              <m:chr m:val="∑"/>
+              <m:limLoc m:val="subSup"/>
+              <m:subHide m:val="1"/>
+              <m:supHide m:val="1"/>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:naryPr>
+            <m:sub>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+            <m:sup>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sup>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>γ</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+          </m:nary>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>Control</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>s</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>it</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>+</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>μ</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>i</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>+</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>δ</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>t</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>+</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>ε</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>it</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+        </m:oMath>
+      </m:oMathPara>
+    </w:p>
+    <w:p w14:paraId="4BAE312A">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>其中，</w:t>
+      </w:r>
+      <m:oMath>
+        <m:sSub>
+          <m:sSubPr>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:sSubPr>
+          <m:e>
+            <m:acc>
+              <m:accPr>
+                <m:ctrlPr>
+                  <w:rPr>
+                    <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                    <w:sz w:val="24"/>
+                  </w:rPr>
+                </m:ctrlPr>
+              </m:accPr>
+              <m:e>
+                <m:r>
+                  <m:rPr/>
+                  <w:rPr>
+                    <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                    <w:sz w:val="24"/>
+                  </w:rPr>
+                  <m:t>DFI</m:t>
+                </m:r>
+                <m:ctrlPr>
+                  <w:rPr>
+                    <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                    <w:sz w:val="24"/>
+                  </w:rPr>
+                </m:ctrlPr>
+              </m:e>
+            </m:acc>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:e>
+          <m:sub>
+            <m:r>
+              <m:rPr/>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+              <m:t>it</m:t>
+            </m:r>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:sub>
+        </m:sSub>
+      </m:oMath>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">为第一阶段估计得到的数字经济拟合值。通过第二阶段回归得到的 </w:t>
+      </w:r>
+      <m:oMath>
+        <m:sSub>
+          <m:sSubPr>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:sSubPr>
+          <m:e>
+            <m:r>
+              <m:rPr/>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+              <m:t>β</m:t>
+            </m:r>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:e>
+          <m:sub>
+            <m:r>
+              <m:rPr/>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+              <m:t>IV</m:t>
+            </m:r>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:sub>
+        </m:sSub>
+      </m:oMath>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>，即为剔除内生性干扰后的因果效应。</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="20533862">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:b/>
+          <w:bCs/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>（三） 异质性检验模型</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="71EB1032">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>受制于各地区资源禀赋与经济基础的差异，&#x201C;数字红利&#x201D;与&#x201C;数字鸿沟&#x201D;的效应可能存在非对称性。本文通过引入交互项模型，检验数字经济对不同区域的异质性影响，模型设定如下：</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="6D8594D5">
+      <w:pPr>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:jc w:val="left"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <m:oMathPara>
+        <m:oMath>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>Ga</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>p</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>it</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>=α+</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>β</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>1</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>DF</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>I</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>it</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>+</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>β</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>2</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>(DF</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>I</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>it</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>×Regio</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>n</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>i</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>)+</m:t>
+          </m:r>
+          <m:nary>
+            <m:naryPr>
+              <m:chr m:val="∑"/>
+              <m:limLoc m:val="subSup"/>
+              <m:subHide m:val="1"/>
+              <m:supHide m:val="1"/>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:naryPr>
+            <m:sub>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+            <m:sup>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sup>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>γ</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+          </m:nary>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>Control</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>s</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>it</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>+</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>μ</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>i</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>+</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>δ</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>t</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+          <m:r>
+            <m:rPr/>
+            <w:rPr>
+              <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+              <w:sz w:val="24"/>
+            </w:rPr>
+            <m:t>+</m:t>
+          </m:r>
+          <m:sSub>
+            <m:sSubPr>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sSubPr>
+            <m:e>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>ε</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:e>
+            <m:sub>
+              <m:r>
+                <m:rPr/>
+                <w:rPr>
+                  <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <m:t>it</m:t>
+              </m:r>
+              <m:ctrlPr>
+                <w:rPr>
+                  <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+              </m:ctrlPr>
+            </m:sub>
+          </m:sSub>
+        </m:oMath>
+      </m:oMathPara>
+    </w:p>
+    <w:p w14:paraId="29673672">
+      <w:pPr>
+        <w:pStyle w:val="14"/>
+        <w:keepNext w:val="0"/>
+        <w:keepLines w:val="0"/>
+        <w:widowControl/>
+        <w:suppressLineNumbers w:val="0"/>
+        <w:spacing w:before="0" w:beforeAutospacing="0" w:line="12" w:lineRule="atLeast"/>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>其中，</w:t>
+      </w:r>
+      <m:oMath>
+        <m:r>
+          <m:rPr/>
+          <w:rPr>
+            <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+            <w:sz w:val="24"/>
+          </w:rPr>
+          <m:t>Regio</m:t>
+        </m:r>
+        <m:sSub>
+          <m:sSubPr>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:sSubPr>
+          <m:e>
+            <m:r>
+              <m:rPr/>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+              <m:t>n</m:t>
+            </m:r>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:e>
+          <m:sub>
+            <m:r>
+              <m:rPr/>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+              <m:t>i</m:t>
+            </m:r>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:sub>
+        </m:sSub>
+      </m:oMath>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve"> 为区域虚拟变量（如设定东部发达地区为1，中西部欠发达地区为0）。交互项系数 </w:t>
+      </w:r>
+      <m:oMath>
+        <m:sSub>
+          <m:sSubPr>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:sSubPr>
+          <m:e>
+            <m:r>
+              <m:rPr/>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+              <m:t>β</m:t>
+            </m:r>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:e>
+          <m:sub>
+            <m:r>
+              <m:rPr/>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+              <m:t>2</m:t>
+            </m:r>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:sub>
+        </m:sSub>
+      </m:oMath>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve"> 反映了数字经济在不同发展梯度地区作用效果的边际差异。若 </w:t>
+      </w:r>
+      <m:oMath>
+        <m:sSub>
+          <m:sSubPr>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:sSubPr>
+          <m:e>
+            <m:r>
+              <m:rPr/>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+              <m:t>β</m:t>
+            </m:r>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:e>
+          <m:sub>
+            <m:r>
+              <m:rPr/>
+              <w:rPr>
+                <w:rFonts w:hint="default" w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+              <m:t>2</m:t>
+            </m:r>
+            <m:ctrlPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math" w:eastAsia="等线"/>
+                <w:sz w:val="24"/>
+              </w:rPr>
+            </m:ctrlPr>
+          </m:sub>
+        </m:sSub>
+      </m:oMath>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>显著，则证实数字经济的区域收敛效应存在显著的异质性特征。</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="2EBFACD4">
+      <w:pPr>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia" w:ascii="等线" w:hAnsi="等线" w:eastAsia="等线" w:cs="等线"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+      </w:pPr>
+    </w:p>
+    <w:sectPr>
+      <w:pgSz w:w="11906" w:h="16838"/>
+      <w:pgMar w:top="1440" w:right="1800" w:bottom="1440" w:left="1800" w:header="851" w:footer="992" w:gutter="0"/>
+      <w:cols w:space="425" w:num="1"/>
+      <w:docGrid w:type="lines" w:linePitch="312" w:charSpace="0"/>
+    </w:sectPr>
+  </w:body>
+</w:document>

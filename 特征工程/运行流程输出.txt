@@ -1,0 +1,32 @@
+ 阶段三-A: 特征工程
+============================================================
+K=392  P_LAGS=3  NETWORK_THRESHOLD=0.3  Ā_WINDOW=20
+加载权重: reg_weights_2436.csv
+  权重矩阵: (2436, 392)
+加载邻接矩阵: adjacency
+  邻接矩阵: 2426/2436 天
+计算外生变量 (VIX + BA Spread + Market Vol)...
+  外生变量: (2436, 9)
+  有效日: 2425/2436
+构建特征矩阵 (Ā 不进入 X，单独保存为 A_bar.npy)...
+  特征矩阵: X=(2415, 2361)  Y=(2415, 392)  A_bar=(2415, 392, 392)  耗时: 38.0s
+  特征维度 = 2361 (滞后 1176 + 外生 9 + 网络拓扑 1176)
+  A_bar 形状 = (n_samples=2415, K=392, K=392) 供正则化掩码 M=1(Ā≥threshold)
+  有效样本: 2415/2436 (99.1%)
+
+验收检查:
+  n_zero_var_features: 0
+  missing_rate: 0.0
+  is_monotonic: True
+  n_valid_samples: 2415
+  coverage: 0.9913793103448276
+  psi_max: 12.786083106208885
+  psi_mean: 0.5952685091874654
+  psi_p50: 0.3511705139794727
+  psi_p95: 1.8337007983044884
+  psi_pass_rate_0.1: 0.20584498094027953
+  psi_pass_rate_0.5: 0.6027107157983905
+
+完成! 总耗时: 49.9s
+输出: X_features.npy ((2415, 2361)), Y_targets.npy ((2415, 392)), A_bar.npy ((2415, 392, 392))      
+      feature_names.txt, feature_valid_dates.csv, valid_indices.npy

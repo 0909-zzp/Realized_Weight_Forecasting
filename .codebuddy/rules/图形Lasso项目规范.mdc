@@ -1,0 +1,154 @@
+---
+description: 图形Lasso — 架构红线、隐式契约、反直觉规则、坑点、命令速查
+alwaysApply: false
+filePatterns:
+  - "**/图形Lasso/**"
+enabled: true
+
+updatedAt: 2026-06-26T00:00:00.000Z
+---
+
+# 图形Lasso 构造层规范
+
+> 本规则覆盖阶段一（λ选择）与阶段二（纯权重计算）。改代码前先读 README。
+
+---
+
+## 一、不可违反的红线
+
+### 1.1 参数唯一源
+所有参数在 `图形Lasso/code/共享模块.py` 有且仅有一处定义。禁止脚本内硬编码任何魔数。
+
+### 1.2 GLasso 统一入口
+```python
+from 共享模块 import do_glasso        # ✅
+from sklearn.covariance import graphical_lasso  # ❌
+```
+例外：纯权重计算 `work()` 因多进程隔离直接调 sklearn。
+协方差公式：`X @ Xᵀ + ridge·I`，**不除以 M**（论文公式3）。
+
+### 1.3 单向数据流
+```
+npy数据 → 阶段一(λ选择) → lambda_opt.txt → 阶段二(纯权重计算) → 输出数据/
+```
+- 阶段间仅通过 `.txt/.csv/.npy` 传递，不跨阶段 import
+- 共享模块不 import 项目内其他脚本
+
+### 1.4 BLAS 线程控制
+`import numpy` 前必须设置 5 行环境变量，否则 264 线程抢 8 核（坑#13）。
+
+---
+
+## 二、参数体系（已锁定）
+
+| 参数 | 值 | 说明 |
+|------|:--:|------|
+| K | 392 | |
+| λ | **3e-6** | 密度 62%，OOS方差+5.6% |
+| EPS_RIDGE | 1e-4 | Ridge 初始值 |
+| RIDGE_FALLBACK | [5e-4,1e-3,5e-3,1e-2] | 共享模块退避链 |
+| MAX_ITER | 150 | |
+| N_WORKERS | cpu_count-1 | 建议 ≤8（内存＜16GB时） |
+
+---
+
+## 三、隐式契约
+
+### 3.1 输出即接口
+| 文件 | 用途 |
+|------|------|
+| `lambda_opt.txt` | 阶段一→二的唯⼀通道 |
+| `reg_weights_2436.csv` | 阶段二→三的唯⼀入口 |
+| `adjacency/YYYYMMDD.npy` | 阶段三⽹络特征来源 |
+| `Table1_*.csv` | 论⽂§5.1描述统计 |
+
+改文件名 = 破坏下游，改前搜所有引⽤。
+
+### 3.2 日志
+- 每个阶段独立写 log（`OUT_DIR / "xxx_log.txt"`）
+- 并⾏进程不直接写 log，主进程汇总后输出
+- ⻓任务前必须预检数据完整性（`.npy` 数量/dtype/NaN），防⽌跑数⼩时后崩溃
+
+### 3.3 失败日处理
+失败天 → 返回 `_failed_result()` 占位 → 存 `failed_days.csv` → NaN 被描述统计⾃动跳过。不中断全流程。
+
+---
+
+## 四、技术栈
+
+| 组件 | 版本 | ⽤途 |
+|------|:--:|------|
+| Python | 3.9+ | 实测 3.13 |
+| numpy/pandas | 1.21+/1.3+ | 矩阵/CSV |
+| scikit-learn | 1.0+ | `graphical_lasso(mode='cd')` |
+| pyreadr | 0.4+ | 已退役，仅回退 |
+
+> Windows 注意：sklearn 某些版本 `graphical_lasso` 不接受 `cov_init` 参数。
+
+---
+
+## 五、反直觉规则
+
+| 直觉 | 实际 |
+|------|------|
+| 协⽅差 = X@Xᵀ/M | **不除 M** |
+| K=392 > M=390 → 满秩 | **必定奇异**，Ridge 不可省 |
+| GLasso 需 500+ iter | 30~80 收敛 |
+| ⽂件名 `20100630_1min...` | 含空格：`20100630 _1min...` |
+| BLAS ⾃动多线程好 | 11w×24t=264 线程抢 8 核，**必须设 1** |
+
+---
+
+## 六、架构取舍
+
+| 取舍 | 选择 | 放弃 | 理由 |
+|------|------|------|------|
+| 协⽅差 | 单⽇ X@Xᵀ | 滚动窗⼝ | 论⽂逐⽇精度矩阵 |
+| 并⾏ | `Pool.imap_unordered` | ThreadPool | GLasso CPU 密集，GIL 限制 |
+| 阶段通信 | ⽂件 | import | 解耦 + 可断点续跑 |
+| λ选择 | 固定窗 44+5+22 | 滚动 CV | 简化、可复现 |
+| λ值 | **3e-6**（密度62%） | 5e-7（密度94%） | ⽹络特征有区分度 |
+| 热启动 | **放弃** | 前⽇ prec 作 init | 并⾏化收益 > 热启动 |
+
+---
+
+## 七、13 个坑
+
+| # | ⼀句话 | 解决 |
+|:--:|--------|------|
+| 1 | float32 → FloatingPointError | 全程 float64 |
+| 2 | λ>1e-3 → 等权重 | λ≤1e-5 |
+| 3 | 崩盘⽇协⽅差奇异 | Ridge 退避链 |
+| 4 | pyreadr 多进程抢⽂件 | 转 .npy |
+| 5 | 中⽂路径 spawn 崩 | ⾸⾏ `stdout.reconfigure('utf-8')` |
+| 6 | 没 `freeze_support()` | `if __name__ == '__main__': main()` |
+| 7 | 输出⽬录没建 | `OUT_DIR.mkdir(exist_ok=True)` |
+| 8 | CMD `cd` 不跨盘 | `cd /d` 或先盘符 |
+| 9 | 旧 log 被覆盖 | 跑完后⼿存关键⾏ |
+| 10 | 全零列精度异常 | Ridge ⾃动覆盖 |
+| 11 | ProcessPoolExecutor 卡死 | 改 `Pool.imap_unordered` |
+| 12 | 云端竞价限速 | 减少 worker |
+| **13** | **BLAS 264线程抢8核→63h** | **5⾏ env 在 import numpy 前** |
+
+---
+
+## ⼋、命令
+
+### λ选择（已做，λ=3e-6，⾮必要不重跑）
+```bash
+python 图形Lasso/code/λΩ选择.py
+```
+
+### 纯权重计算（~3h）
+```bash
+python "图形Lasso/code/纯权重计算.py"
+```
+
+### Git
+```bash
+cd /d "d:\HuaweiMoveData\Users\27438\Desktop\大创"
+git status  # 确认改动
+git diff   # 检查细节
+git add -A && git commit -m "说明"
+git push
+```

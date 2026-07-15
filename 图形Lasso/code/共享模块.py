@@ -48,12 +48,19 @@ L_TRAIN_VARX   = 500           # [TBD] VARX 训练窗 (天)
 L_VAL_VARX     = 60            # [TBD] VARX 验证窗 (天)
 L_TEST_VARX    = 200           # [TBD] VARX 测试窗 (天)
 
-# ---- VARX 超参数 (全部待定，需通过验证实验确定) ----
-P_LAGS          = 3            # [TBD] 自回归滞后阶数
-LAMBDA_LASSO    = 1e-4         # [TBD] VARX 系数 ℓ1 惩罚
-LAMBDA_TURNOVER = 1e-2         # [TBD] 换手率平滑 ℓ2 惩罚
-LAMBDA_NETWORK  = 1e-3         # [TBD] 网络正则化强度
-NETWORK_THRESHOLD = 0.3        # [TBD] 滚动网络均值 Ā 截断阈值
+# ---- VARX 超参数 (网格搜索 final_params.json, rolling folds + 消融证据链) ----
+#   论文公式(13): λ₁=连接滞后ℓ1, λ₂=未连接滞后ℓ1(λ₂>λ₁), λ₃=外生ℓ1, λ_s=平滑ℓ2
+#   代码映射: λ₁=LAMBDA_LASSO, λ₂=λ₁+LAMBDA_NETWORK, λ₃=LAMBDA_EXOG, λ_s=LAMBDA_TURNOVER
+#   验证集最优: M4 beats M3a on mean val MSE (1.803e-5 < 1.807e-5)
+#   M2 独立搜索: LAMBDA_LASSO_M2=5e-4 (M2不同于M3/M4的λ₁)
+P_LAGS          = 3            # 自回归滞后阶数（固定，需重跑特征工程才可变）
+LAMBDA_LASSO    = 3e-4         # λ₁: 连接资产的滞后系数 ℓ1 惩罚 (M3/M4/M5共用)
+LAMBDA_LASSO_M2 = 5e-4         # M2 独立搜索的 λ₁（M2无外生变量，可容忍更大惩罚）
+LAMBDA_NETWORK  = 1e-3         # 增量 λ₂-λ₁: 未连接资产的额外 ℓ1 惩罚（λ₂=λ₁+1e-3）
+LAMBDA_EXOG     = 5e-4         # λ₃: 外生变量系数 ℓ1 惩罚
+LAMBDA_TURNOVER = 1e-3         # λ_s: 换手率平滑 ℓ2 惩罚
+NETWORK_THRESHOLD = 0.7         # 滚动网络均值 Ā 截断阈值（τ=0.7, 密度~26%）
+Ā_ROLLING_WINDOW  = 20         # Ā 滚动平均天数（固定）
 
 # ---- 决策损失 (已确定，基于 10 bps 双边交易成本) ----
 ETA = 1e-4
