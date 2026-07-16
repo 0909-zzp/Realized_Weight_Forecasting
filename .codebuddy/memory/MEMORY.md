@@ -1,5 +1,32 @@
 # 大创项目长期记忆
 
+## 🚀 快速衔接 (新对话从这里开始)
+
+**项目**: 图形 Lasso 高维已实现 GMVP 权重预测 (S&P 500, K=392, 2008-2020)
+
+**已完成**: 
+- ✅ 阶段一-二: GLasso λ=3e-6, 2425天权重+邻接矩阵
+- ✅ 阶段三: 特征工程 (X: 1185维), VARX 7模型 (M1-M7), 网格搜索
+- ✅ Table 2 最终: M4 N-V rank1 (MSE=2.12e-5), DFL rank5 (2.28e-5)
+- ✅ Table 3 最终: DFL 夏普最优 (-0.056) vs M4 (-0.342)
+- ✅ 参数全部确认 (见下方), 文档已更新
+
+**待完成**:
+- [ ] Table 4: 消融分析 (M4→M3a→M3→M2 拆解各组件贡献)
+- [ ] 图 1-4: 论文可视化 (λ曲线/权重热力图/网络密度/累计回测)
+- [ ] MCS 完整程序 (Hansen 2011 bootstrap)
+
+**核心文件**:
+- 参数唯一源: `图形Lasso/code/共享模块.py`
+- Table 2 主脚本: `VARX/VAR及拓展（table2）.py`
+- Table 3 脚本: `性能评估与可视化/Table3_投资组合表现.py`
+- 网格搜索: `VARX/网格搜索.py`
+- 文档: `readme/README.md`, `FILE_GUIDE.md`, `README.md`(GitHub)
+
+**DFL 实现**: L2 闭式解 `w* = (Σ̂+(η+ρ)I)⁻¹·(η·w_prev+ρ·w_stat)`, 网络差异化 η, 盒约束±5%
+
+**GitHub**: `https://github.com/0909-zzp/Realized_Weight_Forecasting`
+
 ## 版本记录
 - **2026-07-15**: DFL 改为 L2 闭式解，Table 2/3 锁定
   - DFL: min w^T·Σ·w + η·‖w−w_prev‖² + ρ·‖w−w_stat‖² → 闭式解
