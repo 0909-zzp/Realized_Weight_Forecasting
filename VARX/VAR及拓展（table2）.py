@@ -39,7 +39,7 @@ sys.stdout.reconfigure(encoding='utf-8')
 # 共享模块路径
 sys.path.insert(0, str(Path(__file__).parents[1] / "图形Lasso" / "code"))
 from 共享模块 import (
-    K, P_LAGS, LAMBDA_LASSO, LAMBDA_NETWORK, LAMBDA_EXOG, LAMBDA_TURNOVER,
+    K, P_LAGS, LAMBDA_LASSO, LAMBDA_LASSO_M2, LAMBDA_NETWORK, LAMBDA_EXOG, LAMBDA_TURNOVER,
     NETWORK_THRESHOLD, ETA, OUT_DIR, log, set_log_file,
 )
 
@@ -64,7 +64,7 @@ FEAT_BLOCKS = {
 #   M3-M5 需 ≤1e-04 保留交叉项供 M4 网络惩罚有靶子可罚
 MODELS = {
     1: {'name': 'VAR',            'blocks': ['lagged'],         'sparse': False, 'network': False, 'smooth': False, 'self_free': False, 'lasso_lambda': LAMBDA_LASSO},
-    2: {'name': 'Sparse VAR',     'blocks': ['lagged'],         'sparse': True,  'network': False, 'smooth': False, 'self_free': False, 'lasso_lambda': LAMBDA_LASSO},
+    2: {'name': 'Sparse VAR',     'blocks': ['lagged'],         'sparse': True,  'network': False, 'smooth': False, 'self_free': False, 'lasso_lambda': LAMBDA_LASSO_M2},
     3: {'name': 'Sparse VARX',    'blocks': ['lagged', 'exog'], 'sparse': True,  'network': False, 'smooth': False, 'self_free': False, 'lasso_lambda': LAMBDA_LASSO},
     4: {'name': 'Network VARX',   'blocks': ['lagged', 'exog'], 'sparse': True,  'network': True,  'smooth': False, 'self_free': True,  'lasso_lambda': LAMBDA_LASSO},
     5: {'name': 'Network+Smooth', 'blocks': ['lagged', 'exog'], 'sparse': True,  'network': True,  'smooth': True,  'self_free': True,  'lasso_lambda': LAMBDA_LASSO},
@@ -516,7 +516,7 @@ sys.stdout.reconfigure(encoding='utf-8')
 # 共享模块路径
 sys.path.insert(0, str(Path(__file__).parents[1] / "图形Lasso" / "code"))
 from 共享模块 import (
-    K, P_LAGS, LAMBDA_LASSO, LAMBDA_NETWORK, LAMBDA_EXOG, LAMBDA_TURNOVER,
+    K, P_LAGS, LAMBDA_LASSO, LAMBDA_LASSO_M2, LAMBDA_NETWORK, LAMBDA_EXOG, LAMBDA_TURNOVER,
     NETWORK_THRESHOLD, ETA, OUT_DIR, log, set_log_file,
 )
 
@@ -541,7 +541,7 @@ FEAT_BLOCKS = {
 #   M3-M5 需 ≤1e-04 保留交叉项供 M4 网络惩罚有靶子可罚
 MODELS = {
     1: {'name': 'VAR',            'blocks': ['lagged'],         'sparse': False, 'network': False, 'smooth': False, 'self_free': False, 'lasso_lambda': LAMBDA_LASSO},
-    2: {'name': 'Sparse VAR',     'blocks': ['lagged'],         'sparse': True,  'network': False, 'smooth': False, 'self_free': False, 'lasso_lambda': LAMBDA_LASSO},
+    2: {'name': 'Sparse VAR',     'blocks': ['lagged'],         'sparse': True,  'network': False, 'smooth': False, 'self_free': False, 'lasso_lambda': LAMBDA_LASSO_M2},
     3: {'name': 'Sparse VARX',    'blocks': ['lagged', 'exog'], 'sparse': True,  'network': False, 'smooth': False, 'self_free': False, 'lasso_lambda': LAMBDA_LASSO},
     4: {'name': 'Network VARX',   'blocks': ['lagged', 'exog'], 'sparse': True,  'network': True,  'smooth': False, 'self_free': True,  'lasso_lambda': LAMBDA_LASSO},
     5: {'name': 'Network+Smooth', 'blocks': ['lagged', 'exog'], 'sparse': True,  'network': True,  'smooth': True,  'self_free': True,  'lasso_lambda': LAMBDA_LASSO},
