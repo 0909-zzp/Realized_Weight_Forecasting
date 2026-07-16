@@ -74,17 +74,19 @@ VARX/
 | ETA | 1e-4 |
 | RHO_DFL | 1e-3 |
 
-## Table 2 (最终)
+## Table 2 (最终, MCS正式)
 
-| # | Model | MSE | DM | MCS |
-|:---:|---:|---:|---:|
-| 4 | Network VARX | 2.12e-5 | -41.27 | 1 |
-| 5 | +Smooth | 2.19e-5 | -41.78 | 2 |
-| 3 | Sparse VARX | 2.25e-5 | -40.28 | 3 |
-| 2 | Sparse VAR | 2.29e-5 | -40.01 | 5 |
-| 6 | DFL VARX (L2) | 2.28e-5 | -40.21 | 5 |
-| 1 | VAR | 9.76e-5 | - | 6 |
-| 7 | LSTM | 2.38e-3 | +1.4 | 7 |
+| # | Model | MSE | DM | MCS p-val | 90%MCS |
+|:---:|---:|---:|---:|---:|:---:|
+| 4 | Network VARX | 2.12e-5 | -41.27 | 1.0000 | ✅ |
+| 5 | +Smooth | 2.19e-5 | -41.78 | 0.1245 | ✅ |
+| 7 | LSTM | 6.48e-3 | +1.64 | 0.2645 | ✅ |
+| 3 | Sparse VARX | 2.25e-5 | -40.28 | 0.0995 | ❌ |
+| 2 | Sparse VAR | 2.29e-5 | -40.01 | 0.0980 | ❌ |
+| 6 | DFL VARX (L2) | 2.28e-5 | -40.26 | 0.0895 | ❌ |
+| 1 | VAR | 9.76e-5 | - | 0.0625 | ❌ |
+
+> MCS: Hansen-Lunde-Nason (2011) bootstrap, 2000次, 块长5天. M4唯一p=1.0.
 
 ## Table 3 要点
 
@@ -116,5 +118,5 @@ DFL 采用 L2 闭式解: w* = (Sigma + (eta+rho)I)^(-1) . (eta.w_prev + rho.w_st
 - [x] Table 2
 - [x] Table 3
 - [x] Table 4 (消融分析) ✅ 2026-07-16
+- [x] MCS 完整程序 ✅ 2026-07-16
 - [ ] 图 1-4 论文可视化
-- [ ] MCS 完整程序

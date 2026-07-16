@@ -10,18 +10,20 @@
 - ✅ Table 2 最终: M4 N-V rank1 (MSE=2.12e-5), DFL rank5 (2.28e-5)
 - ✅ Table 3 最终: DFL 夏普最优 (-0.056) vs M4 (-0.342)
 - ✅ Table 4 消融: 自环豁免 73%贡献, 网络惩罚显著, 证据链完整
+- ✅ MCS 正式程序: Hansen-Lunde-Nason (2011) bootstrap, M4唯一p=1.0
 - ✅ 参数全部确认 (见下方), 文档已更新
 
 **待完成**:
-- [x] Table 4: 消融分析 (M4→M3a→M3→M2 拆解各组件贡献) ✅ 2026-07-16
+- [x] Table 4: 消融分析 ✅ 2026-07-16
+- [x] MCS 完整程序 ✅ 2026-07-16
 - [ ] 图 1-4: 论文可视化 (λ曲线/权重热力图/网络密度/累计回测)
-- [ ] MCS 完整程序 (Hansen 2011 bootstrap)
 
 **核心文件**:
 - 参数唯一源: `图形Lasso/code/共享模块.py`
 - Table 2 主脚本: `VARX/VAR及拓展（table2）.py`
 - Table 3 脚本: `性能评估与可视化/Table3_投资组合表现.py`
 - Table 4 脚本: `消融分析/Table4_消融分析.py`
+- MCS 程序: `性能评估与可视化/MCS_完整程序.py`
 - 网格搜索: `VARX/网格搜索.py`
 - 文档: `readme/README.md`, `FILE_GUIDE.md`, `README.md`(GitHub)
 
@@ -30,6 +32,10 @@
 **GitHub**: `https://github.com/0909-zzp/Realized_Weight_Forecasting`
 
 ## 版本记录
+- **2026-07-16**: MCS 正式程序完成
+  - Hansen-Lunde-Nason (2011) block bootstrap, 2000次, 块长5天
+  - M4 唯一 p=1.0 (始终在 MCS 中), M5/LSTM 进入 90%MCS
+  - 替代之前简化 MSE 排名; 脚本: `性能评估与可视化/MCS_完整程序.py`
 - **2026-07-16**: Table 4 消融分析完成
   - 消融链: M2→M3→M3a→M4, 所有 pairwise DM 高度显著
   - 自环豁免贡献最大 (73%), 网络惩罚虽小但显著 (p≈10⁻³²)
@@ -88,16 +94,18 @@
 | ETA | 1e-04 | DFL交易成本 |
 | RHO_DFL | 1e-3 | DFL锚定 |
 
-### Table 2 最终 (2026-07-16 重跑, M2 λ₁=5e-4)
-| # | Model | MSE | DM | MCS |
-|:---:|---:|---:|---:|
-| 4 | Network VARX | 2.12e-5 | −41.27 | 1 |
-| 5 | +Smooth | 2.19e-5 | −41.78 | 2 |
-| 3 | Sparse VARX | 2.25e-5 | −40.28 | 3 |
-| 6 | DFL VARX (L2) | 2.28e-5 | −40.26 | 4 |
-| 2 | Sparse VAR | 2.29e-5 | −40.01 | 5 |
-| 1 | VAR | 9.76e-5 | — | 6 |
-| 7 | LSTM | 6.48e-3 | +1.64 | 7 |
+### Table 2 最终 (2026-07-16 重跑, M2 λ₁=5e-4, MCS正式)
+| # | Model | MSE | DM | MCS p-val | 90%MCS |
+|:---:|---:|---:|---:|---:|:---:|
+| 4 | Network VARX | 2.12e-5 | −41.27 | **1.0000** | ✅ |
+| 5 | +Smooth | 2.19e-5 | −41.78 | 0.1245 | ✅ |
+| 7 | LSTM | 6.48e-3 | +1.64 | 0.2645 | ✅ |
+| 3 | Sparse VARX | 2.25e-5 | −40.28 | 0.0995 | ❌ |
+| 2 | Sparse VAR | 2.29e-5 | −40.01 | 0.0980 | ❌ |
+| 6 | DFL VARX (L2) | 2.28e-5 | −40.26 | 0.0895 | ❌ |
+| 1 | VAR | 9.76e-5 | — | 0.0625 | ❌ |
+
+> MCS: Hansen-Lunde-Nason (2011) block bootstrap, 2000次, 块长5天. M4唯一p=1.0模型.
 
 ### DFL 最终方案 (L2 闭式解)
 - 目标: min w^T·Σ·w + η·‖w−w_prev‖² + ρ·‖w−w_stat‖²

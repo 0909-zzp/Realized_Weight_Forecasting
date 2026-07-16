@@ -1,0 +1,8 @@
+Model,Name,MCS_pval,Eliminated_round,in_MCS_75,MCS_pval_75%,in_MCS_90,MCS_pval_90%
+1,VAR (OLS),0.0625,1,False,0.0625,False,0.0625
+2,Sparse VAR,0.098,3,False,0.0980,False,0.0980
+3,Sparse VARX,0.0995,4,False,0.0995,False,0.0995
+4,Network VARX,1.0,7,True,1.0000,True,1.0000
+5,Network+Smooth,0.1245,5,False,0.1245,True,0.1245
+6,DFL VARX (L2),0.0895,2,False,0.0895,False,0.0895
+7,LSTM,0.2645,6,True,0.2645,True,0.2645
