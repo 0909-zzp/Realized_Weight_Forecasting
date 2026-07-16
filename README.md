@@ -77,15 +77,15 @@ Realized_Weight_Forecasting/
 
 ### Table 2 — Out-of-Sample Prediction Accuracy (with Formal MCS)
 
-| Model | MSE | DM Stat | MCS p-val | 90% MCS |
-|---|---|---|---|---|
-| **Network VARX** | **2.12×10⁻⁵** | −41.27 | **1.0000** | ✅ |
-| Network+Smooth | 2.19×10⁻⁵ | −41.78 | 0.1245 | ✅ |
-| LSTM | 6.48×10⁻³ | +1.64 | 0.2645 | ✅ |
-| Sparse VARX | 2.25×10⁻⁵ | −40.28 | 0.0995 | ❌ |
-| Sparse VAR | 2.29×10⁻⁵ | −40.01 | 0.0980 | ❌ |
-| DFL VARX (L2) | 2.28×10⁻⁵ | −40.26 | 0.0895 | ❌ |
-| VAR (OLS) | 9.76×10⁻⁵ | — | 0.0625 | ❌ |
+| Model | MSE | DM Stat | MCS p-val | MCS Rank | 90% MCS |
+|---|---|---|---|---|---|
+| **Network VARX** | **2.12×10⁻⁵** | −41.27 | **1.0000** | 1 | ✅ |
+| LSTM | 6.48×10⁻³ | +1.64 | 0.2645 | 2 | ✅ |
+| Network+Smooth | 2.19×10⁻⁵ | −41.78 | 0.1245 | 3 | ✅ |
+| Sparse VARX | 2.25×10⁻⁵ | −40.28 | 0.0995 | 4 | ❌ |
+| Sparse VAR | 2.29×10⁻⁵ | −40.01 | 0.0980 | 5 | ❌ |
+| DFL VARX (L2) | 2.28×10⁻⁵ | −40.26 | 0.0895 | 6 | ❌ |
+| VAR (OLS) | 9.76×10⁻⁵ | — | 0.0625 | 7 | ❌ |
 
 > MCS: Hansen-Lunde-Nason (2011) block bootstrap, 2,000 replications, block length 5 days.
 > M4 is the only model with p=1.0 (always in MCS). LSTM survives due to high day-to-day loss variance despite large mean MSE.

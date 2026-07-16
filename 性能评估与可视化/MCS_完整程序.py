@@ -227,6 +227,9 @@ def mcs_procedure(L: np.ndarray, n_boot: int = N_BOOTSTRAP,
         })
     df = pd.DataFrame(results)
 
+    # MCS rank: 按 p-value 降序 (p越大=越优, rank=1最优)
+    df['MCS_rank'] = df['MCS_pval'].rank(ascending=False, method='min').astype(int)
+
     # 为每个 alpha 添加列
     for alpha in ALPHA_LEVELS:
         col_name = f'in_MCS_{int((1-alpha)*100)}'
@@ -293,16 +296,17 @@ def main():
 
     # ---- Table 2 风格输出 ----
     log(f"\n{'='*72}")
-    log(f"Table 2 MCS 列 (替换简化排名)")
+    log(f"Table 2 MCS 列 (MCS rank = p-value降序)")
     log(f"{'='*72}")
-    log(f"{'#':>2} {'Model':<20} {'MSE':>12} {'MCS p-val':>12} {'75%MCS':>8} {'90%MCS':>8}")
-    log("-" * 70)
+    log(f"{'#':>2} {'Model':<20} {'MSE':>12} {'MCS p-val':>12} {'MCS rank':>10} {'75%MCS':>8} {'90%MCS':>8}")
+    log("-" * 78)
     for _, row in results.iterrows():
         avg_mse = np.mean(L[:, int(row['Model'])-1])
         mcs75 = '✓' if row[f'in_MCS_75'] else '✗'
         mcs90 = '✓' if row[f'in_MCS_90'] else '✗'
         log(f"{int(row['Model']):>2} {row['Name']:<20} "
-            f"{avg_mse:>12.4e} {row['MCS_pval']:>12.4f} {mcs75:>8} {mcs90:>8}")
+            f"{avg_mse:>12.4e} {row['MCS_pval']:>12.4f} {int(row['MCS_rank']):>10} "
+            f"{mcs75:>8} {mcs90:>8}")
 
     log(f"\n{'='*72}")
     log("MCS 完成")
