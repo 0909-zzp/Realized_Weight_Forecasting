@@ -43,6 +43,10 @@ Realized_Weight_Forecasting/
 │   ├── Table3_投资组合表现.py       # Portfolio performance (volatility, RPV, Sharpe, drawdown)
 │   └── Table3_results.csv          # ★ Final Table 3
 │
+├── 消融分析/                        # Table 4: Ablation analysis
+│   ├── Table4_消融分析.py            # Ablation script (M2→M3→M3a→M4)
+│   └── Table4_results.csv           # ★ Final Table 4
+│
 ├── 数据/                            # Data (excluded from git — see .gitignore)
 │
 ├── readme/README.md                 # Full project manual (Chinese)
@@ -95,6 +99,19 @@ Realized_Weight_Forecasting/
 | LSTM | 10.26 | 100.7 | 26.85 | −0.868 | −1135% |
 
 > ± DFL achieves the best risk-adjusted return among all models. L2 closed-form solution balances portfolio variance and turnover.
+
+### Table 4 — Ablation Analysis (2026-07-16)
+
+Decomposing Network VARX (M4): M2 → M3 → M3a → M4.
+
+| Step | ΔMSE | Rel. Improvement | DM pairwise | Component Added |
+|:---:|---:|---:|---:|---|
+| M2→M3 | −3.54×10⁻⁷ | +1.55% | −20.77 | Exogenous variables |
+| M3→M3a | −1.27×10⁻⁶ | +5.64% | −22.10 | Self-lag exemption (~73% of total) |
+| M3a→M4 | −1.17×10⁻⁷ | +0.55% | −11.95 | Network penalty |
+| **M2→M4** | **−1.74×10⁻⁶** | **+7.61%** | **−23.16** | **All components** |
+
+> Self-lag exemption provides the largest gain, while network penalty is the smallest but still highly significant (p≈10⁻³²). All pairwise DM tests pass, forming a complete ablation evidence chain.
 
 ---
 

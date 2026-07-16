@@ -9,17 +9,20 @@
 - ✅ 阶段三: 特征工程 (X: 1185维), VARX 7模型 (M1-M7), 网格搜索
 - ✅ Table 2 最终: M4 N-V rank1 (MSE=2.12e-5), DFL rank5 (2.28e-5)
 - ✅ Table 3 最终: DFL 夏普最优 (-0.056) vs M4 (-0.342)
+- ✅ Table 4 消融: 自环豁免 73%贡献, 网络惩罚显著, 证据链完整
 - ✅ 参数全部确认 (见下方), 文档已更新
 
 **待完成**:
-- [ ] Table 4: 消融分析 (M4→M3a→M3→M2 拆解各组件贡献)
+- [x] Table 4: 消融分析 (M4→M3a→M3→M2 拆解各组件贡献) ✅ 2026-07-16
 - [ ] 图 1-4: 论文可视化 (λ曲线/权重热力图/网络密度/累计回测)
 - [ ] MCS 完整程序 (Hansen 2011 bootstrap)
+- [ ] Table 2 重跑: M2 λ₁ 已改为 5e-4 (原 3e-4), 需重跑确认最终数字
 
 **核心文件**:
 - 参数唯一源: `图形Lasso/code/共享模块.py`
 - Table 2 主脚本: `VARX/VAR及拓展（table2）.py`
 - Table 3 脚本: `性能评估与可视化/Table3_投资组合表现.py`
+- Table 4 脚本: `消融分析/Table4_消融分析.py`
 - 网格搜索: `VARX/网格搜索.py`
 - 文档: `readme/README.md`, `FILE_GUIDE.md`, `README.md`(GitHub)
 
@@ -28,6 +31,11 @@
 **GitHub**: `https://github.com/0909-zzp/Realized_Weight_Forecasting`
 
 ## 版本记录
+- **2026-07-16**: Table 4 消融分析完成
+  - 消融链: M2→M3→M3a→M4, 所有 pairwise DM 高度显著
+  - 自环豁免贡献最大 (73%), 网络惩罚虽小但显著 (p≈10⁻³²)
+  - M2 λ₁ 改回 5e-4 (LAMBDA_LASSO_M2), 与 final_params.json 一致
+  - 脚本: `消融分析/Table4_消融分析.py`, 结果: `消融分析/Table4_results.csv`
 - **2026-07-15**: DFL 改为 L2 闭式解，Table 2/3 锁定
   - DFL: min w^T·Σ·w + η·‖w−w_prev‖² + ρ·‖w−w_stat‖² → 闭式解
   - Table 2: M4 rank1 (MSE=2.12e-5), DFL rank5 (MSE=2.28e-5, TO=0.357)
@@ -101,3 +109,21 @@
 ### Table 2 vs Table 4 分工
 - **Table 2** (§5.2): 7模型水平对比, MSE/MAE/DM/MCS
 - **Table 4** (§5.3): 拆M4→M3a→M3→M2 消融各组件贡献
+
+### Table 4 消融结果 (2026-07-16)
+| Step | ΔMSE | 相对改善 | DM pairwise | 解释 |
+|:---:|---:|---:|---:|---|
+| M2→M3 | −3.54e-7 | +1.55% | −20.77 | +外生变量 |
+| M3→M3a | −1.27e-6 | +5.64% | −22.10 | +自环豁免 (最大贡献) |
+| M3a→M4 | −1.17e-7 | +0.55% | −11.95 | +网络惩罚 |
+| **M2→M4** | **−1.74e-6** | **+7.61%** | **−23.16** | **全部组件合计** |
+
+**Panel A** (测试集单项):
+| Model | MSE | MAE | Sparsity | Turnover |
+|---:|---:|---:|---:|---:|
+| M2 Sparse VAR | 2.290e-5 | 3.568e-3 | 99.0% | 0.240 |
+| M3 Sparse VARX | 2.254e-5 | 3.542e-3 | 97.2% | 0.283 |
+| M3a +Self-lag | 2.127e-5 | 3.446e-3 | 98.2% | 0.349 |
+| M4 Network VARX | 2.116e-5 | 3.436e-3 | 98.9% | 0.354 |
+
+**关键发现**: 自环豁免贡献最大 (73%总改善), 网络惩罚虽最小但高度显著 (p≈10⁻³²). 所有 pairwise DM 均显著, 消融证据链完整.
