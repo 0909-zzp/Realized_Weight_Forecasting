@@ -1215,12 +1215,14 @@ def main():
 
     # 保存拟合结果（系数/截距/scaler/列索引），供 DFL 等下游脚本加载
     import pickle
+    model_dir = out_dir / "fitted_models"
+    model_dir.mkdir(exist_ok=True)
     for mid, fitted in fitted_models.items():
-        np.save(out_dir / f"coefs_model{mid}.npy", fitted['coefs'])           # (K, n_feat_sel)
-        np.save(out_dir / f"intercepts_model{mid}.npy", fitted['intercepts'])  # (K,)
-        with open(out_dir / f"scaler_model{mid}.pkl", 'wb') as f:
+        np.save(model_dir / f"coefs_model{mid}.npy", fitted['coefs'])
+        np.save(model_dir / f"intercepts_model{mid}.npy", fitted['intercepts'])
+        with open(model_dir / f"scaler_model{mid}.pkl", 'wb') as f:
             pickle.dump(fitted['scaler'], f)
-        np.save(out_dir / f"feat_cols_model{mid}.npy", fitted['cols'])        # 选择的特征列索引
+        np.save(model_dir / f"feat_cols_model{mid}.npy", fitted['cols'])
 
     # ---- 打印 Table 2 ----
     log("\n" + "=" * 70)
