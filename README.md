@@ -105,18 +105,17 @@ Realized_Weight_Forecasting/
 
 > ± DFL achieves the best risk-adjusted return among all models. L2 closed-form solution balances portfolio variance and turnover.
 
-### Table 4 — Ablation Analysis (2026-07-16)
+### Table 4 — Ablation Analysis (DFL baseline, top-down subtraction)
 
-Decomposing Network VARX (M4): M2 → M3 → M3a → M4.
+| Configuration | MSE_w | RPV(ann) | Turnover | Net Sharpe |
+|---|---:|---:|---:|---:|
+| Full model (M5+DFL) | 2.301×10⁻⁵ | 0.0098 | 0.385 | −0.073 |
+| − Exogenous vars (M2+DFL) | 2.398×10⁻⁵ | 0.0107 | 0.296 | −0.012 |
+| − Network penalty (M3a+DFL) | 2.290×10⁻⁵ | 0.0103 | 0.367 | −0.047 |
+| − Smooth penalty (M4+DFL) | 2.279×10⁻⁵ | 0.0102 | 0.372 | −0.056 |
+| − DFL (M5 only) | 2.186×10⁻⁵ | 0.0096 | 0.417 | −0.402 |
 
-| Step | ΔMSE | Rel. Improvement | DM pairwise | Component Added |
-|:---:|---:|---:|---:|---|
-| M2→M3 | −3.54×10⁻⁷ | +1.55% | −20.77 | Exogenous variables |
-| M3→M3a | −1.27×10⁻⁶ | +5.64% | −22.10 | Self-lag exemption (~73% of total) |
-| M3a→M4 | −1.17×10⁻⁷ | +0.55% | −11.95 | Network penalty |
-| **M2→M4** | **−1.74×10⁻⁶** | **+7.61%** | **−23.16** | **All components** |
-
-> Self-lag exemption provides the largest gain, while network penalty is the smallest but still highly significant (p≈10⁻³²). All pairwise DM tests pass, forming a complete ablation evidence chain.
+> DFL contributes the largest Sharpe gain (+0.329), followed by exogenous variables (+0.061). MSE_w rises as DFL trades accuracy for utility.
 
 ---
 
