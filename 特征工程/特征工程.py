@@ -72,18 +72,22 @@ def _load_fred_csv(path: Path, value_col: str) -> pd.Series:
     return df.set_index("observation_date")[value_col]
 
 
-def load_exogenous(dates: list, npy_dir: Optional[str] = None) -> pd.DataFrame:
+def load_exogenous(dates: list, npy_dir: Optional[str] = None,
+                   smooth_window: int = 0) -> pd.DataFrame:
     """加载 9 维外生变量（全部 shift(1) 防泄露）。
 
     VIX + BA Spread + Market Vol + Term Spread + Credit Spread
     + S&P500 Ret + DXY + Cross-section Skew + Kurt
+
+    smooth_window: 若 >1, 对原始日频序列做移动平均后再 shift(1).
+                   0=不处理(原行为), 5=MA(5), 21=MA(21).
     """
     data_dir = Path(__file__).parents[1] / "数据"
 
     # VIX
     vix_path = data_dir / "vix_daily.csv"
     if vix_path.exists():
-        vix_df = pd.read_csv(vix_path, index_col=0, dtype={0: str})  # 强制字符串索引
+        vix_df = pd.read_csv(vix_path, index_col=0, dtype={0: str})
         vix_df.index = vix_df.index.astype(str)
         vix_series = pd.Series(
             {d: vix_df.loc[str(d), "vix"] if str(d) in vix_df.index else np.nan for d in dates}
@@ -95,11 +99,10 @@ def load_exogenous(dates: list, npy_dir: Optional[str] = None) -> pd.DataFrame:
     term_spread = _load_fred_csv(data_dir / "term_spread.csv", "T10Y2Y")
     credit_spread = _load_fred_csv(data_dir / "credit_spread.csv", "BAA10YM")
     dxy = _load_fred_csv(data_dir / "dxy_close.csv", "DTWEXBGS")
-    dxy_ret = dxy.pct_change()  # DXY 日收益
+    dxy_ret = dxy.pct_change()
 
     term_s = pd.Series({d: term_spread.get(str(d), np.nan) for d in dates})
     credit_s = pd.Series({d: credit_spread.get(str(d), np.nan) for d in dates})
-    # 信用利差月频 → 前向填充
     credit_s = credit_s.ffill()
     dxy_s = pd.Series({d: dxy_ret.get(str(d), np.nan) for d in dates})
 
@@ -123,21 +126,29 @@ def load_exogenous(dates: list, npy_dir: Optional[str] = None) -> pd.DataFrame:
                 skew_s[d] = sk
                 kurt_s[d] = ku
 
+    # 组装原始序列
     df = pd.DataFrame({
         "vix": vix_series,
-        "lag_market_vol": mvol,
-        "lag_ba_spread": ba,
-        "lag_term_spread": term_s,
-        "lag_credit_spread": credit_s,
-        "lag_sp500_ret": mret,  # 用 392 支等权市场收益代替 S&P500
-        "lag_dxy_ret": dxy_s,
-        "lag_cs_skew": skew_s,
-        "lag_cs_kurt": kurt_s,
+        "market_vol": mvol,
+        "ba_spread": ba,
+        "term_spread": term_s,
+        "credit_spread": credit_s,
+        "sp500_ret": mret,
+        "dxy_ret": dxy_s,
+        "cs_skew": skew_s,
+        "cs_kurt": kurt_s,
     }, index=dates)
+
+    # 可选: 平滑化 (移动平均, 在 shift 之前)
+    if smooth_window > 1:
+        # 对所有列做 MA, 但保留前 smooth_window-1 天用原始值避免 NaN
+        df = df.rolling(window=smooth_window, min_periods=1).mean()
+
     # 全部后移一天 → t-1 值在 t 可知
     for col in df.columns:
-        if col.startswith("lag_"):
-            df[col] = df[col].shift(1)
+        df[f"lag_{col}"] = df[col].shift(1)
+    # 删除未 shift 的原始列
+    df = df[[c for c in df.columns if c.startswith("lag_")]]
     return df
 
 
@@ -248,35 +259,35 @@ def build_feature_matrix(
         names += [f"pr_{i}" for i in range(K)]
         names += [f"clust_{i}" for i in range(K)]
 
-	for t in range(p_lags, T):
-	    # 所有滞后日有效 & 当前日有效
-	    lag_ok = all(valid_mask[t - lag] for lag in range(1, p_lags + 1))
-	    if not (lag_ok and valid_mask[t]):
-	        continue
-	
-	    # 滞后权重
-	    lag_block = np.concatenate([weights_arr[t - lag] for lag in range(1, p_lags + 1)])
-	
-	    # 外生变量
-	    exog_vec = exog_arr[t]
-	
-	    # 网络特征（可选，默认不包含——VARX 通过 A_bar 掩码做网络正则化）
-	    if include_net_topo:
-	        idx_prev = t - 1
-	        if idx_prev in net_cache:
-	            nf = net_cache[idx_prev]
-	            net_block = np.concatenate([nf["degree_centrality"], nf["pagerank"], nf["clustering"]])
-	        else:
-	            net_block = np.zeros(3 * K)
-	        x_vec = np.concatenate([lag_block, exog_vec, net_block])
-	    else:
-	        x_vec = np.concatenate([lag_block, exog_vec])
-	
-	    # 组装特征（Ā 不进入 X）
-	    features.append(x_vec)
-	    targets.append(weights_arr[t])
-	    a_bars.append(a_cache.get(t - 1, np.zeros((K, K))))
-	    valid_idx.append(t)
+    for t in range(p_lags, T):
+        # 所有滞后日有效 & 当前日有效
+        lag_ok = all(valid_mask[t - lag] for lag in range(1, p_lags + 1))
+        if not (lag_ok and valid_mask[t]):
+            continue
+    
+        # 滞后权重
+        lag_block = np.concatenate([weights_arr[t - lag] for lag in range(1, p_lags + 1)])
+    
+        # 外生变量
+        exog_vec = exog_arr[t]
+    
+        # 网络特征（可选，默认不包含——VARX 通过 A_bar 掩码做网络正则化）
+        if include_net_topo:
+            idx_prev = t - 1
+            if idx_prev in net_cache:
+                nf = net_cache[idx_prev]
+                net_block = np.concatenate([nf["degree_centrality"], nf["pagerank"], nf["clustering"]])
+            else:
+                net_block = np.zeros(3 * K)
+            x_vec = np.concatenate([lag_block, exog_vec, net_block])
+        else:
+            x_vec = np.concatenate([lag_block, exog_vec])
+    
+        # 组装特征（Ā 不进入 X）
+        features.append(x_vec)
+        targets.append(weights_arr[t])
+        a_bars.append(a_cache.get(t - 1, np.zeros((K, K))))
+        valid_idx.append(t)
 
     X = np.array(features, dtype=np.float64) if features else np.empty((0, n_total))
     Y = np.array(targets, dtype=np.float64) if targets else np.empty((0, K))
@@ -390,9 +401,11 @@ def main():
 
     # 外生变量
     log("计算外生变量 (VIX + BA Spread + Market Vol)...")
-    exog_df = load_exogenous(date_list, str(npy_dir) if npy_dir.exists() else None)
+    SMOOTH_WINDOW = 0  # 0=原始日频, 5=MA(5)实验(已测,增量极小)
+    exog_df = load_exogenous(date_list, str(npy_dir) if npy_dir.exists() else None,
+                             smooth_window=SMOOTH_WINDOW)
     exog_arr = exog_df.fillna(method="ffill").fillna(0).values
-    log(f"  外生变量: {exog_df.shape}")
+    log(f"  外生变量: {exog_df.shape}  (平滑窗口={SMOOTH_WINDOW}天)")
 
     # 有效日 mask（权重无 NaN）
     valid_mask = ~np.isnan(weights_arr).any(axis=1)
