@@ -58,15 +58,16 @@ VARX/
 └── dxy_close.csv
 ```
 
-## 已确定参数 (2026-07-15)
+## 已确定参数 (2026-07-18, P0/P1/P2验证)
 
 | 参数 | 值 |
 |---|:---:|
 | K | 392 |
 | lambda_Omega | 3e-6 |
 | P_LAGS | 3 |
-| LAMBDA_LASSO | 3e-4 |
+| LAMBDA_LASSO (M3/M4/M5) | 3e-4 |
 | LAMBDA_LASSO_M2 | 5e-4 |
+| LAMBDA_LASSO_M3a | 4.5e-4 |
 | LAMBDA_NETWORK | 1e-3 |
 | LAMBDA_EXOG | 5e-4 |
 | LAMBDA_TURNOVER | 1e-3 |

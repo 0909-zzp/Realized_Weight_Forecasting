@@ -57,19 +57,22 @@ Realized_Weight_Forecasting/
 
 ---
 
-## Key Parameters (Grid Search Confirmed)
+## Key Parameters (Grid Search Confirmed, 2026-07-18)
 
 | Parameter | Value | Description |
 |---|---|---|
 | K | 392 | Asset count |
 | λ_Ω | 3e-6 | GLasso regularization (density 62%) |
 | P_LAGS | 3 | VARX lag order |
-| λ₁ | 3e-4 | Connected-asset lag L1 penalty |
-| λ₃ | 5e-4 | Exogenous variable L1 penalty |
-| τ | 0.7 | Network threshold (density ~26%) |
-| λ_net | 1e-3 | Unconnected-asset additional L1 |
-| λ_s | 1e-3 | Turnover smoothing L2 |
-| η | 1e-4 | DFL transaction cost (10 bps) |
+| λ₁ (LAMBDA_LASSO) | 3e-4 | Connected-asset lag L1 penalty (M3/M4/M5) |
+| λ₁_M2 | 5e-4 | M2 independent λ₁ (P0: verified non-boundary) |
+| λ₁_M3a | 4.5e-4 | M3a independent λ₁ (P1: self-lag exemption optimum) |
+| λ₃ (LAMBDA_EXOG) | 5e-4 | Exogenous variable L1 (P2: optimal for full pipeline) |
+| τ (NETWORK_THRESHOLD) | 0.7 | Network threshold (density ~26%) |
+| λ_net (LAMBDA_NETWORK) | 1e-3 | Unconnected-asset additional L1 |
+| λ_s (LAMBDA_TURNOVER) | 1e-3 | Turnover smoothing L2 |
+| η (ETA) | 1e-4 | DFL transaction cost (10 bps) |
+| ρ (RHO_DFL) | 1e-3 | DFL anchor strength |
 
 ---
 

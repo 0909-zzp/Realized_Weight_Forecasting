@@ -440,18 +440,19 @@ python 性能评估与可视化/Table3_投资组合表现.py
 | L_TRAIN_GLASSO | 40 | 滚动训练天数 |
 | ETA | 1e-4 | 交易成本系数 (10 bps) |
 
-### 5.2 VARX 超参数 ✓ 已确定（rolling folds + 消融证据链）
+### 5.2 VARX 超参数 ✓ 已确定（P0/P1/P2 验证, 2026-07-18）
 
-> 2026-07-03 初选，2026-07-15 终定。
+> 2026-07-03 初选，2026-07-18 终定。
 > 验证集: 3-fold expanding window (train=[0,1200]/[0,1450]/[0,1690], val=紧后~240天)。
-> 消融设计: M3→M3a (自环豁免) → M4 (网络惩罚) → M5 (平滑) → M6 (DFL L2)。
+> 消融设计: M2→M3→M3a→M4→M5→M6。
 
 | 参数 | 值 | 说明 |
 |------|:--:|------|
 | P_LAGS | 3 | 自回归阶数 |
 | LAMBDA_LASSO (λ₁) | 3e-4 | 连接资产 ℓ1 (M3/M4/M5 共用) |
-| LAMBDA_LASSO_M2 | 5e-4 | M2 独立 λ₁ |
-| LAMBDA_EXOG (λ₃) | 5e-4 | 外生变量 ℓ1 |
+| LAMBDA_LASSO_M2 | 5e-4 | M2 独立 λ₁ (P0: 2e-3验证非边界) |
+| LAMBDA_LASSO_M3a | 4.5e-4 | M3a 独立 λ₁ (P1: 自环豁免后最优值≠M3) |
+| LAMBDA_EXOG (λ₃) | 5e-4 | 外生变量 ℓ1 (P2: 完整流水线最优) |
 | LAMBDA_NETWORK (λ₂-λ₁) | 1e-3 | 未连接额外 ℓ1 (λ₂=λ₁+1e-3) |
 | NETWORK_THRESHOLD (τ) | 0.7 | Ā 截断 (~26%密度) |
 | LAMBDA_TURNOVER (λ_s) | 1e-3 | 换手率平滑 ℓ2 |
