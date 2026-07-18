@@ -38,12 +38,20 @@ sys.path.insert(0, str(Path(__file__).parents[1] / "图形Lasso" / "code"))
 
 import 共享模块
 from 共享模块 import K, log, set_log_file
-import VAR及拓展 as vp
+
+# 文件名含中文括号，用 importlib 加载
+import importlib.util
+_varx_path = Path(__file__).parent / "VAR及拓展（table2）.py"
+_spec = importlib.util.spec_from_file_location("VAR及拓展", _varx_path)
+vp = importlib.util.module_from_spec(_spec)
+sys.modules["VAR及拓展"] = vp
+_spec.loader.exec_module(vp)
+
 from VAR及拓展 import compute_mse, compute_turnover
 
 
 # ----------------------------- 搜索空间 -----------------------------
-L1_M2_GRID = [1e-5, 5e-5, 1e-4, 5e-4, 1e-3]
+L1_M2_GRID = [1e-5, 5e-5, 1e-4, 5e-4, 1e-3, 2e-3]   # ← P0: 加 2e-3 确认 5e-4 非边界伪最优
 L1_M3_GRID = [5e-5, 1e-4, 3e-4, 5e-4]
 L3_GRID = [5e-5, 1e-4, 5e-4, 1e-3]
 TAU_GRID = [0.7, 0.8, 0.85, 0.9]
@@ -120,7 +128,7 @@ def run_one(model_id: int, params: Dict, X_tr, Y_tr, A_tr, X_val, Y_val) -> Dict
             net_mask, density = None, np.nan
 
         t0 = time.time()
-        fitted = vp.fit_model(model_id, X_tr, Y_tr, net_mask, n_jobs=4)
+        fitted = vp.fit_model(model_id, X_tr, Y_tr, net_mask, n_jobs=2)  # 降并行度防OOM
         y_pred = vp.predict_model(X_val, fitted)
         elapsed = time.time() - t0
 
@@ -212,7 +220,10 @@ def main():
     log("=" * 72)
 
     data = vp.load_data()
-    X, Y, A_bar = data["X"], data["Y"], data["A_bar"]
+    X, Y = data["X"], data["Y"]
+    # A_bar 2.9GB, 用 memmap 避免 OOM
+    A_bar_path = Path(__file__).parents[1] / "特征工程" / "A_bar.npy"
+    A_bar = np.load(str(A_bar_path), mmap_mode='r')
     folds = make_folds(len(X))
     log(f"数据: X={X.shape} Y={Y.shape} A_bar={A_bar.shape}")
     for f in folds:
@@ -252,17 +263,27 @@ def main():
 
     # ----------------------------- M3a -----------------------------
     log("\n" + "=" * 72)
-    log("M3a 消融: Sparse VARX + self-lag unpenalized")
+    log("M3a 消融: Sparse VARX + self-lag unpenalized — 独立搜索 λ₁")
     base_l1 = float(m3_best["LAMBDA_LASSO"])
     base_l3 = float(m3_best["LAMBDA_EXOG"])
-    m3a_params = {
-        "LAMBDA_LASSO": base_l1, "lasso_lambda": base_l1,
-        "LAMBDA_EXOG": base_l3, "LAMBDA_NETWORK": 0.0, "self_free": True,
-    }
-    m3a_rows = run_across_folds("M3a", 3, m3a_params, X, Y, A_bar, folds)
+    # P1: M3a 不应被动继承 M3 的 λ₁，自环豁免后最优 λ₁ 可能不同
+    L1_M3A_GRID = sorted(set([base_l1 * 0.5, base_l1, base_l1 * 1.5]))
+    L1_M3A_GRID = [max(5e-5, min(1e-3, v)) for v in L1_M3A_GRID]  # 限制在合理范围
+    log(f"  M3 最优 λ₁={base_l1:.0e}, M3a 独立搜索 {L1_M3A_GRID}")
+    m3a_rows = []
+    for lam in L1_M3A_GRID:
+        params = {
+            "LAMBDA_LASSO": lam, "lasso_lambda": lam,
+            "LAMBDA_EXOG": base_l3, "LAMBDA_NETWORK": 0.0, "self_free": True,
+        }
+        m3a_rows += run_across_folds("M3a", 3, params, X, Y, A_bar, folds)
     all_rows += m3a_rows
-    m3a_best = summarize(m3a_rows).iloc[0]
-    log(f"  M3 -> M3a: {m3_best['mean_val_mse']:.4e} -> {m3a_best['mean_val_mse']:.4e}")
+    m3a_summary = summarize(m3a_rows)
+    m3a_best = m3a_summary.sort_values("mean_val_mse").iloc[0]
+    log(f"  M3a 最优 λ₁={float(m3a_best['LAMBDA_LASSO']):.0e}, "
+        f"MSE={float(m3a_best['mean_val_mse']):.4e}")
+    log(f"  M3 -> M3a: {base_l1:.0e}→{float(m3a_best['LAMBDA_LASSO']):.0e}, "
+        f"MSE {m3_best['mean_val_mse']:.4e}→{float(m3a_best['mean_val_mse']):.4e}")
 
     # ----------------------------- M4 -----------------------------
     log("\n" + "=" * 72)
@@ -299,6 +320,38 @@ def main():
         f"MSE={m4_best['mean_val_mse']:.4e}, sparse={m4_best['mean_sparsity']:.1%}, "
         f"alive={m4_best['mean_n_alive']:.0f}, density={m4_best['mean_density']:.1%}")
     log(f"  选择原因: {m4_reason}")
+
+    # P2: M4 λ₃ 两步法 — 固定最优(λ₁,τ,λ_net,last_day), 细搜 λ₃
+    log("\n" + "=" * 72)
+    log("M4 λ₃ 细化: 固定(λ₁*,τ*,λ_net*,last_day*), 搜 λ₃")
+    m4_l1 = float(m4_best.get("LAMBDA_LASSO", m4_best.get("lasso_lambda", base_l1)))
+    m4_tau = float(m4_best["NETWORK_THRESHOLD"])
+    m4_lnet = float(m4_best["LAMBDA_NETWORK"])
+    m4_last = bool(m4_best.get("USE_LAST_DAY", False))
+    L3_REFINE = [1e-4, 3e-4, 5e-4, 7e-4, 1e-3]
+    log(f"  固定: λ₁={m4_l1:.0e}  τ={m4_tau}  λ_net={m4_lnet:.0e}  last_day={m4_last}")
+    m4_l3_rows = []
+    for l3 in L3_REFINE:
+        params = {
+            "LAMBDA_LASSO": m4_l1, "lasso_lambda": m4_l1,
+            "LAMBDA_EXOG": l3,
+            "LAMBDA_NETWORK": m4_lnet,
+            "NETWORK_THRESHOLD": m4_tau,
+            "USE_LAST_DAY": m4_last,
+            "self_free": True,
+        }
+        m4_l3_rows += run_across_folds("M4_l3", 4, params, X, Y, A_bar, folds)
+    all_rows += m4_l3_rows
+    m4_l3_summary = summarize(m4_l3_rows)
+    m4_l3_best = m4_l3_summary.sort_values("mean_val_mse").iloc[0]
+    # 如果 λ₃ 精搜出了更好的, 更新 M4 最优
+    if float(m4_l3_best["mean_val_mse"]) < float(m4_best["mean_val_mse"]):
+        log(f"  ✅ λ₃ 精搜改善: {float(m4_best['mean_val_mse']):.4e} → {float(m4_l3_best['mean_val_mse']):.4e}")
+        log(f"    新 λ₃={float(m4_l3_best['LAMBDA_EXOG']):.0e} (旧={base_l3:.0e})")
+        base_l3 = float(m4_l3_best["LAMBDA_EXOG"])  # 更新，传给 M5
+        m4_best = m4_l3_best
+    else:
+        log(f"  → λ₃ 保持 {base_l3:.0e} (精搜未改善)")
 
     # ----------------------------- M5 -----------------------------
     log("\n" + "=" * 72)
@@ -366,6 +419,7 @@ def main():
         "A_BAR_ROLLING_WINDOW": int(getattr(共享模块, "Ā_ROLLING_WINDOW")),
         "LAMBDA_LASSO_M2": float(m2_best["LAMBDA_LASSO"]),
         "LAMBDA_LASSO_M3": base_l1,
+        "LAMBDA_LASSO_M3a": float(m3a_best.get("LAMBDA_LASSO", base_l1)),  # P1: M3a 独立 λ₁
         "LAMBDA_LASSO_M4": m4_l1,
         "LAMBDA_EXOG": base_l3,
         "LAMBDA_NETWORK": float(m4_best["LAMBDA_NETWORK"]),

@@ -3,33 +3,34 @@
   "A_BAR_ROLLING_WINDOW": 20,
   "LAMBDA_LASSO_M2": 0.0005,
   "LAMBDA_LASSO_M3": 0.0003,
+  "LAMBDA_LASSO_M3a": 0.00045,
   "LAMBDA_LASSO_M4": 0.0003,
-  "LAMBDA_EXOG": 0.0005,
+  "LAMBDA_EXOG": 0.0003,
   "LAMBDA_NETWORK": 0.001,
   "NETWORK_THRESHOLD": 0.7,
   "USE_LAST_DAY": false,
   "LAMBDA_TURNOVER": 0.001,
   "m4_selected_reason": "M4 beats M3a on mean validation MSE",
-  "m5_selected_reason": "MSE <= M4 + 10%, turnover <= M4; picked lowest turnover",
+  "m5_selected_reason": "WARNING: no smooth candidate met turnover/MSE constraints; picked lowest MSE",
   "mean_val_mse": {
     "M2": 1.925598723468969e-05,
-    "M3": 1.888298790906854e-05,
-    "M3a": 1.8074852867474184e-05,
-    "M4": 1.8029181552935693e-05,
-    "M5": 1.892265238137941e-05
+    "M3": 1.888615937939252e-05,
+    "M3a": 1.8068497992752518e-05,
+    "M4": 1.8013644253841846e-05,
+    "M5": 1.931682723240415e-05
   },
   "mean_turnover_econ": {
-    "M4": 1.0008417834713745,
-    "M5": 0.9986462518399971
+    "M4": 1.0016942927939707,
+    "M5": 1.024407209822101
   },
   "mean_sparsity": {
     "M2": 0.9892420403535563,
-    "M3": 0.9702725393955051,
-    "M4": 0.9885631045667213
+    "M3": 0.9702703866356669,
+    "M4": 0.9884963690117398
   },
   "mean_n_alive": {
-    "M3": 13809.0,
-    "M4": 5312.666666666667
+    "M3": 13810.0,
+    "M4": 5343.666666666667
   },
   "mean_network_density": 0.2644362092663152
 }
