@@ -33,7 +33,7 @@ _spec.loader.exec_module(vp)
 
 # ---- 导入共享模块 ----
 sys.path.insert(0, str(Path(__file__).parents[1] / "图形Lasso" / "code"))
-from 共享模块 import K, ETA, log as shared_log, set_log_file, load_day, compute_raw_cov, EPS_RIDGE
+from 共享模块 import K, ETA, log as shared_log, set_log_file, load_day, compute_raw_cov, EPS_RIDGE, LAMBDA_LASSO_M3a
 
 # ---- 导入 Table3 的函数 ----
 _t3_path = Path(__file__).parents[1] / "性能评估与可视化" / "Table3_投资组合表现.py"
@@ -77,9 +77,10 @@ def main():
     # ================================================================
     # 2. 生成 M3a 预测 (不在标准模型中，需单独拟合)
     # ================================================================
-    log(f"\n--- 生成 M3a 预测 ---")
+    log(f"\n--- 生成 M3a 预测 (λ₁={LAMBDA_LASSO_M3a:.0e}) ---")
     old_cfg = dict(vp.MODELS[3])
     vp.MODELS[3]['self_free'] = True
+    vp.MODELS[3]['lasso_lambda'] = LAMBDA_LASSO_M3a  # P1: M3a 独立最优 λ₁
     try:
         fitted_m3a = vp.fit_model(3, X_tr, Y_tr, None, n_jobs=4)
         Y_pred_m3a = vp.predict_model(X_te, fitted_m3a)
