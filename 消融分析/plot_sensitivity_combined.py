@@ -36,28 +36,21 @@ opt_lam = float(best['LAMBDA_LASSO'])
 ax.plot(opt_tau, np.log10(opt_lam), 'k*', markersize=15, markeredgewidth=1.5, 
         markeredgecolor='white')
 
-# ====== RIGHT: 按 MSE 排序, 颜色区分 λ₁ 组别 ======
+# ====== RIGHT: 排序折线, 颜色区分 λ₁ 组, 附 M3a 参照线 ======
 ax = axes[1]
-colors = {1e-4: '#e74c3c', 3e-4: '#27ae60', 5e-4: '#2980b9'}
 m4_sorted = m4.sort_values('mean_val_mse').reset_index(drop=True)
-x = range(len(m4_sorted))
-for lam in [1e-4, 5e-4, 3e-4]:
+for lam, c, lb in [(1e-4, '#e74c3c', 'lambda1=1e-4 (weak)'), 
+                      (5e-4, '#2980b9', 'lambda1=5e-4 (strong)'),
+                      (3e-4, '#27ae60', 'lambda1=3e-4 (optimal)')]:
     mask = m4_sorted['LAMBDA_LASSO'] == lam
-    ax.scatter([i for i, m in enumerate(mask) if m], 
-               m4_sorted.loc[mask, 'mse_scaled'],
-               c=colors[lam], s=18, alpha=0.7, edgecolors='none',
-               label=f'lambda1={lam:.0e} ({mask.sum()})')
+    vals = m4_sorted.loc[mask, 'mse_scaled'].values
+    # Connect points within same lambda group
+    idx = np.where(mask)[0]
+    ax.plot(idx + 1, vals, color=c, linewidth=1.2, alpha=0.8, label=lb)
+    ax.scatter(idx + 1, vals, color=c, s=12, alpha=0.6, edgecolors='none')
 
-ax.axhline(y=m4_sorted['mse_scaled'].iloc[0], color='green', linestyle='--', alpha=0.5)
 ax.axhline(y=m3a_best, color='orange', linestyle=':', linewidth=1.5, 
            label=f'M3a best: {m3a_best:.2f}')
-
-# Annotation
-n_best = int(m4_sorted['LAMBDA_LASSO'].eq(3e-4).sum())
-n_beat = int((m4_sorted['mse_scaled'] < m3a_best).sum())
-ax.text(60, 1.895, f'lambda1=3e-4: {n_beat}/{n_best} beat M3a\n(90% success rate)', 
-        fontsize=8, color='#27ae60', fontweight='bold')
-
 ax.set_xlabel('Parameter combination (sorted by MSE)')
 ax.set_ylabel('Validation MSE (\u00d71e-5)')
 ax.set_title('M4: 120 grid-search combinations')
