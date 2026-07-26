@@ -84,8 +84,14 @@ def compute_all(models, test_days, eta=ETA):
         Y = md['Y_pred'].astype(np.float64)
         T = min(len(Y)-1, n_days-1)
         port_ret = np.array([Y[t] @ daily_rets[t+1] for t in range(T)])
-        to_vec   = np.array([np.sum(np.abs(Y[t+1] - Y[t])) for t in range(T)])
-        rpv_vec  = np.array([Y[t] @ covs[t+1] @ Y[t] for t in range(T)])
+        # 经济换手率: 目标权重 vs 被动漂移权重 (排除价格变动的影响)
+        to_vec = np.zeros(T, dtype=np.float64)
+        for t in range(T):
+            w_prev = Y[t]                    # t时刻的持仓权重
+            r_next = daily_rets[t+1]          # t→t+1的个股收益
+            w_drifted = w_prev * (1 + r_next) / (1 + w_prev @ r_next)  # 只持仓不交易会变成的权重
+            to_vec[t] = np.sum(np.abs(Y[t+1] - w_drifted))             # 实际需要交易的差额
+        rpv_vec = np.array([Y[t] @ covs[t+1] @ Y[t] for t in range(T)])
         results[mid] = _metrics(T, port_ret, to_vec, rpv_vec, eta, md['name'])
 
     return results
