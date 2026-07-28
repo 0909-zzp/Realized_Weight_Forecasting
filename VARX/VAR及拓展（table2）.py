@@ -463,9 +463,6 @@ def compute_model6(Y_pred_m4, Y_actual, valid_train_days, n_train=200, eta=1e-4,
     A_bar=np.load(Path(__file__).parent.parent/"特征工程"/"A_bar.npy")[:len(valid_train_days)].mean(0)
     deg=(A_bar.sum(1)/(K-1)).clip(0,1)
     eta_vec=eta*(1.5-0.5*deg)
-    A_bar=np.load(Path(__file__).parent.parent/"特征工程"/"A_bar.npy")[:len(valid_train_days)].mean(0)
-    deg=(A_bar.sum(1)/(K-1)).clip(0,1)
-    eta_vec=eta*(1.5-0.5*deg)
     log(f"  滚动Sigma({roll_window}d): {loaded}天, deg=[{deg.min():.2f},{deg.max():.2f}], eta=[{eta_vec.min():.1e},{eta_vec.max():.1e}] ({time.time()-t0:.1f}s)")
     T=Y_pred_m4.shape[0]; Y_dfl=np.zeros_like(Y_pred_m4)
     for t in range(T):
@@ -997,12 +994,6 @@ def main():
     m6_to  = compute_turnover(Y_pred_m6)
     log(f"  MSE: {m6_mse:.6e}  MAE: {m6_mae:.6e}  换手率: {m6_to:.6f}")
 
-    predictions[6] = Y_pred_m6
-    m6_mse = compute_mse(Y_pred_m6, Y_te)
-    m6_mae = compute_mae(Y_pred_m6, Y_te)
-    m6_to  = compute_turnover(Y_pred_m6)
-    log(f"  MSE: {m6_mse:.6e}  MAE: {m6_mae:.6e}  换手率: {m6_to:.6f}")
-
     results.append({
         'Model': 6, 'Name': 'DFL VARX',
         'MSE': m6_mse, 'MAE': m6_mae,
@@ -1028,30 +1019,31 @@ def main():
     results[5]['DM_pvalue'] = pval_m6
     results[5]['DM_log10_p'] = log10p_m6
 
-    # ---- Model 7: LSTM (pure NumPy, BPTT + Adam) ----
+    # ---- Model 7: LSTM (single-layer + softmax + dropout + L2) ----
     log(f"\n--- Model 7: LSTM ---")
-    log(f"  架构: 序列长度={20}, 隐藏维度={64}, LSTM×1 → Dense({K})")
     m4_cols = fitted_models[4]['cols']
     X_m7 = X_tr[:, m4_cols]
-
-    # hyperparams
-    seq_len, hid, lr = 20, 64, 0.01     # lr=0.01 补偿 1/K 梯度缩放修复
     n_feat = X_m7.shape[1]
-    batch, epochs, patience = 32, 100, 10
 
-    # ---------- LSTM cell ----------
+    seq_len, hid, lr = 30, 128, 0.0005
+    dropout_rate = 0.05
+    l2_lambda = 0.0
+    softmax_T = 0.5
+    batch, epochs, patience = 64, 500, 50
+    log(f"  架构: seq={seq_len}, LSTM({n_feat}→{hid})→Drop→Softmax({K},T={softmax_T})")
+    log(f"  lr={lr}  dropout={dropout_rate}  L2={l2_lambda}  patience={patience}")
+
+    # ---------- Init ----------
     def sigmoid(x): return 1 / (1 + np.exp(-np.clip(x, -50, 50)))
-    d_tanh    = lambda z, a: 1 - a**2
+    d_tanh = lambda z, a: 1 - a**2
     d_sigmoid = lambda a: a * (1 - a)
 
-    # Xavier init
     scale = np.sqrt(2.0 / (n_feat + hid))
     W = {g: scale * np.random.randn(hid, n_feat + hid).astype(np.float64) for g in 'f i o c'.split()}
     b = {g: (np.ones(hid) if g == 'f' else np.zeros(hid)).astype(np.float64) for g in 'f i o c'.split()}
-    Wy = scale * np.random.randn(K, hid).astype(np.float64)
+    Wy = np.sqrt(2.0/(K+hid)) * np.random.randn(K, hid).astype(np.float64)
     by = np.zeros(K, dtype=np.float64)
 
-    # Adam accumulators
     M, V = {}, {}
     for g in 'f i o c'.split():
         M[f'W_{g}'], V[f'W_{g}'] = np.zeros_like(W[g]), np.zeros_like(W[g])
@@ -1059,31 +1051,29 @@ def main():
     M['Wy'], V['Wy'] = np.zeros_like(Wy), np.zeros_like(Wy)
     M['by'], V['by'] = np.zeros_like(by), np.zeros_like(by)
 
-    # ---------- make sequences ----------
-    def make_seqs(X, Y):  # (n, feat), (n, K) → (n-seq+1, seq, feat), (n-seq+1, K)
+    # ---------- Data ----------
+    def make_seqs(X, Y):
         n = len(X); xs, ys = [], []
         for i in range(seq_len-1, n):
             xs.append(X[i-seq_len+1:i+1]); ys.append(Y[i])
         return np.array(xs, dtype=np.float64), np.array(ys, dtype=np.float64)
 
-    # normalize
     x_mu = X_m7.mean(0); x_sig = np.std(X_m7, 0).clip(1e-8)
     X_s = (X_m7 - x_mu) / x_sig
-    # 验证集从 splits 获取（X_tr/Y_tr 仅含训练部分，不能从中取 val）
     X_val_s = (splits['val'][0][:, m4_cols] - x_mu) / x_sig
     Y_val_d = splits['val'][1]
-    X_te_s  = (X_te[:, m4_cols] - x_mu) / x_sig
+    X_te_s = (X_te[:, m4_cols] - x_mu) / x_sig
 
     Xs_tr, Ys_tr = make_seqs(X_s, Y_tr)
     Xs_val, Ys_val = make_seqs(X_val_s, Y_val_d) if len(Y_val_d) >= seq_len else (Xs_tr[:1], Ys_tr[:1])
 
-    # ---------- forward pass ----------
-    def forward(X_batch):  # (B, seq, feat) → (B, K), plus caches
-        B = len(X_batch)
+    # ---------- Forward ----------
+    def lstm_forward(X_batch, training=True):
+        B, _, _ = X_batch.shape
         h = np.zeros((B, hid)); c = np.zeros((B, hid))
-        cache = []  # [(h_prev, c_prev, i, f, o, ct, x_t)]
+        cache = []
         for t in range(seq_len):
-            x_t = X_batch[:, t, :]; h_prev, c_prev = h.copy(), c.copy()
+            x_t = X_batch[:, t, :]; hp = h.copy(); cp = c.copy()
             xh = np.hstack([x_t, h])
             i = sigmoid(xh @ W['i'].T + b['i'])
             f = sigmoid(xh @ W['f'].T + b['f'])
@@ -1091,91 +1081,121 @@ def main():
             ct = np.tanh(xh @ W['c'].T + b['c'])
             c = f * c + i * ct
             h = o * np.tanh(c)
-            cache.append((h_prev, c_prev, i, f, o, ct, x_t))
-        y = h @ Wy.T + by
-        return y, cache, h, c
+            cache.append((hp, cp, i, f, o, ct, x_t))
+        # Dropout on final hidden state
+        mask = None
+        if training and dropout_rate > 0:
+            mask = (np.random.rand(*h.shape) > dropout_rate).astype(np.float64) / (1 - dropout_rate)
+            h = h * mask
+        # Softmax output (with temperature)
+        logits = h @ Wy.T + by
+        logits_t = logits / softmax_T
+        logits_t = logits_t - logits_t.max(axis=1, keepdims=True)
+        exp_l = np.exp(logits_t)
+        y_pred = exp_l / exp_l.sum(axis=1, keepdims=True)
+        return y_pred, cache, mask, logits_t, h
 
-    # ---------- backward pass + Adam update ----------
-    def step(X_batch, Y_batch, t_step):
+    def eval_loss(Xb, Yb):
+        yp, _, _, _, _ = lstm_forward(Xb, training=False)
+        return float(np.mean((yp - Yb)**2))
+
+    # ---------- Backward + Update ----------
+    def lstm_step(X_batch, Y_batch, t_step):
         nonlocal Wy, by, W, b, M, V
         B = len(X_batch)
-        y_pred, cache, h_T, c_T = forward(X_batch)
-        loss = np.mean((y_pred - Y_batch)**2)
-        dy = (2/(B*K)) * (y_pred - Y_batch)  # loss归一化1/(B*K)，梯度需同步缩放
+        y_pred, cache, mask, logits, h_out = lstm_forward(X_batch, training=True)
 
-        dWy = dy.T @ h_T; dby = dy.sum(0)
-        dh = dy @ Wy
+        # Loss: MSE (no L2)
+        diff = y_pred - Y_batch
+        mse = np.mean(diff**2)
+        loss_val = mse
+
+        # Gradient through softmax + MSE with temperature T
+        dy = (2.0/(B*K)) * diff
+        dlogits = dy * y_pred * (1.0 - y_pred) / softmax_T  # T correction
+
+        # Gradient through output layer
+        dWy = dlogits.T @ h_out  # no L2
+        dby = dlogits.sum(axis=0)
+
+        # Gradient through dropout mask
+        dh = dlogits @ Wy
+        if mask is not None:
+            dh = dh * mask
+
+        # BPTT through LSTM
         dc = np.zeros((B, hid))
-        dW = {g: np.zeros_like(W[g]) for g in 'f i o c'.split()}
-        db = {g: np.zeros_like(b[g]) for g in 'f i o c'.split()}
+        dW_g = {g: np.zeros_like(W[g]) for g in 'f i o c'.split()}
+        db_g = {g: np.zeros_like(b[g]) for g in 'f i o c'.split()}
 
         for t in range(seq_len-1, -1, -1):
-            h_prev, c_prev, i_g, f_g, o_g, ct_g, x_t = cache[t]
-            c_cur = cache[t+1][1] if t < seq_len-1 else c_T  # next step's c_prev = this step's c
-            h_cur = cache[t+1][0] if t < seq_len-1 else h_T
+            hp, cp, ig, fg, og, ctg, x_t = cache[t]
+            c_cur = cache[t+1][2] if t < seq_len-1 else cache[-1][2]
+            h_cur = cache[t+1][0] if t < seq_len-1 else h_out
 
             do = dh * np.tanh(c_cur)
-            dc = dc + dh * o_g * d_tanh(None, np.tanh(c_cur))
-            di = dc * ct_g; dct = dc * i_g
-            df = dc * c_prev          # c_prev = cache[t][1] = 本步遗忘门所用的 C_{t-1}
+            dc = dc + dh * og * d_tanh(None, np.tanh(c_cur))
+            di = dc * ctg; dct = dc * ig
+            df = dc * cp
 
-            do_g = do * d_sigmoid(o_g); di_g = di * d_sigmoid(i_g)
-            df_g = df * d_sigmoid(f_g); dct_g = dct * d_tanh(None, ct_g)
+            do_g = do * d_sigmoid(og); di_g = di * d_sigmoid(ig)
+            df_g = df * d_sigmoid(fg); dct_g = dct * d_tanh(None, ctg)
 
-            xh = np.hstack([x_t, h_prev])
-            dW['o'] += do_g.T @ xh; db['o'] += do_g.sum(0)
-            dW['i'] += di_g.T @ xh; db['i'] += di_g.sum(0)
-            dW['f'] += df_g.T @ xh; db['f'] += df_g.sum(0)
-            dW['c'] += dct_g.T @ xh; db['c'] += dct_g.sum(0)
+            xh = np.hstack([x_t, hp])
+            dW_g['o'] += do_g.T @ xh; db_g['o'] += do_g.sum(axis=0)
+            dW_g['i'] += di_g.T @ xh; db_g['i'] += di_g.sum(axis=0)
+            dW_g['f'] += df_g.T @ xh; db_g['f'] += df_g.sum(axis=0)
+            dW_g['c'] += dct_g.T @ xh; db_g['c'] += dct_g.sum(axis=0)
 
-            dh_xh = do_g@W['o']+di_g@W['i']+df_g@W['f']+dct_g@W['c']
+            dh_xh = do_g@W['o'] + di_g@W['i'] + df_g@W['f'] + dct_g@W['c']
             dh = dh_xh[:, n_feat:]
-            dc = dc * f_g
+            dc = dc * fg
 
-        # Adam update
-        for name, dval in [
-            ('Wy', dWy), ('by', dby),
-            ('W_f', dW['f']), ('b_f', db['f']), ('W_i', dW['i']), ('b_i', db['i']),
-            ('W_o', dW['o']), ('b_o', db['o']), ('W_c', dW['c']), ('b_c', db['c']),
-        ]:
-            M[name] = 0.9*M[name] + 0.1*dval; V[name] = 0.999*V[name] + 0.001*dval**2
-            m_hat = M[name]/(1-0.9**(t_step+1)); v_hat = V[name]/(1-0.999**(t_step+1))
-            if name == 'Wy': Wy -= lr*m_hat/(np.sqrt(v_hat)+1e-8)
-            elif name == 'by': by -= lr*m_hat/(np.sqrt(v_hat)+1e-8)
-            elif name.startswith('W_'): W[name[2]] -= lr*m_hat/(np.sqrt(v_hat)+1e-8)
-            else: b[name[2]] -= lr*m_hat/(np.sqrt(v_hat)+1e-8)
-        return loss
+        # Gradient clipping
+        for name, dval in [('Wy', dWy), ('by', dby)] + \
+            [(f'W_{g}', dW_g[g]) for g in 'f i o c'.split()] + \
+            [(f'b_{g}', db_g[g]) for g in 'f i o c'.split()]:
+            dval = np.clip(dval, -1.0, 1.0)
+            M[name] = 0.9*M[name] + 0.1*dval
+            V[name] = 0.999*V[name] + 0.001*dval**2
+            m_hat = M[name]/(1.0-0.9**(t_step+1))
+            v_hat = V[name]/(1.0-0.999**(t_step+1))
+            update = lr * m_hat / (np.sqrt(v_hat) + 1e-8)
+            if name == 'Wy': Wy -= update
+            elif name == 'by': by -= update
+            elif name.startswith('W_'): W[name[2]] -= update
+            else: b[name[2]] -= update
 
-    # ---------- training ----------
+        return loss_val
+
+    # ---------- Training ----------
     t0 = time.time()
     n_batches = max(1, len(Xs_tr) // batch)
     best_val, wait = np.inf, 0
-    log(f"  训练序列={len(Xs_tr)}, 批次数={n_batches}, {epochs}轮")
+    log(f"  训练序列={len(Xs_tr)}, batch={batch}, n_batches={n_batches}")
 
     for ep in range(epochs):
         idx = np.random.permutation(len(Xs_tr))
         losses = []
         for ib in range(n_batches):
             bi = idx[ib*batch:(ib+1)*batch]
-            loss = step(Xs_tr[bi], Ys_tr[bi], ep*n_batches+ib)
+            loss = lstm_step(Xs_tr[bi], Ys_tr[bi], ep*n_batches+ib)
             losses.append(loss)
 
-        # validation
-        yv, _, _, _ = forward(Xs_val); val_mse = float(np.mean((yv-Ys_val)**2))
+        val_mse = eval_loss(Xs_val, Ys_val)
         if val_mse < best_val: best_val = val_mse; wait = 0
         else: wait += 1
         if ep % 20 == 0:
-            log(f"  ep {ep:3d}: train={np.mean(losses):.4e}  val={val_mse:.4e}")
+            log(f"  ep {ep:3d}: train={np.mean(losses):.4e}  val={val_mse:.4e}  best={best_val:.4e}")
+        if wait >= patience: break
 
     log(f"  训练完成 ({time.time()-t0:.1f}s), 最佳验证MSE={best_val:.4e}")
 
-    # ---------- predict ----------
+    # ---------- Predict ----------
     Xs_te, _ = make_seqs(X_te_s, Y_te)
-    Y_pred_m7, _, _, _ = forward(Xs_te)
-    # pad first seq_len-1 predictions with M4
+    Y_pred_m7, _, _, _, _ = lstm_forward(Xs_te, training=False)
     pad = predictions[4][:seq_len-1]
     Y_pred_m7 = np.vstack([pad, Y_pred_m7])
-    # sum-to-one
     s7 = Y_pred_m7.sum(1, keepdims=True); s7 = np.where(np.abs(s7)<1e-10, 1.0, s7)
     Y_pred_m7 = Y_pred_m7 / s7
 
