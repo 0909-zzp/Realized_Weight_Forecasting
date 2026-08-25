@@ -363,11 +363,11 @@ def compute_mae(Y_pred: np.ndarray, Y_true: np.ndarray) -> float:
 
 def dm_test(Y_pred_model: np.ndarray, Y_pred_baseline: np.ndarray,
             Y_true: np.ndarray) -> Tuple[float, float, float]:
-    """Diebold-Mariano 检验（1步前向，vs baseline Model 1）。
+    """Diebold-Mariano 检验（1步前向，vs baseline Model 1, Newey-West HAC 标准误）。
 
     标准 DM 方向（Diebold & Mariano, 1995）:
       d_t = loss_model_t - loss_baseline_t   （正 = baseline 更好）
-      DM_stat = mean(d) / sqrt(var(d)/n)
+      DM_stat = mean(d) / sqrt(var_HAC(d)/n)
       负且统计显著 → model 显著优于 baseline（损失更低）。
 
     Returns:
@@ -382,7 +382,16 @@ def dm_test(Y_pred_model: np.ndarray, Y_pred_baseline: np.ndarray,
     n = len(d)
     if n < 2 or d.var(ddof=1) < 1e-15:
         return 0.0, 1.0, np.nan
-    dm = d.mean() / np.sqrt(d.var(ddof=1) / n)
+    
+    # Newey-West HAC 标准误 (自动滞后: floor(4*(n/100)^(2/9)))
+    max_lag = int(np.floor(4 * (n/100) ** (2/9)))
+    d_dm = d - d.mean()
+    nw_var = np.dot(d_dm, d_dm) / n
+    for lag in range(1, max_lag + 1):
+        weight = 1 - lag / (max_lag + 1)
+        nw_var += 2 * weight * np.dot(d_dm[lag:], d_dm[:-lag]) / n
+    nw_var = nw_var / n if nw_var > 1e-15 else d.var(ddof=1) / n
+    dm = d.mean() / np.sqrt(nw_var)
     # 用 logsf 避免 float64 下溢（DM≈40 时 p≈10^-350）
     logsf = sp_stats.norm.logsf(abs(dm))          # log(1 - Φ(|DM|))
     log10_p = (np.log(2) + float(logsf)) / np.log(10)
@@ -469,6 +478,149 @@ def compute_model6(Y_pred_m4, Y_actual, valid_train_days, n_train=200, eta=1e-4,
         ws=Y_pred_m4[t]; wp=Y_actual[t-1] if t>0 else Y_actual[0]
         Y_dfl[t]=_solve_dfl_day(ws,wp,Sigma_rolling,eta_vec,rho)
     log(f"  DFL 完成 ({time.time()-t0:.1f}s)")
+    return Y_dfl
+
+
+def compute_model6_drift_l1(Y_pred_m4, Y_actual, valid_train_days,
+                            eta=1e-6, rho=1e-3, risk_mult=1.0,
+                            rolling_cov=False, cov_window=40):
+    """M6: drift-aware L1 DFL。
+
+    惩罚项使用真实再平衡量:
+        w_drifted_{t-1} = w_{t-1}(1+r_t)/(1+w_{t-1}·r_t)
+        loss += η·||w_t - w_drifted_{t-1}||_1
+
+    risk_mult 缩放风险项：min 0.5*risk_mult*w'Σw + η·||w-w_drifted||_1
+    + 0.5*ρ·||w-w_stat||²。
+
+    rolling_cov=True 时，每天使用该日之前 cov_window 天的滚动协方差，
+    而非训练期末的固定协方差。
+
+    该版本与 Table3 评估中的经济换手率对齐，适合生成组合表现用的 DFL 权重。
+    """
+    log("\n--- Model 6: DFL drift-aware L1 "
+        f"(box={DFL_BOX}, eta={eta:.0e}, rho={rho:.0e}, risk={risk_mult:.0f}, "
+        f"rolling={rolling_cov}, win={cov_window}) ---")
+    sys.path.insert(0, str(Path(__file__).parents[1] / "图形Lasso" / "code"))
+    from 共享模块 import K, load_day, compute_raw_cov, EPS_RIDGE
+
+    t0 = time.time()
+
+    # 测试期简单收益，用于把上一期策略持仓漂移到本期
+    feat_dir = Path(__file__).parent.parent / "特征工程"
+    valid_indices = np.load(feat_dir / "valid_indices.npy")
+    test_indices = valid_indices[-len(Y_actual):]
+    data_dir = Path(__file__).parent.parent / "数据" / "1min_log_return_npy"
+    all_files = sorted([f for f in data_dir.iterdir()
+                        if f.suffix == ".npy" and f.name[0].isdigit()])
+    simple_rets = np.array([
+        np.expm1(np.load(all_files[i]).sum(axis=1)) for i in test_indices
+    ])
+
+    if rolling_cov:
+        start = test_indices[0] - cov_window
+        end = test_indices[-1]
+        covs = []
+        for i in range(start, end + 1):
+            rett = np.load(str(all_files[i]))
+            cov = compute_raw_cov(rett)
+            cov.flat[::K + 1] += EPS_RIDGE
+            covs.append(cov)
+        T_sigma = len(test_indices)
+        sigmas = np.empty((T_sigma, K, K), dtype=np.float64)
+        s = np.sum(covs[0:cov_window], axis=0) / cov_window
+        sigmas[0] = s
+        for t in range(1, T_sigma):
+            s = s + (covs[cov_window + t - 1] - covs[t - 1]) / cov_window
+            sigmas[t] = s
+        log(f"  每日滚动Sigma({cov_window}d): {T_sigma}天")
+    else:
+        si = valid_train_days[-cov_window:]
+        cov_sum = np.zeros((K, K))
+        loaded = 0
+        for idx in si:
+            try:
+                rett = load_day(idx)
+                cov = compute_raw_cov(rett)
+                cov.flat[::K + 1] += EPS_RIDGE
+                cov_sum += cov
+                loaded += 1
+            except Exception:
+                pass
+        Sigma_rolling = cov_sum / loaded
+        sigmas = None
+        log(f"  滚动Sigma({cov_window}d): {loaded}天")
+
+    # ADMM 求解 L1 问题; 固定Sigma可预分解一次, 滚动Sigma逐日预分解
+    rho_admm = 0.01
+    eye = np.eye(K)
+    if rolling_cov:
+        minvs = []
+        for S in sigmas:
+            Q = risk_mult * S + rho * eye
+            Minv = np.linalg.inv(Q + rho_admm * eye)
+            minvs.append((Minv, Minv @ np.ones(K)))
+    else:
+        Q = risk_mult * Sigma_rolling + rho * eye
+        Minv = np.linalg.inv(Q + rho_admm * eye)
+        Minv1 = Minv @ np.ones(K)
+        minvs = None
+
+    def _drift(w, r):
+        return w * (1 + r) / (1 + w @ r)
+
+    def _solve_l1(w_stat, w_prev, Minv, Minv1):
+        c = -rho * w_stat
+        z = w_stat.copy()
+        u = np.zeros(K)
+        thr = eta / rho_admm
+        for _ in range(1000):
+            z_old = z.copy()
+            d = c - rho_admm * (z - u)
+            w_hat = -Minv @ d
+            lam = (w_hat.sum() - 1.0) / Minv1.sum()
+            w = w_hat - lam * Minv1
+            a = w + u
+            z_new = w_prev + np.sign(a - w_prev) * np.maximum(
+                np.abs(a - w_prev) - thr, 0.0
+            )
+            z_new = np.clip(z_new, -DFL_BOX, DFL_BOX)
+            u = u + w - z_new
+            primal = np.linalg.norm(w - z_new)
+            dual = rho_admm * np.linalg.norm(z_new - z_old)
+            if (primal < 1e-9 * np.linalg.norm(w) + 1e-10
+                    and dual < 1e-9 * np.linalg.norm(u) + 1e-10):
+                z = z_new
+                break
+            z = z_new
+        return z
+
+    T = Y_pred_m4.shape[0]
+    Y_dfl = np.zeros_like(Y_pred_m4)
+    for t in range(T):
+        if t == 0:
+            w_prev = Y_actual[0]
+        else:
+            w_prev = _drift(Y_dfl[t - 1], simple_rets[t])
+        if eta == 0.0:
+            if rolling_cov:
+                Y_dfl[t] = _solve_dfl_day(
+                    Y_pred_m4[t], w_prev, risk_mult * sigmas[t],
+                    np.zeros(K), rho
+                )
+            else:
+                Y_dfl[t] = _solve_dfl_day(
+                    Y_pred_m4[t], w_prev, risk_mult * Sigma_rolling,
+                    np.zeros(K), rho
+                )
+        else:
+            if rolling_cov:
+                Minv_t, Minv1_t = minvs[t]
+                Y_dfl[t] = _solve_l1(Y_pred_m4[t], w_prev, Minv_t, Minv1_t)
+            else:
+                Y_dfl[t] = _solve_l1(Y_pred_m4[t], w_prev, Minv, Minv1)
+
+    log(f"  DFL drift-aware L1 完成 ({time.time()-t0:.1f}s)")
     return Y_dfl
 
 
@@ -837,11 +989,11 @@ def compute_mae(Y_pred: np.ndarray, Y_true: np.ndarray) -> float:
 
 def dm_test(Y_pred_model: np.ndarray, Y_pred_baseline: np.ndarray,
             Y_true: np.ndarray) -> Tuple[float, float, float]:
-    """Diebold-Mariano 检验（1步前向，vs baseline Model 1）。
+    """Diebold-Mariano 检验（1步前向，vs baseline Model 1, Newey-West HAC 标准误）。
 
     标准 DM 方向（Diebold & Mariano, 1995）:
       d_t = loss_model_t - loss_baseline_t   （正 = baseline 更好）
-      DM_stat = mean(d) / sqrt(var(d)/n)
+      DM_stat = mean(d) / sqrt(var_HAC(d)/n)
       负且统计显著 → model 显著优于 baseline（损失更低）。
 
     Returns:
@@ -856,7 +1008,16 @@ def dm_test(Y_pred_model: np.ndarray, Y_pred_baseline: np.ndarray,
     n = len(d)
     if n < 2 or d.var(ddof=1) < 1e-15:
         return 0.0, 1.0, np.nan
-    dm = d.mean() / np.sqrt(d.var(ddof=1) / n)
+    
+    # Newey-West HAC 标准误 (自动滞后: floor(4*(n/100)^(2/9)))
+    max_lag = int(np.floor(4 * (n/100) ** (2/9)))
+    d_dm = d - d.mean()
+    nw_var = np.dot(d_dm, d_dm) / n
+    for lag in range(1, max_lag + 1):
+        weight = 1 - lag / (max_lag + 1)
+        nw_var += 2 * weight * np.dot(d_dm[lag:], d_dm[:-lag]) / n
+    nw_var = nw_var / n if nw_var > 1e-15 else d.var(ddof=1) / n
+    dm = d.mean() / np.sqrt(nw_var)
     # 用 logsf 避免 float64 下溢（DM≈40 时 p≈10^-350）
     logsf = sp_stats.norm.logsf(abs(dm))          # log(1 - Φ(|DM|))
     log10_p = (np.log(2) + float(logsf)) / np.log(10)
@@ -1021,12 +1182,13 @@ def main():
 
     # ---- Model 7: LSTM (single-layer + softmax + dropout + L2) ----
     log(f"\n--- Model 7: LSTM ---")
+    np.random.seed(42)  # 固定种子, 可复现
     m4_cols = fitted_models[4]['cols']
     X_m7 = X_tr[:, m4_cols]
     n_feat = X_m7.shape[1]
 
     seq_len, hid, lr = 30, 128, 0.0005
-    dropout_rate = 0.05
+    dropout_rate = 0.05  # 与 standalone 版一致
     l2_lambda = 0.0
     softmax_T = 0.5
     batch, epochs, patience = 64, 500, 50
@@ -1093,17 +1255,17 @@ def main():
         logits_t = logits_t - logits_t.max(axis=1, keepdims=True)
         exp_l = np.exp(logits_t)
         y_pred = exp_l / exp_l.sum(axis=1, keepdims=True)
-        return y_pred, cache, mask, logits_t, h
+        return y_pred, cache, mask, logits_t, h, c  # BPTT fix: return final c
 
     def eval_loss(Xb, Yb):
-        yp, _, _, _, _ = lstm_forward(Xb, training=False)
+        yp, _, _, _, _, _ = lstm_forward(Xb, training=False)
         return float(np.mean((yp - Yb)**2))
 
     # ---------- Backward + Update ----------
     def lstm_step(X_batch, Y_batch, t_step):
         nonlocal Wy, by, W, b, M, V
         B = len(X_batch)
-        y_pred, cache, mask, logits, h_out = lstm_forward(X_batch, training=True)
+        y_pred, cache, mask, logits, h_out, c_out = lstm_forward(X_batch, training=True)
 
         # Loss: MSE (no L2)
         diff = y_pred - Y_batch
@@ -1112,7 +1274,10 @@ def main():
 
         # Gradient through softmax + MSE with temperature T
         dy = (2.0/(B*K)) * diff
-        dlogits = dy * y_pred * (1.0 - y_pred) / softmax_T  # T correction
+        # Correct softmax Jacobian: ∂y_i/∂z_j = y_i(δ_ij - y_j)
+        # For MSE loss: dlogits_j = y_j * (dy_j - Σ_i y_i·dy_i)
+        dy_dot = (y_pred * dy).sum(axis=1, keepdims=True)  # (B,1)
+        dlogits = y_pred * (dy - dy_dot) / softmax_T  # T correction
 
         # Gradient through output layer
         dWy = dlogits.T @ h_out  # no L2
@@ -1130,7 +1295,7 @@ def main():
 
         for t in range(seq_len-1, -1, -1):
             hp, cp, ig, fg, og, ctg, x_t = cache[t]
-            c_cur = cache[t+1][2] if t < seq_len-1 else cache[-1][2]
+            c_cur = cache[t+1][1] if t < seq_len-1 else c_out
             h_cur = cache[t+1][0] if t < seq_len-1 else h_out
 
             do = dh * np.tanh(c_cur)
@@ -1192,10 +1357,12 @@ def main():
     log(f"  训练完成 ({time.time()-t0:.1f}s), 最佳验证MSE={best_val:.4e}")
 
     # ---------- Predict ----------
-    Xs_te, _ = make_seqs(X_te_s, Y_te)
-    Y_pred_m7, _, _, _, _ = lstm_forward(Xs_te, training=False)
-    pad = predictions[4][:seq_len-1]
-    Y_pred_m7 = np.vstack([pad, Y_pred_m7])
+    # 拼接验证集最后seq_len-1天特征到测试集前, 形成完整序列 (无数据泄露)
+    X_te_combined = np.vstack([X_val_s[-seq_len+1:], X_te_s])
+    Xs_te, _ = make_seqs(X_te_combined, np.zeros((len(X_te_combined), K)))  # Y dummy
+    Y_pred_m7, _, _, _, _, _ = lstm_forward(Xs_te, training=False)
+    # 预测长度 = len(X_te_combined) - seq_len + 1 = len(X_te_s) = 363 ✓
+    # 无需任何填充
     s7 = Y_pred_m7.sum(1, keepdims=True); s7 = np.where(np.abs(s7)<1e-10, 1.0, s7)
     Y_pred_m7 = Y_pred_m7 / s7
 

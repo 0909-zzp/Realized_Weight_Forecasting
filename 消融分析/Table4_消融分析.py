@@ -1,8 +1,8 @@
-"""Table 4 — 消融分析: DFL基线 + 逐组件减法
+"""Table 4 — 组件消融: DFL基线 + 逐组件减法
 
-设计:
+设计 (注: 非严格单因素, 部分消融同时改变多个超参数):
   完整模型 = M5 (Network+Smooth) + DFL → 所有组件全开
-  无外部   = M2 (Sparse VAR) + DFL      → 移除外生变量
+  无外部   = M2 (Sparse VAR) + DFL      → 移除外生变量(同时改λ₁/self_free)
   无网络   = M3a (Self-free VARX) + DFL → 移除网络惩罚差异化
   无平滑   = M4 + DFL = M6              → 移除换手率平滑
   无DFL    = M5                          → 移除决策聚焦调优
@@ -63,10 +63,16 @@ def main():
     X_te, Y_te, A_te = splits['test']
     n_train, n_test = X_tr.shape[0], X_te.shape[0]
 
+    # 200天评估窗口: 测试集索引 [60:260] (2018-12-19 ~ 2019-10-08)
+    TSTART, TEND = 60, 260
+
     # 训练日索引 (DFL 需要)
     feat_dir = Path(__file__).parents[1] / "特征工程"
     valid_indices = np.load(feat_dir / "valid_indices.npy")
     train_day_indices = valid_indices[:n_train]
+
+    # 200天评估用Y_te切片
+    Y_te_200 = Y_te[TSTART:TEND]
 
     # 网络掩码
     net_mask, density = vp.build_network_mask(A_tr)
@@ -84,7 +90,7 @@ def main():
     try:
         fitted_m3a = vp.fit_model(3, X_tr, Y_tr, None, n_jobs=4)
         Y_pred_m3a = vp.predict_model(X_te, fitted_m3a)
-        m3a_mse = vp.compute_mse(Y_pred_m3a, Y_te)
+        m3a_mse = vp.compute_mse(Y_pred_m3a[TSTART:TEND], Y_te_200)
         log(f"  M3a MSE: {m3a_mse:.4e}")
     finally:
         vp.MODELS[3].clear()
@@ -95,6 +101,7 @@ def main():
     Y_pred_m4 = np.load(Path(__file__).parents[1] / "VARX" / "Y_pred_model4.npy")
     Y_pred_m5 = np.load(Path(__file__).parents[1] / "VARX" / "Y_pred_model5.npy")
 
+    # 取测试集 (全量363天, 用于DFL; 评估时截取200天窗口)
     Y_pred_m2 = Y_pred_m2[-n_test:]
     Y_pred_m4 = Y_pred_m4[-n_test:]
     Y_pred_m5 = Y_pred_m5[-n_test:]
@@ -103,44 +110,52 @@ def main():
     # 3. DFL 应用到各基模型
     # ================================================================
     rho_dfl = getattr(vp, 'RHO_DFL', 1e-3)
-    log(f"\n--- DFL 后处理 (η={ETA}, ρ={rho_dfl}) ---")
+    dfl_eta = 0.0  # HANDOFF: 移除换手惩罚
+    log(f"\n--- DFL 后处理 (η={dfl_eta}, ρ={rho_dfl}) ---")
 
     # M2 + DFL
     t0 = time.time()
-    Y_pred_m2_dfl = vp.compute_model6(Y_pred_m2, Y_te, train_day_indices, eta=ETA)
-    log(f"  M2+DFL  完成 ({time.time()-t0:.1f}s)  MSE={vp.compute_mse(Y_pred_m2_dfl, Y_te):.4e}")
+    Y_pred_m2_dfl = vp.compute_model6(Y_pred_m2, Y_te, train_day_indices, eta=dfl_eta)
+    log(f"  M2+DFL  完成 ({time.time()-t0:.1f}s)  MSE={vp.compute_mse(Y_pred_m2_dfl[TSTART:TEND], Y_te_200):.4e}")
 
     # M3a + DFL
     t0 = time.time()
-    Y_pred_m3a_dfl = vp.compute_model6(Y_pred_m3a, Y_te, train_day_indices, eta=ETA)
-    log(f"  M3a+DFL 完成 ({time.time()-t0:.1f}s)  MSE={vp.compute_mse(Y_pred_m3a_dfl, Y_te):.4e}")
+    Y_pred_m3a_dfl = vp.compute_model6(Y_pred_m3a, Y_te, train_day_indices, eta=dfl_eta)
+    log(f"  M3a+DFL 完成 ({time.time()-t0:.1f}s)  MSE={vp.compute_mse(Y_pred_m3a_dfl[TSTART:TEND], Y_te_200):.4e}")
 
     # M4 + DFL (已有的 M6)
     t0 = time.time()
-    Y_pred_m4_dfl = vp.compute_model6(Y_pred_m4, Y_te, train_day_indices, eta=ETA)
-    log(f"  M4+DFL  完成 ({time.time()-t0:.1f}s)  MSE={vp.compute_mse(Y_pred_m4_dfl, Y_te):.4e}")
+    Y_pred_m4_dfl = vp.compute_model6(Y_pred_m4, Y_te, train_day_indices, eta=dfl_eta)
+    log(f"  M4+DFL  完成 ({time.time()-t0:.1f}s)  MSE={vp.compute_mse(Y_pred_m4_dfl[TSTART:TEND], Y_te_200):.4e}")
 
     # M5 + DFL
     t0 = time.time()
-    Y_pred_m5_dfl = vp.compute_model6(Y_pred_m5, Y_te, train_day_indices, eta=ETA)
-    log(f"  M5+DFL  完成 ({time.time()-t0:.1f}s)  MSE={vp.compute_mse(Y_pred_m5_dfl, Y_te):.4e}")
+    Y_pred_m5_dfl = vp.compute_model6(Y_pred_m5, Y_te, train_day_indices, eta=dfl_eta)
+    log(f"  M5+DFL  完成 ({time.time()-t0:.1f}s)  MSE={vp.compute_mse(Y_pred_m5_dfl[TSTART:TEND], Y_te_200):.4e}")
 
     # ================================================================
     # 4. 投资组合评估 (复用 Table 3)
     # ================================================================
     log(f"\n--- 投资组合表现评估 ---")
 
-    test_days = valid_indices[n_train + int(0.15 * len(X)):]
+    test_indices = valid_indices[n_train + int(0.15 * len(X)):]
+    # 截取200天窗口
+    test_indices = test_indices[TSTART:TEND]
+    # 转换为文件路径以匹配新版 Table3 接口
+    npy_dir = Path(__file__).parents[1] / "数据" / "1min_log_return_npy"
+    all_files = sorted([str(f) for f in npy_dir.iterdir()
+                        if f.suffix == '.npy' and f.name[0].isdigit()])
+    test_files = [all_files[i] for i in test_indices]
 
     models = {
-        2:  {'name': 'M2 (无外生)',     'Y_pred': Y_pred_m2},
-        3:  {'name': 'M3a (无网络)',     'Y_pred': Y_pred_m3a},
-        4:  {'name': 'M4 (无平滑)',      'Y_pred': Y_pred_m4},
-        5:  {'name': 'M5 (无DFL)',       'Y_pred': Y_pred_m5},
-        6:  {'name': 'M5+DFL (完整)',     'Y_pred': Y_pred_m5_dfl},
-        7:  {'name': 'M2+DFL',           'Y_pred': Y_pred_m2_dfl},
-        8:  {'name': 'M3a+DFL',          'Y_pred': Y_pred_m3a_dfl},
-        9:  {'name': 'M4+DFL',           'Y_pred': Y_pred_m4_dfl},
+        2:  {'name': 'M2 (无外生)',     'Y_pred': Y_pred_m2[TSTART:TEND]},
+        3:  {'name': 'M3a (无网络)',     'Y_pred': Y_pred_m3a[TSTART:TEND]},
+        4:  {'name': 'M4 (无平滑)',      'Y_pred': Y_pred_m4[TSTART:TEND]},
+        5:  {'name': 'M5 (无DFL)',       'Y_pred': Y_pred_m5[TSTART:TEND]},
+        6:  {'name': 'M5+DFL (完整)',     'Y_pred': Y_pred_m5_dfl[TSTART:TEND]},
+        7:  {'name': 'M2+DFL',           'Y_pred': Y_pred_m2_dfl[TSTART:TEND]},
+        8:  {'name': 'M3a+DFL',          'Y_pred': Y_pred_m3a_dfl[TSTART:TEND]},
+        9:  {'name': 'M4+DFL',           'Y_pred': Y_pred_m4_dfl[TSTART:TEND]},
     }
     # 按需要的顺序排列
     eval_order = {
@@ -155,18 +170,18 @@ def main():
     needed = set(eval_order.values())
     models_subset = {k: v for k, v in models.items() if k in needed}
 
-    results = t3.compute_all(models_subset, test_days)
+    results = t3.compute_all(models_subset, test_files)
 
     # ================================================================
     # 5. 输出 Table 4
     # ================================================================
     # MSE
     mse_dict = {
-        5: vp.compute_mse(Y_pred_m5, Y_te),
-        6: vp.compute_mse(Y_pred_m5_dfl, Y_te),
-        7: vp.compute_mse(Y_pred_m2_dfl, Y_te),
-        8: vp.compute_mse(Y_pred_m3a_dfl, Y_te),
-        9: vp.compute_mse(Y_pred_m4_dfl, Y_te),
+        5: vp.compute_mse(Y_pred_m5[TSTART:TEND], Y_te_200),
+        6: vp.compute_mse(Y_pred_m5_dfl[TSTART:TEND], Y_te_200),
+        7: vp.compute_mse(Y_pred_m2_dfl[TSTART:TEND], Y_te_200),
+        8: vp.compute_mse(Y_pred_m3a_dfl[TSTART:TEND], Y_te_200),
+        9: vp.compute_mse(Y_pred_m4_dfl[TSTART:TEND], Y_te_200),
     }
 
     log(f"\n{'='*80}")

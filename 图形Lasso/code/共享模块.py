@@ -59,7 +59,7 @@ LAMBDA_LASSO_M2 = 5e-4         # M2 独立搜索的 λ₁（M2无外生变量，
 LAMBDA_LASSO_M3a = 4.5e-4      # M3a 独立搜索的 λ₁ (P1: 自环豁免后最优 λ₁ 高于 M3)
 LAMBDA_NETWORK  = 1e-3         # 增量 λ₂-λ₁: 未连接资产的额外 ℓ1 惩罚（λ₂=λ₁+1e-3）
 LAMBDA_EXOG     = 5e-4         # λ₃: 外生变量系数 ℓ1 惩罚 (P2验证: 完整流水线M5+DFL最优)
-LAMBDA_TURNOVER = 1e-3         # λ_s: 换手率平滑 ℓ2 惩罚
+LAMBDA_TURNOVER = 3e-3         # λ_s: 换手率平滑 ℓ2 惩罚
 NETWORK_THRESHOLD = 0.7         # 滚动网络均值 Ā 截断阈值（τ=0.7, 密度~26%）
 Ā_ROLLING_WINDOW  = 20         # Ā 滚动平均天数（固定）
 

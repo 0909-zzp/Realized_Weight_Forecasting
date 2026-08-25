@@ -62,9 +62,9 @@ def load_loss_series() -> Tuple[np.ndarray, np.ndarray, int]:
     pred_dir = proj / "VARX"
     Y_te = np.load(proj / "特征工程" / "Y_targets.npy")
 
-    # 测试集从 Table 2 划分: 70/15/15 → test 是最后15%
+    # 测试集从 Table 2 划分: 70/15/15 → test 是最后15% (余数363天)
     n_total = Y_te.shape[0]
-    n_test = int(n_total * 0.15)
+    n_test = n_total - int(n_total * 0.7) - int(n_total * 0.15)  # 363, 与Table2一致
     Y_te = Y_te[-n_test:]  # 取测试集部分
 
     # 加载各模型预测
@@ -116,7 +116,7 @@ def mcs_procedure(L: np.ndarray, n_boot: int = N_BOOTSTRAP,
         L: (T, M) 损失矩阵, L[t,m] = MSE of model m at day t
 
     Returns:
-        DataFrame: model, MCS_pval_75, MCS_pval_90, in_MCS_75, in_MCS_90
+        DataFrame: model, MCS_pval, MCS_raw_pval, in_MCS_75, in_MCS_90
     """
     T, M = L.shape
     rng = np.random.default_rng(seed)
@@ -128,7 +128,8 @@ def mcs_procedure(L: np.ndarray, n_boot: int = N_BOOTSTRAP,
 
     # 初始化: 所有模型都在集合中, p-values 记录淘汰时的 p 值
     surviving = list(range(M))           # 当前存活模型索引 (0-based)
-    model_pvals = np.zeros(M)            # 每个模型被淘汰时的集合 p-value
+    model_pvals = np.zeros(M)            # 单调调整后的 MCS p-value
+    model_raw_pvals = np.zeros(M)        # 淘汰时集合检验的原始 p-value
     eliminated_round = np.full(M, -1)    # 淘汰轮次
 
     round_num = 0
@@ -138,54 +139,41 @@ def mcs_procedure(L: np.ndarray, n_boot: int = N_BOOTSTRAP,
         log(f"\n  Round {round_num}: {m_current} models surviving "
             f"→ {[MODEL_NAMES[s+1] for s in surviving]}")
 
-        # ---- Step 1: 对当前存活集合计算损失差分 t-statistics ----
+        # ---- Step 1: 对当前存活集合计算损失差分 ----
         L_sub = L[:, surviving]                            # (T, m)
         d_mean = np.zeros((m_current, m_current))          # 均值差分
-        d_var  = np.zeros((m_current, m_current))          # 方差
-        t_stat = np.zeros((m_current, m_current))          # t-statistics
 
         for i in range(m_current):
             for j in range(m_current):
                 if i == j:
                     continue
-                dij = L_sub[:, i] - L_sub[:, j]            # (T,)
-                d_mean[i, j] = np.mean(dij)
-                v = np.var(dij, ddof=1)
-                d_var[i, j] = v
-                if v > 1e-20:
-                    t_stat[i, j] = d_mean[i, j] / np.sqrt(v / T)
+                d_mean[i, j] = np.mean(L_sub[:, i] - L_sub[:, j])
+
+        # ---- Step 2: Bootstrap 重采样均值差分 ----
+        # HLN 用 bootstrap 均值的方差标准化 t 统计量，而不是样本内方差。
+        d_boot_mean = np.zeros((n_boot, m_current, m_current))
+        for b in range(n_boot):
+            loss_mean = L_sub[boot_idx[b], :].mean(axis=0)  # (m,)
+            d_boot_mean[b] = loss_mean[:, None] - loss_mean[None, :]
+
+        d_boot_var = np.mean(
+            (d_boot_mean - d_mean[None, :, :]) ** 2, axis=0
+        )
+        d_boot_var = np.maximum(d_boot_var, 1e-20)
+        d_boot_std = np.sqrt(d_boot_var)
+
+        # 观测与 bootstrap t-statistics
+        t_stat = d_mean / d_boot_std
+        t_boot = (d_boot_mean - d_mean[None, :, :]) / d_boot_std
 
         # 检验统计量: T_R = max_{i,j} |t_{ij}|
         T_R_obs = np.max(np.abs(t_stat))
-
-        # ---- Step 2: Bootstrap 零分布 ----
-        # H0: E[d_{ij,t}] = 0  → 中心化: d*_{ij,t} = d_{ij,t} - d̄_{ij}
-        # 对每对 (i,j), 我们只需要 bootstrap T_R, 不需要逐个保存所有差分
-        T_R_boot = np.zeros(n_boot)
-
-        for b in range(n_boot):
-            idx = boot_idx[b]
-            L_boot = L_sub[idx, :]                          # (T, m) 重采样
-            t_boot = np.zeros((m_current, m_current))
-
-            for i in range(m_current):
-                for j in range(m_current):
-                    if i == j:
-                        continue
-                    dij_b = L_boot[:, i] - L_boot[:, j]     # (T,)
-                    # 中心化: 原差分均值假设为零
-                    dij_centered = dij_b - d_mean[i, j]     # H0: mean=0
-                    dm = np.mean(dij_centered)
-                    vv = np.var(dij_centered, ddof=1)
-                    if vv > 1e-20:
-                        t_boot[i, j] = dm / np.sqrt(vv / T)
-
-            T_R_boot[b] = np.max(np.abs(t_boot))
+        T_R_boot = np.abs(t_boot).max(axis=(1, 2))
 
         # ---- Step 3: Bootstrap p-value ----
-        p_val = np.mean(T_R_boot >= T_R_obs)
+        p_val = np.mean(T_R_boot > T_R_obs)
         log(f"    T_R={T_R_obs:.3f}  p={p_val:.6f}  "
-            f"({np.sum(T_R_boot >= T_R_obs)}/{n_boot} bootstrap >= T_R)")
+            f"({np.sum(T_R_boot > T_R_obs)}/{n_boot} bootstrap > T_R)")
 
         # ---- Step 4: 决策 ----
         # 对于每个 alpha, 若 p < alpha 则拒绝 H0 (集合不全是等优的)
@@ -198,8 +186,9 @@ def mcs_procedure(L: np.ndarray, n_boot: int = N_BOOTSTRAP,
         worst_local = int(np.argmax(t_max_row))            # 行索引 (0..m-1)
         worst_global = surviving[worst_local]              # 全局模型索引
 
-        # 记录此模型在当前集合的 p-value
+        # 记录此模型在当前集合被淘汰时的原始 p-value
         model_pvals[worst_global] = p_val
+        model_raw_pvals[worst_global] = p_val
         eliminated_round[worst_global] = round_num
 
         log(f"    淘汰: {MODEL_NAMES[worst_global+1]} (loc={worst_local}, "
@@ -212,28 +201,45 @@ def mcs_procedure(L: np.ndarray, n_boot: int = N_BOOTSTRAP,
     if surviving:
         last = surviving[0]
         model_pvals[last] = 1.0
+        model_raw_pvals[last] = 1.0
         eliminated_round[last] = round_num + 1
         log(f"\n  最终幸存: {MODEL_NAMES[last+1]} (p=1.0)")
+
+    # Hansen et al. (2011): 序贯 p 值单调调整
+    # 只有展示用的 MCS p-value 做单调调整，原始 p-value 保留用于 membership/rank
+    order = np.argsort(eliminated_round)  # 从最早淘汰到最后幸存
+    running_max = 0.0
+    for idx in order:
+        running_max = max(running_max, model_raw_pvals[idx])
+        model_pvals[idx] = running_max
 
     # ---- 输出: 对每个 α 判断是否在 MCS 中 ----
     results = []
     for mid in range(M):
-        pv = model_pvals[mid]
         results.append({
             'Model': mid + 1,
             'Name': MODEL_NAMES[mid + 1],
-            'MCS_pval': round(pv, 6),
+            'MCS_pval': round(model_pvals[mid], 6),
+            'MCS_raw_pval': model_raw_pvals[mid],
             'Eliminated_round': eliminated_round[mid],
         })
     df = pd.DataFrame(results)
 
-    # MCS rank: 按 p-value 降序 (p越大=越优, rank=1最优)
-    df['MCS_rank'] = df['MCS_pval'].rank(ascending=False, method='min').astype(int)
+    # MCS rank: 原始 p 值降序；p 值相同时按淘汰轮次降序（越晚淘汰越优）
+    rank_order = df.sort_values(
+        ['MCS_raw_pval', 'Eliminated_round'],
+        ascending=[False, False],
+    ).index
+    rank_map = {
+        model: i + 1
+        for i, model in enumerate(df.loc[rank_order, 'Model'])
+    }
+    df['MCS_rank'] = df['Model'].map(rank_map).astype(int)
 
     # 为每个 alpha 添加列
     for alpha in ALPHA_LEVELS:
         col_name = f'in_MCS_{int((1-alpha)*100)}'
-        df[col_name] = df['MCS_pval'] > alpha
+        df[col_name] = df['MCS_raw_pval'] > alpha
         df[f'MCS_pval_{(1-alpha):.0%}'] = df['MCS_pval'].apply(
             lambda p: f"{p:.4f}"
         )
@@ -286,7 +292,8 @@ def main():
 
     log(f"\n完整 p-values:")
     for _, row in results.iterrows():
-        log(f"  M{int(row['Model'])} {row['Name']:<20} p={row['MCS_pval']:.4f}  "
+        log(f"  M{int(row['Model'])} {row['Name']:<20} "
+            f"p(adj)={row['MCS_pval']:.4f} p(raw)={row['MCS_raw_pval']:.4f}  "
             f"淘汰轮次={int(row['Eliminated_round'])}")
 
     # ---- 保存 ----
@@ -296,7 +303,7 @@ def main():
 
     # ---- Table 2 风格输出 ----
     log(f"\n{'='*72}")
-    log(f"Table 2 MCS 列 (MCS rank = p-value降序)")
+    log(f"Table 2 MCS 列 (MCS rank = raw p 降序, 同 p 按淘汰轮次降序)")
     log(f"{'='*72}")
     log(f"{'#':>2} {'Model':<20} {'MSE':>12} {'MCS p-val':>12} {'MCS rank':>10} {'75%MCS':>8} {'90%MCS':>8}")
     log("-" * 78)

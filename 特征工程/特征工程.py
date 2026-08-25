@@ -33,21 +33,25 @@ from 共享模块 import (
 # 外生变量
 # ===================================================================
 def compute_ba_spread(rett: np.ndarray) -> float:
-    """Abdi-Ranaldo bid-ask spread from intraday returns."""
-    log_p = np.vstack([np.zeros((1, rett.shape[1])), rett.cumsum(axis=0)])
-    high, low, close = log_p.max(axis=0), log_p.min(axis=0), log_p[-1]
+    """Abdi-Ranaldo bid-ask spread: 每资产重建log-price, 截面平均。"""
+    # rett: (K, M), 每行是一支股票的日内收益
+    log_p = np.hstack([np.zeros((rett.shape[0], 1)), rett.cumsum(axis=1)])  # (K, M+1)
+    high = log_p.max(axis=1)   # 每资产日内最高价 (K,)
+    low  = log_p.min(axis=1)   # 每资产日内最低价 (K,)
+    close = log_p[:, -1]       # 每资产收盘价 (K,)
     eta = (high + low) / 2
     return float(2 * np.sqrt(np.mean((close - eta) ** 2)))
 
 
 def compute_market_vol(rett: np.ndarray) -> float:
-    """Cross-sectional mean volatility."""
-    return float(np.sqrt(np.mean(rett ** 2)))
+    """截面波动率: 每只股票日收益的截面标准差。"""
+    daily_ret = rett.sum(axis=1)  # (K,) 每只股票的日收益
+    return float(daily_ret.std())
 
 
 def compute_cross_section_moments(rett: np.ndarray) -> Tuple[float, float]:
-    """截面偏度与峰度（基于 392 支股票当日日内收益）。"""
-    daily_ret = rett.sum(axis=0)  # 当日累计收益 (K,)
+    """截面偏度与峰度（基于 392 支股票日收益的截面分布）。"""
+    daily_ret = rett.sum(axis=1)  # (K,) 每只股票的日收益
     mu = daily_ret.mean()
     sigma = daily_ret.std()
     if sigma < 1e-10:
@@ -58,8 +62,8 @@ def compute_cross_section_moments(rett: np.ndarray) -> Tuple[float, float]:
 
 
 def compute_market_return(rett: np.ndarray) -> float:
-    """等权市场日收益（392 支股票当日累计收益均值）。"""
-    return float(rett.sum(axis=0).mean())
+    """等权市场日收益: 每只股票日收益的截面均值。"""
+    return float(rett.sum(axis=1).mean())
 
 
 def _load_fred_csv(path: Path, value_col: str) -> pd.Series:

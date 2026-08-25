@@ -10,7 +10,7 @@ from 共享模块 import K, load_day, compute_raw_cov, EPS_RIDGE
 from sklearn.covariance import LedoitWolf, graphical_lasso
 
 # 参数
-W = 40           # 滚动窗口天数
+W = 20           # 滚动窗口天数 (与Ā_ROLLING_WINDOW一致)
 LAM_GL = 3e-6    # GLasso 正则化参数
 
 # 路径
@@ -88,8 +88,8 @@ for t in range(363):
         print(f'  {t}/363')
 
 # 保存
-np.save(varx / 'Y_pred_bench_sample.npy', w_sample)
-np.save(varx / 'Y_pred_bench_shrink.npy', w_shrink)
-np.save(varx / 'Y_pred_bench_glasso.npy', w_glasso)
-print(f'已保存: Y_pred_bench_sample/shrink/glasso.npy')
+np.save(varx / 'Y_pred_bench_sample_W20.npy', w_sample)
+np.save(varx / 'Y_pred_bench_shrink_W20.npy', w_shrink)
+np.save(varx / 'Y_pred_bench_glasso_W20.npy', w_glasso)
+print(f'已保存: Y_pred_bench_*_W20.npy (W={W}天滚动)')
 print('完成')
