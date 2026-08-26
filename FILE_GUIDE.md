@@ -75,17 +75,17 @@ VARX/
 | ETA | 1e-4 |
 | RHO_DFL | 1e-3 |
 
-## Table 2 (最终, MCS正式)
+## Table 2 (最终, MCS正式, 200天)
 
 | # | Model | MSE | DM | MCS p-val | MCS rank | 90%MCS |
 |:---:|---:|---:|---:|---:|:---:|:---:|
-| 4 | Network VARX | 2.12e-5 | -23.53 | 1.0000 | 1 | ✅ |
-| 7 | LSTM | 2.96e-5 | -21.96 | 0.0000 | 6 | ❌ |
-| 5 | Network+Smooth | 2.28e-5 | -23.11 | 0.0000 | 5 | ❌ |
-| 3 | Sparse VARX | 2.25e-5 | -23.08 | 0.0000 | 3 | ❌ |
-| 2 | Sparse VAR | 2.29e-5 | -22.96 | 0.0000 | 4 | ❌ |
-| 6 | Network VARX + Smooth + DFL | 2.39e-5 | -22.46 | 0.0000 | 2 | ❌ |
-| 1 | VAR | 9.76e-5 | - | 0.0000 | 7 | ❌ |
+| 4 | Network VARX | 2.30e-5 | -17.34 | 1.0000 | 1 | ✅ |
+| 7 | LSTM | 3.23e-5 | -16.21 | 0.0000 | 6 | ❌ |
+| 5 | Network+Smooth | 2.46e-5 | -17.11 | 0.0000 | 5 | ❌ |
+| 3 | Sparse VARX | 2.43e-5 | -17.09 | 0.0000 | 3 | ❌ |
+| 2 | Sparse VAR | 2.47e-5 | -17.01 | 0.0000 | 4 | ❌ |
+| 6 | Network VARX + Smooth + DFL | 2.64e-5 | -16.30 | 0.0000 | 2 | ❌ |
+| 1 | VAR | 1.06e-4 | - | 0.0000 | 7 | ❌ |
 
 > MCS: Hansen-Lunde-Nason (2011) bootstrap, 2000次, 块长5天. M4唯一p=1.0.
 
