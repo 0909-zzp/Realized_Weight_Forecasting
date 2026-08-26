@@ -82,16 +82,16 @@ Realized_Weight_Forecasting/
 
 | Model | MSE | DM Stat | MCS p-val | MCS Rank | 90% MCS |
 |---|---|---|---|---|---|
-| **Network VARX** | **2.12×10⁻⁵** | −41.27 | **1.0000** | 1 | ✅ |
-| LSTM | 6.48×10⁻³ | +1.64 | 0.2645 | 2 | ✅ |
-| Network+Smooth | 2.19×10⁻⁵ | −41.78 | 0.1245 | 3 | ✅ |
-| Sparse VARX | 2.25×10⁻⁵ | −40.28 | 0.0995 | 4 | ❌ |
-| Sparse VAR | 2.29×10⁻⁵ | −40.01 | 0.0980 | 5 | ❌ |
-| DFL VARX (L2) | 2.28×10⁻⁵ | −40.26 | 0.0895 | 6 | ❌ |
-| VAR (OLS) | 9.76×10⁻⁵ | — | 0.0625 | 7 | ❌ |
+| **Network VARX** | **2.12×10⁻⁵** | −23.53 | **1.0000** | 1 | ✅ |
+| LSTM | 2.96×10⁻⁵ | −21.96 | 0.0000 | 6 | ❌ |
+| Network+Smooth | 2.28×10⁻⁵ | −23.11 | 0.0000 | 5 | ❌ |
+| Sparse VARX | 2.25×10⁻⁵ | −23.08 | 0.0000 | 3 | ❌ |
+| Sparse VAR | 2.29×10⁻⁵ | −22.96 | 0.0000 | 4 | ❌ |
+| Network VARX + Smooth + DFL | 2.39×10⁻⁵ | −22.46 | 0.0000 | 2 | ❌ |
+| VAR (OLS) | 9.76×10⁻⁵ | — | 0.0000 | 7 | ❌ |
 
 > MCS: Hansen-Lunde-Nason (2011) block bootstrap, 2,000 replications, block length 5 days.
-> M4 is the only model with p=1.0 (always in MCS). LSTM survives due to high day-to-day loss variance despite large mean MSE.
+> M4 is the only model with p=1.0 and the only model in the 75% and 90% MCS; all other models are eliminated at p≈0.
 
 ### Table 3 — Portfolio Performance
 
@@ -99,12 +99,12 @@ Realized_Weight_Forecasting/
 |---|---|---|---|---|---|
 | Equal-Weight | 0.123 | 0.01263 | 0.010 | +1.08 | −8.9% |
 | VAR | 0.121 | 0.01323 | 3.229 | +0.94 | −6.6% |
-| Sparse VAR | 0.091 | 0.00770 | 0.251 | +1.70 | −5.7% |
-| Sparse VARX | 0.091 | 0.00762 | 0.295 | +1.67 | −5.7% |
+| Sparse VAR | 2.29×10⁻⁵ | −22.96 | 0.0000 | 4 | ❌ |
+| Sparse VARX | 2.25×10⁻⁵ | −23.08 | 0.0000 | 3 | ❌ |
 | Network VARX | 0.089 | 0.00723 | 0.368 | +1.59 | −5.7% |
-| Network+Smooth | 0.081 | 0.00632 | 0.272 | +1.61 | −5.9% |
+| Network+Smooth | 2.28×10⁻⁵ | −23.11 | 0.0000 | 5 | ❌ |
 | **Network+Smooth + DFL (L1 drift, η=1e-6, 滚动Σ150d)** | 0.075 | 0.00563 | 0.069 | **+2.00** | **−3.79%** |
-| LSTM | 0.110 | 0.01061 | 0.306 | +1.14 | −7.8% |
+| LSTM | 2.96×10⁻⁵ | −21.96 | 0.0000 | 6 | ❌ |
 | Sample GMVP (W=20) | 0.073 | 0.00573 | 0.341 | +1.60 | −4.4% |
 | Shrinkage GMVP (W=20) | 0.096 | 0.00911 | 0.371 | +1.09 | −7.5% |
 | GLasso GMVP (W=20) | 0.105 | 0.00953 | 0.697 | +1.60 | −5.7% |

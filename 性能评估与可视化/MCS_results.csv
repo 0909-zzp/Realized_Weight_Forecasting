@@ -1,8 +1,8 @@
 Model,Name,MCS_pval,MCS_raw_pval,Eliminated_round,MCS_rank,in_MCS_75,MCS_pval_75%,in_MCS_90,MCS_pval_90%
-1,VAR (OLS),0.0,0.0,2,6,False,0.0000,False,0.0000
-2,Sparse VAR,0.0,0.0,4,4,False,0.0000,False,0.0000
-3,Sparse VARX,0.0,0.0,5,3,False,0.0000,False,0.0000
-4,Network VARX,1.0,1.0,7,1,True,1.0000,True,1.0000
-5,Network+Smooth,0.0,0.0,6,2,False,0.0000,False,0.0000
-6,DFL VARX (L2),0.0,0.0,3,5,False,0.0000,False,0.0000
-7,LSTM,0.0,0.0,1,7,False,0.0000,False,0.0000
+1,VAR (OLS),0.0,0.0,1,7,False,0.0,False,0.0
+2,Sparse VAR,0.0,0.0,4,4,False,0.0,False,0.0
+3,Sparse VARX,0.0,0.0,5,3,False,0.0,False,0.0
+4,Network VARX,1.0,1.0,7,1,True,1.0,True,1.0
+5,Network+Smooth,0.0,0.0,3,5,False,0.0,False,0.0
+6,Network VARX + Smooth + DFL,0.0,0.0,6,2,False,0.0,False,0.0
+7,LSTM,0.0,0.0,2,6,False,0.0,False,0.0
