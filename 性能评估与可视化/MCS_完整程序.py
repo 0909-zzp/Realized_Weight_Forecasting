@@ -45,7 +45,7 @@ MODEL_NAMES = {
     3: 'Sparse VARX',
     4: 'Network VARX',
     5: 'Network+Smooth',
-    6: 'DFL VARX (L2)',
+    6: 'Network VARX + Smooth + DFL',
     7: 'LSTM',
 }
 
@@ -67,11 +67,15 @@ def load_loss_series() -> Tuple[np.ndarray, np.ndarray, int]:
     n_test = n_total - int(n_total * 0.7) - int(n_total * 0.15)  # 363, 与Table2一致
     Y_te = Y_te[-n_test:]  # 取测试集部分
 
+    # 与Table2/3/4统一: 200天评估窗口 [65:265] = 2018-12-28 ~ 2019-10-15
+    TSTART, TEND = 65, 265
+    Y_te = Y_te[TSTART:TEND]
+
     # 加载各模型预测
     L_list = []
     for mid in range(1, 8):
         Y_pred = np.load(pred_dir / f"Y_pred_model{mid}.npy")
-        Y_pred = Y_pred[-n_test:]  # 对齐测试集
+        Y_pred = Y_pred[-n_test:][TSTART:TEND]  # 对齐测试集并截取200天窗口
         # 逐日 MSE (对 K=392 维取平均)
         daily_mse = ((Y_pred - Y_te) ** 2).mean(axis=1)  # (T,)
         L_list.append(daily_mse)

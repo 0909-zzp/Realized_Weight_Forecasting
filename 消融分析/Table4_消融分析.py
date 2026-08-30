@@ -1,11 +1,14 @@
-"""Table 4 — 组件消融: DFL基线 + 逐组件减法
+"""Table 4 — 组件消融: 严格单因素减法
 
-设计 (注: 非严格单因素, 部分消融同时改变多个超参数):
-  完整模型 = M5 (Network+Smooth) + DFL → 所有组件全开
-  无外部   = M2 (Sparse VAR) + DFL      → 移除外生变量(同时改λ₁/self_free)
-  无网络   = M3a (Self-free VARX) + DFL → 移除网络惩罚差异化
-  无平滑   = M4 + DFL = M6              → 移除换手率平滑
-  无DFL    = M5                          → 移除决策聚焦调优
+设计 (每次只移除一个组件):
+  完整模型 = 网络VARX+平滑+DFL (M5 + drift-aware L1 DFL)
+  无外部   = M5无外生+DFL → 移除exog特征块 (保留网络+平滑)
+  无网络   = 稀疏VARX+平滑+DFL → 移除网络差异化惩罚 (保留平滑)
+  无平滑   = M4+DFL      → 移除换手率平滑
+  无DFL    = M5          → 移除决策聚焦调优
+
+评估口径与Table2/3/MCS统一: 200天窗口 [65:265] = 2018-12-28 ~ 2019-10-15,
+DFL 使用最终版本: drift-aware L1, η=1e-6, ρ=1e-3, 每日滚动协方差150天。
 
 产出:
   Table4_完整.csv — MSE_w / RPV / Turnover / 净夏普
@@ -33,7 +36,7 @@ _spec.loader.exec_module(vp)
 
 # ---- 导入共享模块 ----
 sys.path.insert(0, str(Path(__file__).parents[1] / "图形Lasso" / "code"))
-from 共享模块 import K, ETA, log as shared_log, set_log_file, load_day, compute_raw_cov, EPS_RIDGE, LAMBDA_LASSO_M3a
+from 共享模块 import K, ETA, log as shared_log, set_log_file, load_day, compute_raw_cov, EPS_RIDGE, LAMBDA_LASSO
 
 # ---- 导入 Table3 的函数 ----
 _t3_path = Path(__file__).parents[1] / "性能评估与可视化" / "Table3_投资组合表现.py"
@@ -63,8 +66,8 @@ def main():
     X_te, Y_te, A_te = splits['test']
     n_train, n_test = X_tr.shape[0], X_te.shape[0]
 
-    # 200天评估窗口: 测试集索引 [60:260] (2018-12-19 ~ 2019-10-08)
-    TSTART, TEND = 60, 260
+    # 200天评估窗口: 测试集索引 [65:265] (2018-12-28 ~ 2019-10-15), 与Table2/3/MCS统一
+    TSTART, TEND = 65, 265
 
     # 训练日索引 (DFL 需要)
     feat_dir = Path(__file__).parents[1] / "特征工程"
@@ -81,28 +84,42 @@ def main():
     log(f"网络: density={density:.1%}")
 
     # ================================================================
-    # 2. 生成 M3a 预测 (不在标准模型中，需单独拟合)
+    # 2. 生成严格单因素消融基模型预测 (不在标准模型中, 需单独拟合)
     # ================================================================
-    log(f"\n--- 生成 M3a 预测 (λ₁={LAMBDA_LASSO_M3a:.0e}) ---")
-    old_cfg = dict(vp.MODELS[3])
-    vp.MODELS[3]['self_free'] = True
-    vp.MODELS[3]['lasso_lambda'] = LAMBDA_LASSO_M3a  # P1: M3a 独立最优 λ₁
+    # 无外生: M5 去掉 exog 特征块 (保留网络+平滑)
+    log(f"\n--- 生成 无外生 基模型 (M5 仅滞后块, λ₁={LAMBDA_LASSO:.0e}) ---")
+    old_cfg5 = dict(vp.MODELS[5])
+    vp.MODELS[5]['blocks'] = ['lagged']
     try:
-        fitted_m3a = vp.fit_model(3, X_tr, Y_tr, None, n_jobs=4)
-        Y_pred_m3a = vp.predict_model(X_te, fitted_m3a)
-        m3a_mse = vp.compute_mse(Y_pred_m3a[TSTART:TEND], Y_te_200)
-        log(f"  M3a MSE: {m3a_mse:.4e}")
+        fitted_noexog = vp.fit_model(5, X_tr, Y_tr, net_mask, n_jobs=4)
+        Y_pred_m5_noexog = vp.predict_model(X_te, fitted_noexog)
+        m_noexog_mse = vp.compute_mse(Y_pred_m5_noexog[TSTART:TEND], Y_te_200)
+        log(f"  无外生基模型 MSE: {m_noexog_mse:.4e}")
+    finally:
+        vp.MODELS[5].clear()
+        vp.MODELS[5].update(old_cfg5)
+
+    # 无网络: M3 + 平滑, 去掉网络差异化惩罚 (保留外生+平滑)
+    log(f"\n--- 生成 无网络 基模型 (稀疏VARX+平滑, λ₁={LAMBDA_LASSO:.0e}) ---")
+    old_cfg3 = dict(vp.MODELS[3])
+    vp.MODELS[3]['self_free'] = True
+    vp.MODELS[3]['smooth'] = True
+    vp.MODELS[3]['network'] = False
+    vp.MODELS[3]['lasso_lambda'] = LAMBDA_LASSO
+    try:
+        fitted_nonnet = vp.fit_model(3, X_tr, Y_tr, None, n_jobs=4)
+        Y_pred_m3a_smooth = vp.predict_model(X_te, fitted_nonnet)
+        m_nonnet_mse = vp.compute_mse(Y_pred_m3a_smooth[TSTART:TEND], Y_te_200)
+        log(f"  无网络基模型 MSE: {m_nonnet_mse:.4e}")
     finally:
         vp.MODELS[3].clear()
-        vp.MODELS[3].update(old_cfg)
+        vp.MODELS[3].update(old_cfg3)
 
     # 加载已有预测
-    Y_pred_m2 = np.load(Path(__file__).parents[1] / "VARX" / "Y_pred_model2.npy")
     Y_pred_m4 = np.load(Path(__file__).parents[1] / "VARX" / "Y_pred_model4.npy")
     Y_pred_m5 = np.load(Path(__file__).parents[1] / "VARX" / "Y_pred_model5.npy")
 
     # 取测试集 (全量363天, 用于DFL; 评估时截取200天窗口)
-    Y_pred_m2 = Y_pred_m2[-n_test:]
     Y_pred_m4 = Y_pred_m4[-n_test:]
     Y_pred_m5 = Y_pred_m5[-n_test:]
 
@@ -110,27 +127,43 @@ def main():
     # 3. DFL 应用到各基模型
     # ================================================================
     rho_dfl = getattr(vp, 'RHO_DFL', 1e-3)
-    dfl_eta = 0.0  # HANDOFF: 移除换手惩罚
+    dfl_eta = 1e-6  # drift-aware L1 换手惩罚 (OOS验证期选择)
     log(f"\n--- DFL 后处理 (η={dfl_eta}, ρ={rho_dfl}) ---")
 
-    # M2 + DFL
+    # 无外生 + DFL
     t0 = time.time()
-    Y_pred_m2_dfl = vp.compute_model6(Y_pred_m2, Y_te, train_day_indices, eta=dfl_eta)
-    log(f"  M2+DFL  完成 ({time.time()-t0:.1f}s)  MSE={vp.compute_mse(Y_pred_m2_dfl[TSTART:TEND], Y_te_200):.4e}")
+    Y_pred_noexog_dfl = vp.compute_model6_drift_l1(
+        Y_pred_m5_noexog, Y_te, train_day_indices,
+        eta=dfl_eta, rho=rho_dfl, risk_mult=1.0,
+        rolling_cov=True, cov_window=150,
+    )
+    log(f"  无外生+DFL 完成 ({time.time()-t0:.1f}s)  MSE={vp.compute_mse(Y_pred_noexog_dfl[TSTART:TEND], Y_te_200):.4e}")
 
-    # M3a + DFL
+    # 无网络 + DFL
     t0 = time.time()
-    Y_pred_m3a_dfl = vp.compute_model6(Y_pred_m3a, Y_te, train_day_indices, eta=dfl_eta)
-    log(f"  M3a+DFL 完成 ({time.time()-t0:.1f}s)  MSE={vp.compute_mse(Y_pred_m3a_dfl[TSTART:TEND], Y_te_200):.4e}")
+    Y_pred_nonnet_dfl = vp.compute_model6_drift_l1(
+        Y_pred_m3a_smooth, Y_te, train_day_indices,
+        eta=dfl_eta, rho=rho_dfl, risk_mult=1.0,
+        rolling_cov=True, cov_window=150,
+    )
+    log(f"  无网络+DFL 完成 ({time.time()-t0:.1f}s)  MSE={vp.compute_mse(Y_pred_nonnet_dfl[TSTART:TEND], Y_te_200):.4e}")
 
-    # M4 + DFL (已有的 M6)
+    # M4 + DFL
     t0 = time.time()
-    Y_pred_m4_dfl = vp.compute_model6(Y_pred_m4, Y_te, train_day_indices, eta=dfl_eta)
+    Y_pred_m4_dfl = vp.compute_model6_drift_l1(
+        Y_pred_m4, Y_te, train_day_indices,
+        eta=dfl_eta, rho=rho_dfl, risk_mult=1.0,
+        rolling_cov=True, cov_window=150,
+    )
     log(f"  M4+DFL  完成 ({time.time()-t0:.1f}s)  MSE={vp.compute_mse(Y_pred_m4_dfl[TSTART:TEND], Y_te_200):.4e}")
 
     # M5 + DFL
     t0 = time.time()
-    Y_pred_m5_dfl = vp.compute_model6(Y_pred_m5, Y_te, train_day_indices, eta=dfl_eta)
+    Y_pred_m5_dfl = vp.compute_model6_drift_l1(
+        Y_pred_m5, Y_te, train_day_indices,
+        eta=dfl_eta, rho=rho_dfl, risk_mult=1.0,
+        rolling_cov=True, cov_window=150,
+    )
     log(f"  M5+DFL  完成 ({time.time()-t0:.1f}s)  MSE={vp.compute_mse(Y_pred_m5_dfl[TSTART:TEND], Y_te_200):.4e}")
 
     # ================================================================
@@ -148,22 +181,22 @@ def main():
     test_files = [all_files[i] for i in test_indices]
 
     models = {
-        2:  {'name': 'M2 (无外生)',     'Y_pred': Y_pred_m2[TSTART:TEND]},
-        3:  {'name': 'M3a (无网络)',     'Y_pred': Y_pred_m3a[TSTART:TEND]},
-        4:  {'name': 'M4 (无平滑)',      'Y_pred': Y_pred_m4[TSTART:TEND]},
-        5:  {'name': 'M5 (无DFL)',       'Y_pred': Y_pred_m5[TSTART:TEND]},
-        6:  {'name': 'M5+DFL (完整)',     'Y_pred': Y_pred_m5_dfl[TSTART:TEND]},
-        7:  {'name': 'M2+DFL',           'Y_pred': Y_pred_m2_dfl[TSTART:TEND]},
-        8:  {'name': 'M3a+DFL',          'Y_pred': Y_pred_m3a_dfl[TSTART:TEND]},
-        9:  {'name': 'M4+DFL',           'Y_pred': Y_pred_m4_dfl[TSTART:TEND]},
+        2:  {'name': '网络VARX + 平滑（无外生）+ DFL', 'Y_pred': Y_pred_m5_noexog[TSTART:TEND]},
+        3:  {'name': '稀疏VARX + 平滑（无网络）+ DFL', 'Y_pred': Y_pred_m3a_smooth[TSTART:TEND]},
+        4:  {'name': '网络VARX + DFL',                 'Y_pred': Y_pred_m4[TSTART:TEND]},
+        5:  {'name': '网络VARX + 平滑',                'Y_pred': Y_pred_m5[TSTART:TEND]},
+        6:  {'name': '网络VARX + 平滑 + DFL',          'Y_pred': Y_pred_m5_dfl[TSTART:TEND]},
+        7:  {'name': '网络VARX + 平滑（无外生）+ DFL', 'Y_pred': Y_pred_noexog_dfl[TSTART:TEND]},
+        8:  {'name': '稀疏VARX + 平滑（无网络）+ DFL', 'Y_pred': Y_pred_nonnet_dfl[TSTART:TEND]},
+        9:  {'name': '网络VARX + DFL',                 'Y_pred': Y_pred_m4_dfl[TSTART:TEND]},
     }
     # 按需要的顺序排列
     eval_order = {
-        '完整': 6,   # M5+DFL
-        '无外部': 7,  # M2+DFL
-        '无网络': 8,  # M3a+DFL
-        '无平滑': 9,  # M4+DFL
-        '无DFL': 5,   # M5
+        '网络VARX + 平滑 + DFL': 6,          # M5+DFL
+        '网络VARX + 平滑（无外生）+ DFL': 7,  # M5无外生+DFL
+        '稀疏VARX + 平滑（无网络）+ DFL': 8,  # 稀疏VARX+平滑+DFL
+        '网络VARX + DFL': 9,                 # M4+DFL
+        '网络VARX + 平滑': 5,                # M5
     }
 
     # 只评估需要的模型
@@ -179,8 +212,8 @@ def main():
     mse_dict = {
         5: vp.compute_mse(Y_pred_m5[TSTART:TEND], Y_te_200),
         6: vp.compute_mse(Y_pred_m5_dfl[TSTART:TEND], Y_te_200),
-        7: vp.compute_mse(Y_pred_m2_dfl[TSTART:TEND], Y_te_200),
-        8: vp.compute_mse(Y_pred_m3a_dfl[TSTART:TEND], Y_te_200),
+        7: vp.compute_mse(Y_pred_noexog_dfl[TSTART:TEND], Y_te_200),
+        8: vp.compute_mse(Y_pred_nonnet_dfl[TSTART:TEND], Y_te_200),
         9: vp.compute_mse(Y_pred_m4_dfl[TSTART:TEND], Y_te_200),
     }
 

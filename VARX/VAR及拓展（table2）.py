@@ -8,7 +8,7 @@
   3. Sparse VARX      — Lasso, 全 x_t（含网络拓扑）
   4. Network VARX     — Lasso, 同 M3 特征集 + λ₁≠λ₂ 网络惩罚
   5. Network+Smooth   — Model 4 + 数据增广 λ_s 平滑（训练时嵌入）
-  6. DFL-Tuned VARX   — Model 4 预测 + 决策聚焦后处理调优
+  6. Network+Smooth+DFL — Model 5 预测 + drift-aware L1 DFL 后处理
   
 Model 7 (LSTM) → 待实现
 
@@ -16,7 +16,7 @@ Model 7 (LSTM) → 待实现
   λ₁ = LAMBDA_LASSO      = 1e-4   (连接资产的滞后系数 ℓ1)
   λ₂ = λ₁+LAMBDA_NETWORK  = 5.1e-3 (未连接资产的滞后系数 ℓ1, λ₂≫λ₁)
   λ₃ = LAMBDA_EXOG       = 5e-4   (外生变量系数 ℓ1)
-  λ_s = LAMBDA_TURNOVER  = 5e-3   (换手率平滑 ℓ2)
+  λ_s = LAMBDA_TURNOVER  = 3e-3   (换手率平滑 ℓ2)
 """
 import os as _os
 _os.environ["OPENBLAS_NUM_THREADS"] = "1"
@@ -429,6 +429,10 @@ def compute_turnover(Y_pred: np.ndarray,
 # ===================================================================
 RHO_DFL = 1e-3
 DFL_BOX = 0.05
+DFL_ETA = 1e-6            # drift-aware L1 换手惩罚 (OOS验证期选择)
+DFL_RISK = 1.0
+DFL_ROLLING_COV = True
+DFL_COV_WINDOW = 150      # 每日滚动协方差窗口, 与Table3/4一致
 
 def _solve_dfl_day(w_stat, w_prev, Sigma, eta_vec, rho=1e-3):
     """L2 闭式解 — 网络差异化交易成本。
@@ -634,7 +638,7 @@ def compute_model6_drift_l1(Y_pred_m4, Y_actual, valid_train_days,
   3. Sparse VARX      — Lasso, 全 x_t（含网络拓扑）
   4. Network VARX     — Lasso, 同 M3 特征集 + λ₁≠λ₂ 网络惩罚
   5. Network+Smooth   — Model 4 + 数据增广 λ_s 平滑（训练时嵌入）
-  6. DFL-Tuned VARX   — Model 4 预测 + 决策聚焦后处理调优
+  6. Network+Smooth+DFL — Model 5 预测 + drift-aware L1 DFL 后处理
   
 Model 7 (LSTM) → 待实现
 
@@ -642,7 +646,7 @@ Model 7 (LSTM) → 待实现
   λ₁ = LAMBDA_LASSO      = 1e-4   (连接资产的滞后系数 ℓ1)
   λ₂ = λ₁+LAMBDA_NETWORK  = 5.1e-3 (未连接资产的滞后系数 ℓ1, λ₂≫λ₁)
   λ₃ = LAMBDA_EXOG       = 5e-4   (外生变量系数 ℓ1)
-  λ_s = LAMBDA_TURNOVER  = 5e-3   (换手率平滑 ℓ2)
+  λ_s = LAMBDA_TURNOVER  = 3e-3   (换手率平滑 ℓ2)
 """
 import os as _os
 _os.environ["OPENBLAS_NUM_THREADS"] = "1"
@@ -1081,6 +1085,10 @@ def main():
     n_train, n_val, n_test = X_tr.shape[0], splits['val'][0].shape[0], X_te.shape[0]
     log(f"划分: 训练={n_train}  验证={n_val}  测试={n_test}")
 
+    # 200天评估窗口: 测试集索引 [65:265] = 2018-12-28 ~ 2019-10-15 (与Table3/4/MCS统一)
+    TSTART, TEND = 65, 265
+    Y_te_eval = Y_te[TSTART:TEND]
+
     # ---- 网络掩码 ----
     net_mask, density = build_network_mask(A_tr)
     avg_degree = net_mask.sum(axis=1).mean()
@@ -1101,14 +1109,15 @@ def main():
         t_fit = time.time() - t0
 
         Y_pred = predict_model(X_te, fitted)
+        Y_pred_eval = Y_pred[TSTART:TEND]
 
         predictions[model_id] = Y_pred
         fitted_models[model_id] = fitted
 
-        mse = compute_mse(Y_pred, Y_te)
-        mae = compute_mae(Y_pred, Y_te)
+        mse = compute_mse(Y_pred_eval, Y_te_eval)
+        mae = compute_mae(Y_pred_eval, Y_te_eval)
         sparsity = float(np.mean(np.abs(fitted['coefs']) < 1e-8))
-        turnover = compute_turnover(Y_pred)
+        turnover = compute_turnover(Y_pred_eval)
 
         log(f"  耗时: {t_fit:.1f}s")
         log(f"  MSE: {mse:.6e}  MAE: {mae:.6e}")
@@ -1130,7 +1139,7 @@ def main():
     for model_id in [2, 3, 4, 5, 6]:
         if model_id not in predictions:
             continue
-        dm, pval, log10p = dm_test(predictions[model_id], Y_base, Y_te)
+        dm, pval, log10p = dm_test(predictions[model_id][TSTART:TEND], Y_base[TSTART:TEND], Y_te_eval)
         if pval == 0.0 and not np.isnan(log10p):
             p_fmt = "10^{" + f"{log10p:.0f}" + "}"
         else:
@@ -1143,20 +1152,24 @@ def main():
     results[0]['DM_stat'] = np.nan
     results[0]['DM_pvalue'] = np.nan
 
-    # ---- Model 6: DFL Post-hoc (盒约束) ----
+    # ---- Model 6: DFL Post-hoc (drift-aware L1, 最终口径) ----
     feat_dir = Path(__file__).parent.parent / "特征工程"
     valid_indices = np.load(feat_dir / "valid_indices.npy")
     train_day_indices = valid_indices[:n_train]
-    Y_pred_m6 = compute_model6(predictions[4], Y_te, train_day_indices, eta=ETA)
+    Y_pred_m6 = compute_model6_drift_l1(
+        predictions[5], Y_te, train_day_indices,
+        eta=DFL_ETA, rho=RHO_DFL, risk_mult=DFL_RISK,
+        rolling_cov=DFL_ROLLING_COV, cov_window=DFL_COV_WINDOW,
+    )
 
     predictions[6] = Y_pred_m6
-    m6_mse = compute_mse(Y_pred_m6, Y_te)
-    m6_mae = compute_mae(Y_pred_m6, Y_te)
-    m6_to  = compute_turnover(Y_pred_m6)
+    m6_mse = compute_mse(Y_pred_m6[TSTART:TEND], Y_te_eval)
+    m6_mae = compute_mae(Y_pred_m6[TSTART:TEND], Y_te_eval)
+    m6_to  = compute_turnover(Y_pred_m6[TSTART:TEND])
     log(f"  MSE: {m6_mse:.6e}  MAE: {m6_mae:.6e}  换手率: {m6_to:.6f}")
 
     results.append({
-        'Model': 6, 'Name': 'DFL VARX',
+        'Model': 6, 'Name': 'Network VARX + Smooth + DFL',
         'MSE': m6_mse, 'MAE': m6_mae,
         'Sparsity': np.nan, 'Turnover': m6_to, 'FitTime_s': np.nan,
     })
@@ -1169,7 +1182,7 @@ def main():
     })
 
     # ---- M6 DM 检验（补在 results 之后）----
-    dm_m6, pval_m6, log10p_m6 = dm_test(predictions[6], Y_base, Y_te)
+    dm_m6, pval_m6, log10p_m6 = dm_test(predictions[6][TSTART:TEND], Y_base[TSTART:TEND], Y_te_eval)
     if pval_m6 == 0.0 and not np.isnan(log10p_m6):
         p_fmt_m6 = "10^{" + f"{log10p_m6:.0f}" + "}"
     else:
@@ -1367,9 +1380,9 @@ def main():
     Y_pred_m7 = Y_pred_m7 / s7
 
     predictions[7] = Y_pred_m7
-    m7_mse = compute_mse(Y_pred_m7, Y_te)
-    m7_mae = compute_mae(Y_pred_m7, Y_te)
-    m7_to  = compute_turnover(Y_pred_m7)
+    m7_mse = compute_mse(Y_pred_m7[TSTART:TEND], Y_te_eval)
+    m7_mae = compute_mae(Y_pred_m7[TSTART:TEND], Y_te_eval)
+    m7_to  = compute_turnover(Y_pred_m7[TSTART:TEND])
     log(f"  MSE: {m7_mse:.6e}  MAE: {m7_mae:.6e}  TO: {m7_to:.6f}")
 
     results[6]['MSE'] = m7_mse
@@ -1377,7 +1390,7 @@ def main():
     results[6]['Turnover'] = m7_to
     results[6]['FitTime_s'] = round(time.time()-t0, 1)
 
-    dm_m7, pval_m7, log10p_m7 = dm_test(Y_pred_m7, Y_base, Y_te)
+    dm_m7, pval_m7, log10p_m7 = dm_test(Y_pred_m7[TSTART:TEND], Y_base[TSTART:TEND], Y_te_eval)
     if pval_m7 == 0.0 and not np.isnan(log10p_m7):
         p_fmt_m7 = "10^{" + f"{log10p_m7:.0f}" + "}"
     else:

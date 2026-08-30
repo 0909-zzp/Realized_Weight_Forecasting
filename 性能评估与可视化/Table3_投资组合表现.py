@@ -55,8 +55,8 @@ def load_data():
     n_days = len(test_files)
     log(f"200天窗口: {START_DATE}~{END_DATE} ({n_days}天)")
 
-    # --- VARX 模型预测 (test set, 取200天窗口 [60:260]) ---
-    # 200天窗口在363天测试集中位于索引 [60:260]
+    # --- VARX 模型预测 (test set, 取200天窗口 [65:265]) ---
+    # 200天窗口在363天测试集中位于索引 [65:265], 2018-12-28 ~ 2019-10-15
     TSTART, TEND = 65, 265
     models = {}
     for mid, name in [(1,'VAR'),(2,'Sparse VAR'),(3,'Sparse VARX'),
