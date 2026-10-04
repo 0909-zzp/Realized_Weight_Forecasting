@@ -35,7 +35,9 @@ sys.stdout.reconfigure(encoding='utf-8')
 # 参数
 # ===================================================================
 N_BOOTSTRAP = 2000       # bootstrap 重复次数
-BLOCK_LEN   = 5          # block bootstrap 块长度 (交易日, 约1周)
+BLOCK_LEN   = 5          # block bootstrap 块长度 (交易日, 约1周) - 默认, Table 2 沿用
+# 敏感性网格: 对齐 Hansen et al. (2011) 附录中 p6/p9/p12 多块长报告的做法
+BLOCK_LENGTHS = [5, 10, 20]
 SEED        = 42         # 随机种子 (可复现)
 ALPHA_LEVELS = [0.25, 0.10]  # MCS 置信水平: 75% 和 90%
 
@@ -110,122 +112,135 @@ def block_bootstrap(T: int, B: int, block_len: int, rng: np.random.Generator
     return idx_matrix
 
 
-def mcs_procedure(L: np.ndarray, n_boot: int = N_BOOTSTRAP,
-                  block_len: int = BLOCK_LEN,
-                  seed: int = SEED
-                  ) -> pd.DataFrame:
-    """Hansen-Lunde-Nason (2011) MCS 主程序。
+def _round_statistics(L_sub: np.ndarray, boot_idx: np.ndarray, n_boot: int
+                      ) -> Tuple[float, float, int, float, np.ndarray]:
+    """单轮 EPA 检验 (等价预测能力), 返回 (T_R, p_hat, 最差局部索引, 其 t 值, 每行最大 t)。
 
-    Args:
-        L: (T, M) 损失矩阵, L[t,m] = MSE of model m at day t
+    p_hat 做 +1 平滑: (1 + #{T_R* > T_R}) / (1 + B), 因此可报告的最小水平是
+    1/(B+1) 而不是 0 —— 0 只是 bootstrap 分辨率的下限, 不是一个测得出来的数。
+    """
+    d_bar = L_sub.mean(axis=0)
+    D_obs = d_bar[:, None] - d_bar[None, :]              # (m, m) 均值差分
+    boot_mean = L_sub[boot_idx, :].mean(axis=1)          # (B, m) 重采样均值
+    D_boot = boot_mean[:, :, None] - boot_mean[:, None, :]
 
-    Returns:
-        DataFrame: model, MCS_pval, MCS_raw_pval, in_MCS_75, in_MCS_90
+    d_boot_std = np.sqrt(np.maximum(
+        ((D_boot - D_obs) ** 2).mean(axis=0), 1e-20))
+    t_stat = D_obs / d_boot_std
+    t_boot = (D_boot - D_obs) / d_boot_std
+
+    T_R_obs = float(np.max(np.abs(t_stat)))
+    T_R_boot = np.abs(t_boot).max(axis=(1, 2))
+    n_exceed = int(np.count_nonzero(T_R_boot > T_R_obs))
+    p_hat = (1.0 + n_exceed) / (1.0 + n_boot)
+
+    t_max_row = np.max(t_stat, axis=1)
+    worst = int(np.argmax(t_max_row))
+    return T_R_obs, float(p_hat), worst, float(t_max_row[worst]), t_max_row
+
+
+def mcs_path(L: np.ndarray, n_boot: int = N_BOOTSTRAP,
+             block_len: int = BLOCK_LEN, seed: int = SEED,
+             verbose: bool = True) -> Tuple[list, int]:
+    """走完 HLN 的嵌套淘汰路径, 返回 (每轮记录, 最终幸存模型)。
+
+    淘汰顺序只由检验统计量决定, 与 α 无关 —— α 仅决定在第几轮停下。所以这条
+    路径算一次就能读出任意置信水平下的 MCS, 不必为每个 α 重复 bootstrap。
     """
     T, M = L.shape
     rng = np.random.default_rng(seed)
-    log(f"MCS: T={T}天, M={M}模型, bootstrap={n_boot}次, block_len={block_len}")
-
-    # 预生成所有 bootstrap 索引 (所有迭代共用)
     boot_idx = block_bootstrap(T, n_boot, block_len, rng)
-    log(f"  Bootstrap 索引矩阵: ({n_boot} × {T}), 耗时忽略不计")
+    if verbose:
+        log(f"MCS: T={T}天, M={M}模型, bootstrap={n_boot}次, "
+            f"block_len={block_len}, seed={seed}")
 
-    # 初始化: 所有模型都在集合中, p-values 记录淘汰时的 p 值
-    surviving = list(range(M))           # 当前存活模型索引 (0-based)
-    model_pvals = np.zeros(M)            # 单调调整后的 MCS p-value
-    model_raw_pvals = np.zeros(M)        # 淘汰时集合检验的原始 p-value
-    eliminated_round = np.full(M, -1)    # 淘汰轮次
-
-    round_num = 0
+    surviving = list(range(M))
+    rounds = []
     while len(surviving) > 1:
-        round_num += 1
-        m_current = len(surviving)
-        log(f"\n  Round {round_num}: {m_current} models surviving "
-            f"→ {[MODEL_NAMES[s+1] for s in surviving]}")
+        before = list(surviving)
+        T_R, p_hat, worst, t_worst, _ = _round_statistics(L[:, before], boot_idx, n_boot)
+        elim = int(surviving.pop(worst))
+        rounds.append({
+            'round': len(rounds) + 1,
+            'models_before': before,
+            'models_after': list(surviving),
+            'T_R': T_R,
+            'p_hat': p_hat,
+            'eliminated': elim,
+            't_worst': t_worst,
+        })
+        if verbose:
+            log(f"\n  Round {len(rounds)}: {len(before)} models surviving "
+                f"→ {[MODEL_NAMES[s + 1] for s in before]}")
+            log(f"    T_R={T_R:.3f}  p_hat={p_hat:.6f}  "
+                f"淘汰 {MODEL_NAMES[elim + 1]} (t={t_worst:.3f})")
 
-        # ---- Step 1: 对当前存活集合计算损失差分 ----
-        L_sub = L[:, surviving]                            # (T, m)
-        d_mean = np.zeros((m_current, m_current))          # 均值差分
+    last = int(surviving[0])
+    if verbose:
+        log(f"\n  路径结束: 唯一幸存 {MODEL_NAMES[last + 1]}")
+    return rounds, last
 
-        for i in range(m_current):
-            for j in range(m_current):
-                if i == j:
-                    continue
-                d_mean[i, j] = np.mean(L_sub[:, i] - L_sub[:, j])
 
-        # ---- Step 2: Bootstrap 重采样均值差分 ----
-        # HLN 用 bootstrap 均值的方差标准化 t 统计量，而不是样本内方差。
-        d_boot_mean = np.zeros((n_boot, m_current, m_current))
-        for b in range(n_boot):
-            loss_mean = L_sub[boot_idx[b], :].mean(axis=0)  # (m,)
-            d_boot_mean[b] = loss_mean[:, None] - loss_mean[None, :]
+def mcs_member_sets(rounds: list, M: int, alphas=ALPHA_LEVELS) -> dict:
+    """按 HLN 停止规则读集合: 首轮 p_hat >= α 时不再拒绝, 当时在场的模型即 MCS。
 
-        d_boot_var = np.mean(
-            (d_boot_mean - d_mean[None, :, :]) ** 2, axis=0
-        )
-        d_boot_var = np.maximum(d_boot_var, 1e-20)
-        d_boot_std = np.sqrt(d_boot_var)
+    Returns: {α: (成员索引集合, 停止轮次)}。若始终拒绝到只剩一个模型, 集合为该
+    唯一幸存者, 停止轮次记为 len(rounds)+1。
+    """
+    out = {}
+    for a in alphas:
+        S = list(range(M))
+        stop = len(rounds) + 1
+        for r in rounds:
+            if r['p_hat'] >= a:
+                stop = r['round']
+                break
+            S = r['models_after']
+        out[a] = (set(int(x) for x in S), stop)
+    return out
 
-        # 观测与 bootstrap t-statistics
-        t_stat = d_mean / d_boot_std
-        t_boot = (d_boot_mean - d_mean[None, :, :]) / d_boot_std
 
-        # 检验统计量: T_R = max_{i,j} |t_{ij}|
-        T_R_obs = np.max(np.abs(t_stat))
-        T_R_boot = np.abs(t_boot).max(axis=(1, 2))
+def mcs_procedure(L: np.ndarray, n_boot: int = N_BOOTSTRAP,
+                  block_len: int = BLOCK_LEN, seed: int = SEED,
+                  alphas=ALPHA_LEVELS, verbose: bool = True) -> pd.DataFrame:
+    """Hansen-Lunde-Nason (2011) MCS —— α 停止规则版。
 
-        # ---- Step 3: Bootstrap p-value ----
-        p_val = np.mean(T_R_boot > T_R_obs)
-        log(f"    T_R={T_R_obs:.3f}  p={p_val:.6f}  "
-            f"({np.sum(T_R_boot > T_R_obs)}/{n_boot} bootstrap > T_R)")
+    Args:
+        L: (T, M) 损失矩阵, L[t,m] = 模型 m 在第 t 天的损失
 
-        # ---- Step 4: 决策 ----
-        # 对于每个 alpha, 若 p < alpha 则拒绝 H0 (集合不全是等优的)
-        # 若 p >= alpha, 当前集合即 MCS
+    Returns:
+        DataFrame: Model, Name, MCS_pval, MCS_raw_pval, Eliminated_round,
+                   MCS_rank, in_MCS_{75,90}, stop_round_{75,90}
+    """
+    T, M = L.shape
+    rounds, last = mcs_path(L, n_boot=n_boot, block_len=block_len,
+                            seed=seed, verbose=verbose)
+    member_sets = mcs_member_sets(rounds, M, alphas)
 
-        # 淘汰最差模型 (不论 p 值如何, 只要不止一个模型就删)
-        # 淘汰准则: argmax_i sup_{j} t_{ij} (i 相对所有 j 最差的那个)
-        # 即 t_{i,•} = max_j t_{ij} 中最大的 i
-        t_max_row = np.max(t_stat, axis=1)                 # (m,) 每行最大t
-        worst_local = int(np.argmax(t_max_row))            # 行索引 (0..m-1)
-        worst_global = surviving[worst_local]              # 全局模型索引
+    model_raw_pvals = np.zeros(M)          # 淘汰那一轮的 p_hat
+    eliminated_round = np.full(M, -1)
+    for r in rounds:
+        model_raw_pvals[r['eliminated']] = r['p_hat']
+        eliminated_round[r['eliminated']] = r['round']
+    model_raw_pvals[last] = 1.0
+    eliminated_round[last] = len(rounds) + 1
 
-        # 记录此模型在当前集合被淘汰时的原始 p-value
-        model_pvals[worst_global] = p_val
-        model_raw_pvals[worst_global] = p_val
-        eliminated_round[worst_global] = round_num
-
-        log(f"    淘汰: {MODEL_NAMES[worst_global+1]} (loc={worst_local}, "
-            f"t_max={t_max_row[worst_local]:.3f})")
-
-        # 从存活集合移除
-        surviving.pop(worst_local)
-
-    # 最后一个幸存模型: p-value = 1.0 (总在 MCS 中)
-    if surviving:
-        last = surviving[0]
-        model_pvals[last] = 1.0
-        model_raw_pvals[last] = 1.0
-        eliminated_round[last] = round_num + 1
-        log(f"\n  最终幸存: {MODEL_NAMES[last+1]} (p=1.0)")
-
-    # Hansen et al. (2011): 序贯 p 值单调调整
-    # 只有展示用的 MCS p-value 做单调调整，原始 p-value 保留用于 membership/rank
-    order = np.argsort(eliminated_round)  # 从最早淘汰到最后幸存
+    # step-wise 展示用 p 值: 后淘汰者不低于先淘汰者 (单调调整)
+    model_pvals = model_raw_pvals.copy()
+    order = [r['eliminated'] for r in rounds] + [last]
     running_max = 0.0
     for idx in order:
         running_max = max(running_max, model_raw_pvals[idx])
         model_pvals[idx] = running_max
 
-    # ---- 输出: 对每个 α 判断是否在 MCS 中 ----
     results = []
     for mid in range(M):
         results.append({
             'Model': mid + 1,
             'Name': MODEL_NAMES[mid + 1],
-            'MCS_pval': round(model_pvals[mid], 6),
-            'MCS_raw_pval': model_raw_pvals[mid],
-            'Eliminated_round': eliminated_round[mid],
+            'MCS_pval': round(float(model_pvals[mid]), 6),
+            'MCS_raw_pval': float(model_raw_pvals[mid]),
+            'Eliminated_round': int(eliminated_round[mid]),
         })
     df = pd.DataFrame(results)
 
@@ -240,14 +255,15 @@ def mcs_procedure(L: np.ndarray, n_boot: int = N_BOOTSTRAP,
     }
     df['MCS_rank'] = df['Model'].map(rank_map).astype(int)
 
-    # 为每个 alpha 添加列
-    for alpha in ALPHA_LEVELS:
-        col_name = f'in_MCS_{int((1-alpha)*100)}'
-        df[col_name] = df['MCS_raw_pval'] > alpha
-        df[f'MCS_pval_{(1-alpha):.0%}'] = df['MCS_pval'].apply(
+    # 成员资格来自停止规则下的集合, 而不是 p_hat 与 α 的直接比较
+    for alpha in alphas:
+        members, stop = member_sets[alpha]
+        pct = int((1 - alpha) * 100)
+        df[f'in_MCS_{pct}'] = [mid in members for mid in range(M)]
+        df[f'stop_round_{pct}'] = stop
+        df[f'MCS_pval_{(1 - alpha):.0%}'] = df['MCS_pval'].apply(
             lambda p: f"{p:.4f}"
         )
-
     return df
 
 
